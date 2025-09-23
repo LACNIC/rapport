@@ -1,10 +1,11 @@
 Set up the RRDP key:
 
 ```sh
-# Set 'localhost' as common name
+# Notice the 'localhost' commonName (CN)
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-	-keyout "tools/fft.key" -out "tools/fft.crt"
-sudo cp "tools/fft.crt" "/usr/local/share/ca-certificates/"
+	-subj "/C=AU/ST=Some-State/O=IWPL/CN=localhost" \
+	-keyout "tools/rpt.key" -out "tools/rpt.crt"
+sudo cp "tools/rpt.crt" "/usr/local/share/ca-certificates/"
 sudo update-ca-certificates
 ```
 
@@ -29,6 +30,6 @@ Drop the tmpfs:
 Delete the RRDP key:
 
 ```sh
-sudo rm "/usr/local/share/ca-certificates/fft.crt"
+sudo rm "/usr/local/share/ca-certificates/rpt.crt"
 sudo update-ca-certificates
 ```
