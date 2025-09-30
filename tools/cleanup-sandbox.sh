@@ -8,11 +8,9 @@ if [ -f "sandbox/rsyncd/rsyncd.pid" ]; then
 fi
 
 mkdir -p "sandbox/keys"
-mkdir -p "sandbox/tal"
 mkdir -p "sandbox/apache2"
 mkdir -p "sandbox/rsyncd"
-mkdir -p "sandbox/cache"
-mkdir -p "sandbox/output"
+mkdir -p "sandbox/tests"
 
 if [ -z "$(ls -A sandbox/keys)" ]; then    # "If sandbox/keys is empty"
 	for i in $(seq 0 20); do
@@ -21,11 +19,9 @@ if [ -z "$(ls -A sandbox/keys)" ]; then    # "If sandbox/keys is empty"
 	done
 fi
 
-rm -rf sandbox/tal/*
 rm -rf sandbox/apache2/*
 rm -rf sandbox/rsyncd/*
-rm -rf sandbox/cache/*
-rm -rf sandbox/output/*
+rm -rf sandbox/tests/*
 
 cp "tools/apache2.conf" "sandbox/apache2"
 mkdir -p "sandbox/apache2/content"

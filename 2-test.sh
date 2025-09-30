@@ -12,14 +12,17 @@ tools/cleanup-sandbox.sh
 RSYNC_PATH="--rsync-path sandbox/rsyncd/content"
 RRDP_PATH="--rrdp-path sandbox/apache2/content/rrdp"
 KEYS="--keys sandbox/keys"
-PRINTS="-vvp csv"
+PRINTS="-p csv"
 #TIMES="--now 2025-01-01T00:00:00Z --later 2026-01-01T00:00:00Z"
 BARRY="$BARRY $RSYNC_PATH $RRDP_PATH $KEYS $PRINTS"
 
-FORT_CACHE="--local-repository sandbox/cache"
-FORT_NLOG="--log.enabled --log.level debug"
-FORT_VLOG="--validation-log.enabled --validation-log.level debug"
-FORT="$FORT --mode standalone $FORT_CACHE $FORT_NLOG $FORT_VLOG"
+FORT="$FORT --mode standalone $FORT_CACHE"
+
+APACHE_REQLOG="sandbox/apache2/logs/8443.log"
+RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
+
+LEAK_CHECK="--leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all"
+VALGRIND="valgrind --error-exitcode=1 $LEAK_CHECK --track-origins=yes"
 
 SUCCESSES=0
 FAILS=0
@@ -27,31 +30,34 @@ FAILS=0
 ########################################################################
 
 run_test() {
-	TEST="$1"
-	TAL="sandbox/tal/$TEST.tal"
-	RD="rd/$TEST.rd"
-
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
 		return
 	fi
 
+	echo "Test: $TEST"
+
+	RD="rd/$TEST.rd"
+	WORKSPACE="sandbox/tests/$TEST"
+	TAL="$WORKSPACE/tal.txt"
+
 	rm -rf sandbox/apache2/content/*
 	rm -rf sandbox/rsyncd/content/*
+	echo > "$APACHE_REQLOG"
+	echo > "$RSYNC_REQLOG"
+	mkdir -p "$WORKSPACE/cache"
 
-	$BARRY --tal-path $TAL $RD \
-		>  sandbox/output/$TEST.barry.stdout.log \
-		2> sandbox/output/$TEST.barry.stderr.log
+	$BARRY --tal-path $TAL $RD > "$WORKSPACE/barry.txt" 2>&1
 	RESULT=$?
-	if [ $RESULT -eq 0 ]; then
-		SUCCESSES=$((SUCCESSES+1))
-	else
+	if [ $RESULT -ne 0 ]; then
 		echo "$TEST: Barry returned $RESULT"
 		FAILS=$((FAILS+1))
+		return
 	fi
 
-	$FORT --tal $TAL \
-		>  sandbox/output/$TEST.rp.stdout.log \
-		2> sandbox/output/$TEST.rp.stderr.log
+	$VALGRIND $FORT --tal $TAL \
+		--local-repository "$WORKSPACE/cache" \
+		--report.path "$WORKSPACE/report.txt" \
+		> "$WORKSPACE/fort.log" 2>&1
 	RESULT=$?
 	if [ $RESULT -eq 0 ]; then
 		SUCCESSES=$((SUCCESSES+1))
@@ -61,17 +67,115 @@ run_test() {
 	fi
 }
 
+# $1: file to grep in
+# $2: grep flags
+# $3: regex to search
+check_output() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
+	fi
+
+	grep -q $2 -- "$3" "sandbox/tests/$TEST/$1"
+	RESULT=$?
+	if [ $RESULT -eq 0 ]; then
+		SUCCESSES=$((SUCCESSES+1))
+	else
+		echo "$TEST: $1 does not contain '$3'"
+		FAILS=$((FAILS+1))
+	fi
+}
+
+# $1: Expected VRP count
+check_vrp_count() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
+	fi
+
+	check_output "fort.log" -Fx "INF: - Valid ROAs: $1"
+}
+
+# Arguments: Expected request log lines
+check_http_requests() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
+	fi
+
+	WORKSPACE="sandbox/tests/$TEST/apache2"
+	EXPECTED="$WORKSPACE/expected.log"
+	ACTUAL="$WORKSPACE/actual.log"
+	DIFF="$WORKSPACE/diff.txt"
+	mkdir -p "$WORKSPACE"
+
+	cp "$APACHE_REQLOG" "$ACTUAL"
+	for i in "$@"; do
+		echo "$i" >> "$EXPECTED"
+	done
+
+	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
+	RESULT=$?
+	if [ $RESULT -eq 0 ]; then
+		SUCCESSES=$((SUCCESSES+1))
+	else
+		echo "$TEST: Unexpected Apache request sequence; see $DIFF"
+		FAILS=$((FAILS+1))
+	fi
+}
+
+# Arguments: Expected request log lines
+check_rsync_requests() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
+	fi
+
+	WORKSPACE="sandbox/tests/$TEST/rsync"
+	EXPECTED="$WORKSPACE/expected.log"
+	ACTUAL="$WORKSPACE/actual.log"
+	DIFF="$WORKSPACE/diff.txt"
+	mkdir -p "$WORKSPACE"
+
+	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
+	for i in "$@"; do
+		echo "rsync on $i from localhost" >> "$EXPECTED"
+	done
+
+	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
+	RESULT=$?
+	if [ $RESULT -eq 0 ]; then
+		SUCCESSES=$((SUCCESSES+1))
+	else
+		echo "$TEST: Unexpected rsync request sequence; see $DIFF"
+		FAILS=$((FAILS+1))
+	fi
+}
+
 ########################################################################
 
 tools/apache2-start.sh
 tools/rsyncd-start.sh
 
-run_test "simple"
+export TEST="simple"
+run_test
+check_vrp_count 1
+check_http_requests \
+	"/rrdp/ta.cer 200" \
+	"/rrdp/notification.xml 200" \
+	"/rrdp/notification.xml.snapshot 200"
+#check_rsync_requests "rpki/"
+
+export TEST="bad-roa-version"
+run_test
+check_vrp_count 0
+check_output "report.txt" -F "ROA's version (2) is nonzero."
+check_http_requests \
+	"/rrdp/ta.cer 200" \
+	"/rrdp/notification.xml 200" \
+	"/rrdp/notification.xml.snapshot 200"
 
 tools/rsyncd-stop.sh
 tools/apache2-stop.sh
 
 ########################################################################
 
+echo ""
 echo "Successes: $SUCCESSES"
 echo "Failures : $FAILS"
