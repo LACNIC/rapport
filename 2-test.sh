@@ -1,12 +1,36 @@
 #!/bin/sh
 
-#set -x     # Print commands
-#set -e     # Stop immediately on error
+#set -x     # Decomment to print all commands
+#set -e     # Decomment to stop immediately on error
 
 # If $1 exists, only tests involving a matching RD will be run.
 ACCEPT_RD="$1"
 
+case "$RP" in
+	"fort2")
+		export RP_BIN="$FORT"
+		;;
+	"routinator")
+		export RP_BIN="$ROUTINATOR"
+		;;
+	"rpki-client")
+		export RP_BIN="$RPKI_CLIENT"
+		;;
+	"rpki-prover")
+		export RP_BIN="$RPKI_PROVER"
+		;;
+	*)
+		echo "Unknown RP: $RP"
+		echo '(Look up "$RP" in the README.)'
+		return 1
+		;;
+esac
+
+. rp/"$RP".sh
 . tools/vars.sh
+if [ $? -ne 0 ]; then
+	exit 1
+fi
 tools/cleanup-sandbox.sh
 
 RSYNC_PATH="--rsync-path sandbox/rsyncd/content"
@@ -16,18 +40,34 @@ PRINTS="-p csv"
 #TIMES="--now 2025-01-01T00:00:00Z --later 2026-01-01T00:00:00Z"
 BARRY="$BARRY $RSYNC_PATH $RRDP_PATH $KEYS $PRINTS"
 
-FORT="$FORT --mode standalone $FORT_CACHE"
-
 APACHE_REQLOG="sandbox/apache2/logs/8443.log"
 RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
 
-LEAK_CHECK="--leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all"
-VALGRIND="valgrind --error-exitcode=1 $LEAK_CHECK --track-origins=yes"
+if [ -z "$MEMCHECK" ]; then
+	MEMCHECK="$MEMCHECK_DEFAULT"
+fi
+# Note, if you set MEMCHECK=0 and override VALGRIND in the environment,
+# you'll be able to define a custom container.
+if [ "$MEMCHECK" -ne 0 ]; then
+	VALGRIND="valgrind --error-exitcode=1 --leak-check=full \
+		--show-leak-kinds=all --errors-for-leak-kinds=all \
+		--track-origins=yes"
+fi
 
 SUCCESSES=0
 FAILS=0
 
 ########################################################################
+
+ck_result() {
+	RESULT=$1
+	if [ $RESULT -eq 0 ]; then
+		SUCCESSES=$((SUCCESSES+1))
+	else
+		echo "$TEST: $2"
+		FAILS=$((FAILS+1))
+	fi
+}
 
 run_test() {
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
@@ -38,13 +78,13 @@ run_test() {
 
 	RD="rd/$TEST.rd"
 	WORKSPACE="sandbox/tests/$TEST"
-	TAL="$WORKSPACE/tal.txt"
+	TAL=$(rp_tal)
 
 	rm -rf sandbox/apache2/content/*
 	rm -rf sandbox/rsyncd/content/*
 	echo > "$APACHE_REQLOG"
 	echo > "$RSYNC_REQLOG"
-	mkdir -p "$WORKSPACE/cache"
+	mkdir -p "$WORKSPACE/workdir"
 
 	$BARRY --tal-path $TAL $RD > "$WORKSPACE/barry.txt" 2>&1
 	RESULT=$?
@@ -54,17 +94,19 @@ run_test() {
 		return
 	fi
 
-	$VALGRIND $FORT --tal $TAL \
-		--local-repository "$WORKSPACE/cache" \
-		--report.path "$WORKSPACE/report.txt" \
-		> "$WORKSPACE/fort.log" 2>&1
-	RESULT=$?
-	if [ $RESULT -eq 0 ]; then
-		SUCCESSES=$((SUCCESSES+1))
-	else
-		echo "$TEST: Fort returned $RESULT"
-		FAILS=$((FAILS+1))
+	rp_run
+	ck_result $? "$RP returned $RESULT."
+}
+
+# $1: Expected VRP count
+ck_vrp_count() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
 	fi
+
+	ACTUAL=$(rp_count_vrps)
+	test "$1" -eq "$ACTUAL"
+	ck_result $? "Expected $1 VRP(s), $RP produced $ACTUAL"
 }
 
 # $1: file to grep in
@@ -74,24 +116,13 @@ check_output() {
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
 		return
 	fi
+	if [ "$RP" != "fort2" ]; then
+		# Haven't figured out how this is going to work for other RPs
+		return;
+	fi
 
 	grep -q $2 -- "$3" "sandbox/tests/$TEST/$1"
-	RESULT=$?
-	if [ $RESULT -eq 0 ]; then
-		SUCCESSES=$((SUCCESSES+1))
-	else
-		echo "$TEST: $1 does not contain '$3'"
-		FAILS=$((FAILS+1))
-	fi
-}
-
-# $1: Expected VRP count
-check_vrp_count() {
-	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
-		return
-	fi
-
-	check_output "fort.log" -Fx "INF: - Valid ROAs: $1"
+	ck_result $? "$1 does not contain '$3'"
 }
 
 # Arguments: Expected request log lines
@@ -112,13 +143,7 @@ check_http_requests() {
 	done
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
-	RESULT=$?
-	if [ $RESULT -eq 0 ]; then
-		SUCCESSES=$((SUCCESSES+1))
-	else
-		echo "$TEST: Unexpected Apache request sequence; see $DIFF"
-		FAILS=$((FAILS+1))
-	fi
+	ck_result $? "Unexpected Apache request sequence; see $DIFF"
 }
 
 # Arguments: Expected request log lines
@@ -139,13 +164,7 @@ check_rsync_requests() {
 	done
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
-	RESULT=$?
-	if [ $RESULT -eq 0 ]; then
-		SUCCESSES=$((SUCCESSES+1))
-	else
-		echo "$TEST: Unexpected rsync request sequence; see $DIFF"
-		FAILS=$((FAILS+1))
-	fi
+	ck_result $? "Unexpected rsync request sequence; see $DIFF"
 }
 
 ########################################################################
@@ -155,7 +174,7 @@ tools/rsyncd-start.sh
 
 export TEST="simple"
 run_test
-check_vrp_count 1
+ck_vrp_count 1
 check_http_requests \
 	"/rrdp/ta.cer 200" \
 	"/rrdp/notification.xml 200" \
@@ -164,7 +183,7 @@ check_http_requests \
 
 export TEST="bad-roa-version"
 run_test
-check_vrp_count 0
+ck_vrp_count 0
 check_output "report.txt" -F "ROA's version (2) is nonzero."
 check_http_requests \
 	"/rrdp/ta.cer 200" \

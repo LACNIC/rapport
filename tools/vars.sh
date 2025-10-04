@@ -1,19 +1,6 @@
 #!/bin/sh
 
-if [ -z "$BARRY" ]; then
-	BARRY=~/git/barry/src/barry
-fi
-if [ -z "$FORT" ]; then
-	FORT=~/git/fort/src/fort
-fi
-if [ -z "$APACHE2" ]; then
-	APACHE2=/usr/sbin/apache2
-fi
-if [ -z "$RSYNC" ]; then
-	RSYNC=rsync
-fi
-
-test_exists() {
+check_exists() {
 	$1 > /dev/null
 	if [ $? -ne 0 ]; then
 		echo "'$1' returns nonzero."
@@ -22,7 +9,21 @@ test_exists() {
 	fi
 }
 
-test_exists "$BARRY --help" "BARRY"
-test_exists "$FORT --help" "FORT"
-test_exists "$APACHE2 -v" "APACHE2"
-test_exists "$RSYNC --help" "RSYNC"
+
+if [ -z "$BARRY" ]; then
+	export BARRY=barry
+fi
+if [ -z "$APACHE2" ]; then
+	export APACHE2=apache2
+fi
+if [ -z "$RSYNC" ]; then
+	export RSYNC=rsync
+fi
+if [ -z "$RP_BIN" ]; then
+	export RP_BIN="$RP_BIN_DEFAULT"
+fi
+
+check_exists "$BARRY --help" "BARRY"
+check_exists "$APACHE2 -v" "APACHE2"
+check_exists "$RSYNC --help" "RSYNC"
+check_exists rp_test "$RP_EV"
