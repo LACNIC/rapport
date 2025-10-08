@@ -20,23 +20,24 @@ rp_test() {
 	$RP_BIN -V > /dev/null
 }
 
+# Typical, common, single-run RP invocation.
 rp_run() {
 	$VALGRIND $RP_BIN \
 		--mode standalone \
-		--tal "$TAL" \
+		--tal "$WORKSPACE/$TEST.tal" \
 		--local-repository "$WORKSPACE/workdir" \
 		--report "$WORKSPACE/report.txt" \
+		--output.roa "$WORKSPACE/vrps.csv" \
 		> "$WORKSPACE/$RP.log" 2>&1
 }
 
-rp_tal() {
+# Echoes the location where rp_run() expects to find the TAL file.
+# (Barry will drop it there.)
+rp_tal_path() {
 	echo "$WORKSPACE/$TEST.tal"
 }
 
-# A callback for the most basic test.
-# It's the RP-dependent part of it, so all RPs need to override it.
-# Prints the number of VRPs the RP generated.
-rp_count_vrps() {
-	# TODO Prometheus would be a more formal means to extract this
-	grep -x -- "INF: - Valid ROAs: .*" "$WORKSPACE/$RP.log" | cut -d' ' -f5
+# Echoes the location where rp_run() dropped the VRP file.
+rp_vrp_path() {
+	echo "$WORKSPACE/vrps.csv"
 }

@@ -75,10 +75,7 @@ run_test() {
 	fi
 
 	echo "Test: $TEST"
-
-	RD="rd/$TEST.rd"
-	WORKSPACE="sandbox/tests/$TEST"
-	TAL=$(rp_tal)
+	export WORKSPACE="sandbox/tests/$TEST"
 
 	rm -rf sandbox/apache2/content/*
 	rm -rf sandbox/rsyncd/content/*
@@ -86,7 +83,7 @@ run_test() {
 	echo > "$RSYNC_REQLOG"
 	mkdir -p "$WORKSPACE/workdir"
 
-	$BARRY --tal-path $TAL $RD > "$WORKSPACE/barry.txt" 2>&1
+	$BARRY --tal-path $(rp_tal_path) "rd/$TEST.rd" > "$WORKSPACE/barry.txt" 2>&1
 	RESULT=$?
 	if [ $RESULT -ne 0 ]; then
 		echo "$TEST: Barry returned $RESULT"
@@ -98,17 +95,50 @@ run_test() {
 	ck_result $? "$RP returned $RESULT."
 }
 
+# Checks the RP generated $1 VRPs.
+# This test is redundant if you also do check_vrp_output(),
+# but is more appropriate if the RP is supposed to generate 0 VRPs.
 # $1: Expected VRP count
-ck_vrp_count() {
+check_vrp_count() {
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
 		return
 	fi
 
-	ACTUAL=$(rp_count_vrps)
+	ROWS=$(wc -l < "$(rp_vrp_path)")
+	ACTUAL=$((ROWS-1))
 	test "$1" -eq "$ACTUAL"
 	ck_result $? "Expected $1 VRP(s), $RP produced $ACTUAL"
 }
 
+# Checks the RP generated the $@ VRPs.
+# $@: Sequence of VRPs in "PREFIX-MAXLEN => AS" format.
+#     It must be sorted in accordance to `sort`'s default rules.
+check_vrp_output() {
+	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
+		return
+	fi
+
+	VRP_DIR="$WORKSPACE/vrp"
+	EXPECTED="$VRP_DIR/expected.txt"
+	ACTUAL="$VRP_DIR/actual.txt"
+	DIFF="$VRP_DIR/diff.txt"
+	mkdir -p "$VRP_DIR"
+
+	for i in "$@"; do
+		echo "$i" >> "$EXPECTED"
+	done
+	# Lucky: All supported RPs print the same first 3 columns,
+	# so there's no need for a callback.
+	tail -n +2 "$(rp_vrp_path)" |
+		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
+		sort > "$ACTUAL"
+	
+	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
+	ck_result $? "Unexpected VRPs; see $VRP_DIR"
+}
+
+# Checks the RP's output logfile contains a line that matches $3 regex string.
+# Needs work, because it currently only supports Fort.
 # $1: file to grep in
 # $2: grep flags
 # $3: regex to search
@@ -125,17 +155,19 @@ check_output() {
 	ck_result $? "$1 does not contain '$3'"
 }
 
-# Arguments: Expected request log lines
+# Checks the Apache server received the $@ sequence of requests (and nothing
+# else).
+# $@: Sequence of HTTP requests in "PATH HTTP_RESULT_CODE" format.
 check_http_requests() {
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
 		return
 	fi
 
-	WORKSPACE="sandbox/tests/$TEST/apache2"
-	EXPECTED="$WORKSPACE/expected.log"
-	ACTUAL="$WORKSPACE/actual.log"
-	DIFF="$WORKSPACE/diff.txt"
-	mkdir -p "$WORKSPACE"
+	APACHE_DIR="$WORKSPACE/apache2"
+	EXPECTED="$APACHE_DIR/expected.log"
+	ACTUAL="$APACHE_DIR/actual.log"
+	DIFF="$APACHE_DIR/diff.txt"
+	mkdir -p "$APACHE_DIR"
 
 	cp "$APACHE_REQLOG" "$ACTUAL"
 	for i in "$@"; do
@@ -143,20 +175,22 @@ check_http_requests() {
 	done
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
-	ck_result $? "Unexpected Apache request sequence; see $DIFF"
+	ck_result $? "Unexpected Apache request sequence; see $APACHE_DIR"
 }
 
-# Arguments: Expected request log lines
+# Checks the rsync server received the $@ sequence of requests (and nothing
+# else).
+# $@: Sequence of rsync requests in "PATH" format.
 check_rsync_requests() {
 	if [ ! -z "$ACCEPT_RD" -a "$TEST" != "$ACCEPT_RD" ]; then
 		return
 	fi
 
-	WORKSPACE="sandbox/tests/$TEST/rsync"
-	EXPECTED="$WORKSPACE/expected.log"
-	ACTUAL="$WORKSPACE/actual.log"
-	DIFF="$WORKSPACE/diff.txt"
-	mkdir -p "$WORKSPACE"
+	RSYNC_DIR="$WORKSPACE/rsync"
+	EXPECTED="$RSYNC_DIR/expected.log"
+	ACTUAL="$RSYNC_DIR/actual.log"
+	DIFF="$RSYNC_DIR/diff.txt"
+	mkdir -p "$RSYNC_DIR"
 
 	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
 	for i in "$@"; do
@@ -164,7 +198,7 @@ check_rsync_requests() {
 	done
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF"
-	ck_result $? "Unexpected rsync request sequence; see $DIFF"
+	ck_result $? "Unexpected rsync request sequence; see $RSYNC_DIR"
 }
 
 ########################################################################
@@ -174,7 +208,11 @@ tools/rsyncd-start.sh
 
 export TEST="simple"
 run_test
-ck_vrp_count 1
+check_vrp_output \
+	"101::/16-16 => AS1234" \
+	"102::/16-16 => AS1234" \
+	"1.1.0.0/16-16 => AS1234" \
+	"1.2.0.0/16-16 => AS1234"
 check_http_requests \
 	"/rrdp/ta.cer 200" \
 	"/rrdp/notification.xml 200" \
@@ -183,7 +221,7 @@ check_http_requests \
 
 export TEST="bad-roa-version"
 run_test
-ck_vrp_count 0
+check_vrp_count 0
 check_output "report.txt" -F "ROA's version (2) is nonzero."
 check_http_requests \
 	"/rrdp/ta.cer 200" \

@@ -17,11 +17,10 @@ rp_run() {
 		> "$WORKSPACE/vrps.csv" 2> "$WORKSPACE/stderr.txt"
 }
 
-rp_tal() {
+rp_tal_path() {
 	echo "$WORKSPACE/tal/$TEST.tal"
 }
 
-rp_count_vrps() {
-	ROWS=$(wc -l < "$WORKSPACE/vrps.csv")
-	echo $((ROWS-1))
+rp_vrp_path() {
+	echo "$WORKSPACE/vrps.csv"
 }

@@ -19,10 +19,10 @@ rp_run() {
 		> "$WORKSPACE/$RP.log" 2>&1
 }
 
-rp_tal() {
+rp_tal_path() {
 	echo "$WORKSPACE/tal/$TEST.tal"
 }
 
-rp_count_vrps() {
-	tail -n +2 $WORKSPACE/vrps.txt | sort | uniq | wc -l
+rp_vrp_path() {
+	echo "$WORKSPACE/vrps.txt"
 }

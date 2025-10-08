@@ -11,17 +11,16 @@ rp_test() {
 rp_run() {
 	mkdir -p "$WORKSPACE/outputdir"
 	$VALGRIND $RP_BIN \
-		-t "$TAL" \
+		-t "$WORKSPACE/$TEST.tal" \
 		-d "$WORKSPACE/workdir" \
 		"$WORKSPACE/outputdir" \
 		> "$WORKSPACE/$RP.log" 2>&1
 }
 
-rp_tal() {
+rp_tal_path() {
 	echo "$WORKSPACE/$TEST.tal"
 }
 
-rp_count_vrps() {
-	ROWS=$(wc -l < "$WORKSPACE/outputdir/csv")
-	echo "$((ROWS-1))"
+rp_vrp_path() {
+	echo "$WORKSPACE/outputdir/csv"
 }
