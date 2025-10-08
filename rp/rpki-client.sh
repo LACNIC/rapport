@@ -5,7 +5,7 @@ export RP_EV="RPKI_CLIENT"
 export MEMCHECK_DEFAULT=1
 
 rp_test() {
-	$RP_BIN -V > /dev/null
+	$RP_BIN -V 2> /dev/null
 }
 
 rp_run() {
