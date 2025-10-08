@@ -24,20 +24,20 @@ rp_test() {
 rp_run() {
 	$VALGRIND $RP_BIN \
 		--mode standalone \
-		--tal "$WORKSPACE/$TEST.tal" \
-		--local-repository "$WORKSPACE/workdir" \
-		--report "$WORKSPACE/report.txt" \
-		--output.roa "$WORKSPACE/vrps.csv" \
-		> "$WORKSPACE/$RP.log" 2>&1
+		--tal "$SANDBOX/$TEST.tal" \
+		--local-repository "$SANDBOX/workdir" \
+		--report "$SANDBOX/report.txt" \
+		--output.roa "$SANDBOX/vrps.csv" \
+		> "$SANDBOX/$RP.log" 2>&1
 }
 
 # Echoes the location where rp_run() expects to find the TAL file.
 # (Barry will drop it there.)
 rp_tal_path() {
-	echo "$WORKSPACE/$TEST.tal"
+	echo "$SANDBOX/$TEST.tal"
 }
 
 # Echoes the location where rp_run() dropped the VRP file.
 rp_vrp_path() {
-	echo "$WORKSPACE/vrps.csv"
+	echo "$SANDBOX/vrps.csv"
 }

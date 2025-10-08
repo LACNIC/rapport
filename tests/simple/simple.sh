@@ -1,10 +1,15 @@
 #!/bin/sh
 
 # Among a few others, all tests inherit the following environment variables:
+#
 # - $TEST: Name of the test (in this case, "simple")
-# - $WORKSPACE: Path to the test's sandbox directory ("sandbox/tests/simple"),
-#   which is supposed to be where the test dumps all of its output.
-#   (If the test fails, this directory needs to be queried for debugging.)
+# - $SRCDIR: Path to the test's source directory ("tests/simple").
+#   This directory contains all the (constant) files that will build and run
+#   the test (usually this script and likely a Barry RD).
+# - $SANDBOX: Path to the test's sandbox directory ("sandbox/tests/simple"),
+#   which is supposed to be its workspace. Here, the test will dump needed
+#   temporal files and output, and is the place the user needs to be directed
+#   if debugging needs to take place.
 # - All the environment variables defined in the README.
 
 

@@ -15,8 +15,8 @@ run_barry_default() {
 		--keys "sandbox/keys" \
 		--print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
-		"tests/$TEST/$1" \
-		> "$WORKSPACE/barry.txt" 2>&1 \
+		"$SRCDIR/$1" \
+		> "$SANDBOX/barry.txt" 2>&1 \
 		|| fail "Barry returned $?"
 }
 
@@ -39,7 +39,7 @@ check_vrp_count() {
 # $@: Sequence of VRPs in "PREFIX-MAXLEN => AS" format.
 #     It must be sorted in accordance to `sort`'s default rules.
 check_vrp_output() {
-	VRP_DIR="$WORKSPACE/vrp"
+	VRP_DIR="$SANDBOX/vrp"
 	EXPECTED="$VRP_DIR/expected.txt"
 	ACTUAL="$VRP_DIR/actual.txt"
 	DIFF="$VRP_DIR/diff.txt"
@@ -69,7 +69,7 @@ check_output() {
 		return
 	fi
 
-	grep -q $2 -- "$3" "sandbox/tests/$TEST/$1" \
+	grep -q $2 -- "$3" "$SANDBOX/$1" \
 		|| fail "$1 does not contain '$3'"
 }
 
@@ -77,7 +77,7 @@ check_output() {
 # else).
 # $@: Sequence of HTTP requests in "PATH HTTP_RESULT_CODE" format.
 check_http_requests() {
-	APACHE_DIR="$WORKSPACE/apache2"
+	APACHE_DIR="$SANDBOX/apache2"
 	EXPECTED="$APACHE_DIR/expected.log"
 	ACTUAL="$APACHE_DIR/actual.log"
 	DIFF="$APACHE_DIR/diff.txt"
@@ -96,7 +96,7 @@ check_http_requests() {
 # else).
 # $@: Sequence of rsync requests in "PATH" format.
 check_rsync_requests() {
-	RSYNC_DIR="$WORKSPACE/rsync"
+	RSYNC_DIR="$SANDBOX/rsync"
 	EXPECTED="$RSYNC_DIR/expected.log"
 	ACTUAL="$RSYNC_DIR/actual.log"
 	DIFF="$RSYNC_DIR/diff.txt"

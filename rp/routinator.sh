@@ -10,17 +10,17 @@ rp_test() {
 
 rp_run() {
 	$VALGRIND $RP_BIN \
-		-r "$WORKSPACE/workdir" \
-		--no-rir-tals --extra-tals-dir "$WORKSPACE/tal" \
-		--log-repository-issues --logfile "$WORKSPACE/$RP.log" \
+		-r "$SANDBOX/workdir" \
+		--no-rir-tals --extra-tals-dir "$SANDBOX/tal" \
+		--log-repository-issues --logfile "$SANDBOX/$RP.log" \
 		vrps \
-		> "$WORKSPACE/vrps.csv" 2> "$WORKSPACE/stderr.txt"
+		> "$SANDBOX/vrps.csv" 2> "$SANDBOX/stderr.txt"
 }
 
 rp_tal_path() {
-	echo "$WORKSPACE/tal/$TEST.tal"
+	echo "$SANDBOX/tal/$TEST.tal"
 }
 
 rp_vrp_path() {
-	echo "$WORKSPACE/vrps.csv"
+	echo "$SANDBOX/vrps.csv"
 }

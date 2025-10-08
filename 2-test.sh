@@ -57,9 +57,10 @@ NFAILS=0
 tools/apache2-start.sh
 tools/rsyncd-start.sh
 
-for t in $TESTS; do
-	export TEST="$(basename $t)"
-	export WORKSPACE="sandbox/tests/$TEST"
+for T in $TESTS; do
+	export TEST="$(basename $T)"
+	export SRCDIR="$T"
+	export SANDBOX="sandbox/tests/$TEST"
 
 	echo "Test: $TEST"
 
@@ -67,9 +68,9 @@ for t in $TESTS; do
 	rm -rf sandbox/rsyncd/content/*
 	echo > "$APACHE_REQLOG"
 	echo > "$RSYNC_REQLOG"
-	mkdir -p "$WORKSPACE/workdir"
+	mkdir -p "$SANDBOX/workdir"
 
-	$t/$TEST.sh || NFAILS=$((NFAILS+1))
+	$T/$TEST.sh || NFAILS=$((NFAILS+1))
 	NTESTS=$((NTESTS+1))
 	
 	set +e # In case a test enables -e.

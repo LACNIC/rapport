@@ -11,18 +11,18 @@ rp_test() {
 rp_run() {
 	$VALGRIND $RP_BIN \
 		--once \
-		--vrp-output "$WORKSPACE/vrps.txt" \
-		--no-rir-tals --extra-tals-directory "$WORKSPACE/tal" \
-		--rpki-root-directory "$WORKSPACE/workdir" \
+		--vrp-output "$SANDBOX/vrps.txt" \
+		--no-rir-tals --extra-tals-directory "$SANDBOX/tal" \
+		--rpki-root-directory "$SANDBOX/workdir" \
 		--rsync-client-path "$RSYNC" \
 		--log-level debug \
-		> "$WORKSPACE/$RP.log" 2>&1
+		> "$SANDBOX/$RP.log" 2>&1
 }
 
 rp_tal_path() {
-	echo "$WORKSPACE/tal/$TEST.tal"
+	echo "$SANDBOX/tal/$TEST.tal"
 }
 
 rp_vrp_path() {
-	echo "$WORKSPACE/vrps.txt"
+	echo "$SANDBOX/vrps.txt"
 }

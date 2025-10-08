@@ -9,18 +9,18 @@ rp_test() {
 }
 
 rp_run() {
-	mkdir -p "$WORKSPACE/outputdir"
+	mkdir -p "$SANDBOX/outputdir"
 	$VALGRIND $RP_BIN \
-		-t "$WORKSPACE/$TEST.tal" \
-		-d "$WORKSPACE/workdir" \
-		"$WORKSPACE/outputdir" \
-		> "$WORKSPACE/$RP.log" 2>&1
+		-t "$SANDBOX/$TEST.tal" \
+		-d "$SANDBOX/workdir" \
+		"$SANDBOX/outputdir" \
+		> "$SANDBOX/$RP.log" 2>&1
 }
 
 rp_tal_path() {
-	echo "$WORKSPACE/$TEST.tal"
+	echo "$SANDBOX/$TEST.tal"
 }
 
 rp_vrp_path() {
-	echo "$WORKSPACE/outputdir/csv"
+	echo "$SANDBOX/outputdir/csv"
 }
