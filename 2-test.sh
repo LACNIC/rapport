@@ -1,7 +1,6 @@
 #!/bin/sh
 
 #set -x     # Decomment to print all commands
-#set -e     # Decomment to stop immediately on error
 
 # $1 is the name of the test you want to run. Send nothing to run all tests.
 if [ -z "$1" ]; then
@@ -72,8 +71,6 @@ for T in $TESTS; do
 
 	$T/$TEST.sh || NFAILS=$((NFAILS+1))
 	NTESTS=$((NTESTS+1))
-	
-	set +e # In case a test enables -e.
 done
 
 tools/rsyncd-stop.sh

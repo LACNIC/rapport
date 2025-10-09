@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 . tools/checks.sh
 . rp/$RP.sh
 
