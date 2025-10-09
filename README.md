@@ -49,7 +49,7 @@ Run tests as many times as needed:
 
 ```sh
 # See "Arguments" below.
-RP="fort" ./2-test.sh
+RP="fort2" ./2-test.sh
 ```
 
 Drop the tmpfs (if you mounted it):
@@ -77,7 +77,7 @@ The "simple name" of the Relying Party you want to test. (Each test run only tar
 
 There is no default; defining this variable is mandatory.
 
-If there's an open source implementation I've missed, let me know. If you can provide the configuration file ([sample](tools/fort.sh)), all the better.
+If there's an open source implementation I've missed, let me know. If you can provide the configuration file ([samples](rp/)), all the better.
 
 ### `$FORT`
 
@@ -103,7 +103,19 @@ rpki-client's equivalent to [`$FORT`](#fort). Optional; defaults to `rpki-client
 
 RPKI Prover's equivalent to [`$FORT`](#fort). Optional; defaults to `rpki-prover`.
 
-### `MEMCHECK`
+### `$BARRY`
+
+[Barry](https://github.com/LACNIC/barry/)'s equivalent to [`$FORT`](#fort). Optional; defaults to `barry`.
+
+### `$APACHE2`
+
+Apache HTTP Server's equivalent to [`$FORT`](#fort). Optional; defaults to `apache2`.
+
+### `$RSYNC`
+
+rsync's equivalent to [`$FORT`](#fort). Optional; defaults to `rsync`.
+
+### `$MEMCHECK`
 
 Controls the inclusion of the memory leak checks (ie. Valgrind). Nonzero means "included," zero means "excluded."
 
