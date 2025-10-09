@@ -13,6 +13,7 @@ rp_run() {
 		-r "$SANDBOX/workdir" \
 		--no-rir-tals --extra-tals-dir "$SANDBOX/tal" \
 		--log-repository-issues --logfile "$SANDBOX/$RP.log" \
+		--rsync-command "$RSYNC" \
 		vrps \
 		> "$SANDBOX/vrps.csv" 2> "$SANDBOX/stderr.txt"
 }

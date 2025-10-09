@@ -13,6 +13,7 @@ rp_run() {
 	$VALGRIND $RP_BIN \
 		-t "$SANDBOX/$TEST.tal" \
 		-d "$SANDBOX/workdir" \
+		-e "$RSYNC" \
 		"$SANDBOX/outputdir" \
 		> "$SANDBOX/$RP.log" 2>&1
 }

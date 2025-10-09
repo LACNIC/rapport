@@ -28,6 +28,7 @@ rp_run() {
 		--local-repository "$SANDBOX/workdir" \
 		--report "$SANDBOX/report.txt" \
 		--output.roa "$SANDBOX/vrps.csv" \
+		--rsync.program "$RSYNC" \
 		> "$SANDBOX/$RP.log" 2>&1
 }
 
