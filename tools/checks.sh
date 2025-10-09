@@ -25,8 +25,7 @@ run_rp_default() {
 }
 
 # Checks the RP generated $1 VRPs.
-# This test is redundant if you also do check_vrp_output(),
-# but is more appropriate if the RP is supposed to generate 0 VRPs.
+# This test is redundant if you also do check_vrp_output().
 # $1: Expected VRP count
 check_vrp_count() {
 	ROWS=$(wc -l < "$(rp_vrp_path)")
@@ -45,9 +44,11 @@ check_vrp_output() {
 	DIFF="$VRP_DIR/diff.txt"
 	mkdir -p "$VRP_DIR"
 
+	touch "$EXPECTED"
 	for i in "$@"; do
 		echo "$i" >> "$EXPECTED"
 	done
+
 	# Lucky: All supported RPs print the same first 3 columns,
 	# so there's no need for a callback.
 	tail -n +2 "$(rp_vrp_path)" |
@@ -58,7 +59,7 @@ check_vrp_output() {
 		|| fail "Unexpected VRPs; see $VRP_DIR"
 }
 
-# Checks the RP's output logfile contains a line that matches $3 regex string.
+# Checks the RP's logfile contains a line that matches the $3 regex string.
 # Needs work, because it currently only supports Fort.
 # $1: file to grep in
 # $2: grep flags
@@ -70,7 +71,7 @@ check_output() {
 	fi
 
 	grep -q $2 -- "$3" "$SANDBOX/$1" \
-		|| fail "$1 does not contain '$3'"
+		|| fail "$SANDBOX/$1 does not contain '$3'"
 }
 
 # Checks the Apache server received the $@ sequence of requests (and nothing
@@ -83,10 +84,12 @@ check_http_requests() {
 	DIFF="$APACHE_DIR/diff.txt"
 	mkdir -p "$APACHE_DIR"
 
-	cp "$APACHE_REQLOG" "$ACTUAL"
+	touch "$EXPECTED"
 	for i in "$@"; do
 		echo "$i" >> "$EXPECTED"
 	done
+
+	cp "$APACHE_REQLOG" "$ACTUAL"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected Apache request sequence; see $APACHE_DIR"
@@ -102,10 +105,12 @@ check_rsync_requests() {
 	DIFF="$RSYNC_DIR/diff.txt"
 	mkdir -p "$RSYNC_DIR"
 
-	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
+	touch "$EXPECTED"
 	for i in "$@"; do
 		echo "rsync on $i from localhost" >> "$EXPECTED"
 	done
+
+	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected rsync request sequence; see $RSYNC_DIR"

@@ -41,20 +41,19 @@ run_rp_default
 # Step 3: Check the results.
 
 # Here's a very typical check that should probably be defined for all tests:
-# Check the RP's output VRP file lists the expected VRPs.
+# Verify the RP's output VRP file lists the expected VRPs.
 check_vrp_output \
 	"101::/16-16 => AS1234" \
 	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \
 	"1.2.0.0/16-16 => AS1234"
 
-# Check the RP made the logical sequence of HTTP requests.
+# Check the RP made the logical sequence of HTTP requests:
 check_http_requests \
 	"/rrdp/ta.cer 200" \
 	"/rrdp/notification.xml 200" \
 	"/rrdp/notification.xml.snapshot 200"
 
-# This is how you'd check the equivalent logical sequence of rysnc requests.
-# (Since the RP will not have to fall back to rsync at any point, no requests
-# are meant to be made here.)
-#check_rsync_requests "rpki/"
+# Check the RP made the logical sequence of rsync requests
+# (In this case, that would be none):
+check_rsync_requests
