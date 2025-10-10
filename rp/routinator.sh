@@ -2,11 +2,8 @@
 
 export RP_BIN_DEFAULT="routinator"
 export RP_EV="ROUTINATOR"
+export RP_TEST="-V"
 export MEMCHECK_DEFAULT=0
-
-rp_test() {
-	$RP_BIN -V > /dev/null
-}
 
 rp_run() {
 	$VALGRIND $RP_BIN \

@@ -2,11 +2,8 @@
 
 export RP_BIN_DEFAULT="rpki-client"
 export RP_EV="RPKI_CLIENT"
+export RP_TEST="-V"
 export MEMCHECK_DEFAULT=1
-
-rp_test() {
-	$RP_BIN -V 2> /dev/null
-}
 
 rp_run() {
 	mkdir -p "$SANDBOX/outputdir"

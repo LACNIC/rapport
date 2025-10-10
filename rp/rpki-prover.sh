@@ -2,11 +2,8 @@
 
 export RP_BIN_DEFAULT="rpki-prover"
 export RP_EV="RPKI_PROVER"
+export RP_TEST="--version"
 export MEMCHECK_DEFAULT=0
-
-rp_test() {
-	$RP_BIN --version > /dev/null
-}
 
 rp_run() {
 	$VALGRIND $RP_BIN \

@@ -11,14 +11,13 @@ export RP_BIN_DEFAULT="fort"
 # Name of the environment variable that overrides $RP_BIN_DEFAULT.
 export RP_EV="FORT"
 
+# `$RP_BIN $RP_TEST` will be invoked to check the binary's existence.
+# $RP_TEST must be a flag that causes the RP to return zero as soon as possible.
+export RP_TEST="-V"
+
 # $MEMCHECK's default value. (See the README.)
 export MEMCHECK_DEFAULT=1
 
-# Will be invoked to check the binary's existence.
-# Must cause the RP to return zero and exit as soon as possible.
-rp_test() {
-	$RP_BIN -V > /dev/null
-}
 
 # Typical, common, single-run RP invocation.
 rp_run() {

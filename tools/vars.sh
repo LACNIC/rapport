@@ -26,4 +26,4 @@ fi
 check_exists "$BARRY --help" "BARRY"
 check_exists "$APACHE2 -v" "APACHE2"
 check_exists "$RSYNC --help" "RSYNC"
-check_exists rp_test "$RP_EV"
+check_exists "$RP_BIN $RP_TEST" "$RP_EV"
