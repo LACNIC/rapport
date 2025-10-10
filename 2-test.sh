@@ -30,10 +30,7 @@ case "$RP" in
 esac
 
 . rp/"$RP".sh
-. tools/vars.sh
-if [ $? -ne 0 ]; then
-	exit 1
-fi
+. tools/vars.sh || exit 1
 tools/cleanup-sandbox.sh
 
 export APACHE_REQLOG="sandbox/apache2/logs/8443.log"
