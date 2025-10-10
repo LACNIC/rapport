@@ -1,7 +1,7 @@
 #!/bin/sh
 
 check_exists() {
-	$1 > /dev/null
+	$1 > /dev/null 2> /dev/null
 	if [ $? -ne 0 ]; then
 		echo "'$1' returns nonzero."
 		echo "Please adjust the '$2' environment variable."
