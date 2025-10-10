@@ -40,10 +40,14 @@ check_exists "$RP_BIN $RP_TEST" "$RP_EV"
 if [ -z "$MEMCHECK" ]; then
 	MEMCHECK="$MEMCHECK_DEFAULT"
 fi
-# Note, if you set MEMCHECK=0 and override VALGRIND in the environment,
-# you'll be able to define a custom container.
 if [ "$MEMCHECK" -ne 0 ]; then
-	export VALGRIND="valgrind --error-exitcode=1 --leak-check=full \
+	if [ -z "$VALGRIND" ]; then
+		VALGRIND=valgrind
+	fi
+	check_exists "$VALGRIND --help" "VALGRIND"
+	export VALGRIND="$VALGRIND --error-exitcode=1 --leak-check=full \
 		--show-leak-kinds=all --errors-for-leak-kinds=all \
 		--track-origins=yes"
+else
+	export VALGRIND=""
 fi

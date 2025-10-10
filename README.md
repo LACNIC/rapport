@@ -129,3 +129,7 @@ Memory leak checks are only useful in test runs involving RPs written in memory-
 - rpki-prover: 0
 
 If you exclude memory leak checks, you can ditch the `valgrind` dependency.
+
+### `$VALGRIND`
+
+Valgrind's equivalent to [`$FORT`](#fort). Optional; defaults to `valgrind`.
