@@ -11,6 +11,7 @@ rp_run() {
 		--no-rir-tals --extra-tals-dir "$SANDBOX/tal" \
 		--log-repository-issues --logfile "$SANDBOX/$RP.log" \
 		--rsync-command "$RSYNC" \
+		--allow-dubious-hosts \
 		vrps \
 		> "$SANDBOX/vrps.csv" 2> "$SANDBOX/stderr.txt"
 }
