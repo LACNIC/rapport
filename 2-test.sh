@@ -29,23 +29,9 @@ case "$RP" in
 		;;
 esac
 
-. rp/"$RP".sh
+. rp/$RP.sh
 . tools/vars.sh || exit 1
 tools/cleanup-sandbox.sh
-
-export APACHE_REQLOG="sandbox/apache2/logs/8443.log"
-export RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
-
-if [ -z "$MEMCHECK" ]; then
-	MEMCHECK="$MEMCHECK_DEFAULT"
-fi
-# Note, if you set MEMCHECK=0 and override VALGRIND in the environment,
-# you'll be able to define a custom container.
-if [ "$MEMCHECK" -ne 0 ]; then
-	export VALGRIND="valgrind --error-exitcode=1 --leak-check=full \
-		--show-leak-kinds=all --errors-for-leak-kinds=all \
-		--track-origins=yes"
-fi
 
 NTESTS=0
 NFAILS=0
@@ -72,8 +58,6 @@ done
 
 tools/rsyncd-stop.sh
 tools/apache2-stop.sh
-
-########################################################################
 
 echo ""
 echo "Successes: $((NTESTS-NFAILS))"
