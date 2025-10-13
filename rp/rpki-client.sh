@@ -11,6 +11,7 @@ rp_run() {
 		-t "$SANDBOX/$TEST.tal" \
 		-d "$SANDBOX/workdir" \
 		-e "$RSYNC" \
+		"$@" \
 		"$SANDBOX/outputdir" \
 		> "$SANDBOX/$RP.log" 2>&1
 }

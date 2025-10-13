@@ -13,6 +13,7 @@ rp_run() {
 		--rpki-root-directory "$SANDBOX/workdir" \
 		--rsync-client-path "$RSYNC" \
 		--log-level debug \
+		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1
 }
 

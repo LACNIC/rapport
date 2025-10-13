@@ -20,6 +20,7 @@ export MEMCHECK_DEFAULT=1
 
 
 # Typical, common, single-run RP invocation.
+# $@: Additional arguments
 rp_run() {
 	$VALGRIND $RP_BIN \
 		--mode standalone \
@@ -28,6 +29,7 @@ rp_run() {
 		--report "$SANDBOX/report.txt" \
 		--output.roa "$SANDBOX/vrps.csv" \
 		--rsync.program "$RSYNC" \
+		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1
 }
 

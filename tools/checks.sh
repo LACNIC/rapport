@@ -13,15 +13,16 @@ run_barry_default() {
 	$BARRY --rsync-path "sandbox/rsyncd/content" \
 		--rrdp-path "sandbox/apache2/content/rrdp" \
 		--keys "sandbox/keys" \
-		--print-objects "csv" \
+		-v --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
 		"$SRCDIR/$1" \
 		> "$SANDBOX/barry.txt" 2>&1 \
 		|| fail "Barry returned $?"
 }
 
+# $@: Additional arguments
 run_rp_default() {
-	rp_run || fail "$RP returned $?"
+	rp_run "$@" || fail "$RP returned $?"
 }
 
 # Checks the RP generated $1 VRPs.
