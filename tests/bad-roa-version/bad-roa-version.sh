@@ -3,8 +3,8 @@
 . tools/checks.sh
 . rp/$RP.sh
 
-run_barry_default "$TEST.rd"
-run_rp_default
+run_barry "$TEST.rd"
+run_rp
 
 check_vrp_count 0
 check_output "report.txt" -F "ROA's version (2) is nonzero."

@@ -29,13 +29,13 @@
 # Step 1: Generate the test repository.
 # I expect most tests will require a very similar single Barry invocation,
 # so I made this quick wrapper.
-run_barry_default "$TEST.rd"
+run_barry "$TEST.rd"
 
 
 # Step 2: Run the RP.
 # I expect most tests will require a very similar single RP invocation,
 # so I made this quick wrapper.
-run_rp_default
+run_rp
 
 
 # Step 3: Check the results.

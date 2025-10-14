@@ -9,19 +9,23 @@ fail() {
 }
 
 # $1: Name of the rd
-run_barry_default() {
+# $2, $3, $4...: Additional arguments for Barry
+run_barry() {
+	RD="$1"
+	shift
 	$BARRY --rsync-path "sandbox/rsyncd/content" \
 		--rrdp-path "sandbox/apache2/content/rrdp" \
 		--keys "sandbox/keys" \
-		-v --print-objects "csv" \
+		-vv --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
-		"$SRCDIR/$1" \
+		"$@" \
+		"$SRCDIR/$RD" \
 		> "$SANDBOX/barry.txt" 2>&1 \
-		|| fail "Barry returned $?"
+		|| fail "Barry returned $?; see $SANDBOX/barry.txt"
 }
 
 # $@: Additional arguments
-run_rp_default() {
+run_rp() {
 	rp_run "$@" || fail "$RP returned $?"
 }
 

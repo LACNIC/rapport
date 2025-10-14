@@ -25,8 +25,8 @@ case "$RP" in
 		;;
 esac
 
-run_barry_default "$TEST.rd"
-run_rp_default $MAXDEPTH_ARG
+run_barry "$TEST.rd"
+run_rp $MAXDEPTH_ARG
 
 check_vrp_output \
 	"1.0.0.0/8-8 => AS1234" \
