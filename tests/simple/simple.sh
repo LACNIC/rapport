@@ -50,9 +50,9 @@ check_vrp_output \
 
 # Check the RP made the logical sequence of HTTP requests:
 check_http_requests \
-	"/rrdp/ta.cer 200" \
-	"/rrdp/notification.xml 200" \
-	"/rrdp/notification.xml.snapshot 200"
+	"/$TEST/ta.cer 200" \
+	"/$TEST/notification.xml 200" \
+	"/$TEST/notification.xml.snapshot 200"
 
 # Check the RP made the logical sequence of rsync requests
 # (In this case, that would be none):

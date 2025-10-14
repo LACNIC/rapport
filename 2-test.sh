@@ -48,8 +48,8 @@ for T in $TESTS; do
 
 	rm -rf sandbox/apache2/content/*
 	rm -rf sandbox/rsyncd/content/*
-	echo > "$APACHE_REQLOG"
-	echo > "$RSYNC_REQLOG"
+	:> "$APACHE_REQLOG"
+	:> "$RSYNC_REQLOG"
 	mkdir -p "$SANDBOX/workdir"
 
 	$T/$TEST.sh || NFAILS=$((NFAILS+1))

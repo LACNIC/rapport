@@ -13,8 +13,10 @@ fail() {
 run_barry() {
 	RD="$1"
 	shift
-	$BARRY --rsync-path "sandbox/rsyncd/content" \
-		--rrdp-path "sandbox/apache2/content/rrdp" \
+	$BARRY	--rsync-uri "rsync://localhost:8873/rpki/$TEST" \
+		--rsync-path "sandbox/rsyncd/content/$TEST" \
+		--rrdp-uri "https://localhost:8443/$TEST" \
+		--rrdp-path "sandbox/apache2/content/$TEST" \
 		--keys "sandbox/keys" \
 		-vv --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
@@ -49,7 +51,7 @@ check_vrp_output() {
 	DIFF="$VRP_DIR/diff.txt"
 	mkdir -p "$VRP_DIR"
 
-	touch "$EXPECTED"
+	:> "$EXPECTED"
 	for i in "$@"; do
 		echo "$i" >> "$EXPECTED"
 	done
@@ -89,12 +91,13 @@ check_http_requests() {
 	DIFF="$APACHE_DIR/diff.txt"
 	mkdir -p "$APACHE_DIR"
 
-	touch "$EXPECTED"
+	:> "$EXPECTED"
 	for i in "$@"; do
 		echo "$i" >> "$EXPECTED"
 	done
 
 	cp "$APACHE_REQLOG" "$ACTUAL"
+	:> "$APACHE_REQLOG"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected Apache request sequence; see $APACHE_DIR"
@@ -110,13 +113,46 @@ check_rsync_requests() {
 	DIFF="$RSYNC_DIR/diff.txt"
 	mkdir -p "$RSYNC_DIR"
 
-	touch "$EXPECTED"
+	:> "$EXPECTED"
 	for i in "$@"; do
 		echo "rsync on $i from localhost" >> "$EXPECTED"
 	done
 
 	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
+	:> "$RSYNC_REQLOG"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected rsync request sequence; see $RSYNC_DIR"
+}
+
+# $@: Same as run_barry
+create_delta() {
+	sleep 1 # Wait out HTTP IMS. TODO May be unnecessary
+
+	APACHEDIR="sandbox/apache2/content/$TEST"
+	TMPDIR="sandbox/tmp/$TEST"
+
+	rm -r "sandbox/rsyncd/content/$TEST"
+
+	mkdir -p "$TMPDIR"
+	mv "$APACHEDIR" "$TMPDIR/old"
+
+	run_barry "$@"
+	mv "$APACHEDIR" "$TMPDIR/new"
+
+	mkdir "$APACHEDIR"
+	$BARRY-delta \
+		--old.notification	"$TMPDIR/old/notification.xml" \
+		--old.snapshot		"$TMPDIR/old/notification.xml.snapshot" \
+		--new.notification	"$TMPDIR/new/notification.xml" \
+		--new.snapshot		"$TMPDIR/new/notification.xml.snapshot" \
+		--output.notification	"$APACHEDIR/notification.xml" \
+		--output.delta.path	"$APACHEDIR/delta-$1.xml" \
+		--output.delta.uri	"https://localhost:8443/$TEST/delta-$1.xml" \
+		> "$SANDBOX/barry-delta.txt" 2>&1 \
+		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
+
+	mv "$TMPDIR/new/notification.xml.snapshot" "$APACHEDIR"
+	mv "$TMPDIR/new/ta.cer" "$APACHEDIR"
+	rm -r "$TMPDIR"
 }
