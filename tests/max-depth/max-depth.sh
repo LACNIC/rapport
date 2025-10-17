@@ -11,17 +11,14 @@ case "$RP" in
 		MAXDEPTH_ARG="--max-ca-depth 10"
 		;;
 	"rpki-client")
-		echo "Error: rpki-client seems to lack a maxdepth arg?"
-		# It probably has a limit, but it's not configurable.
-		# TODO Worry about it later.
-		exit 1
+		# It has a limit of 12, but it's not configurable.
+		skip "rpki-client seems to lack a maxdepth arg"
 		;;
 	"rpki-prover")
 		MAXDEPTH_ARG="--max-certificate-path-depth 10"
 		;;
 	*)
-		echo "Test '$TEST' does not support $RP" 1>&2
-		exit 1
+		fail "Test '$TEST' does not support $RP"
 		;;
 esac
 

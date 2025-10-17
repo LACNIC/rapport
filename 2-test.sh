@@ -33,8 +33,10 @@ esac
 . tools/vars.sh || exit 1
 tools/cleanup-sandbox.sh
 
-NTESTS=0
+NSUCCESSES=0
 NFAILS=0
+NSKIPS=0
+NUNKNOWNS=0
 
 tools/apache2-start.sh
 tools/rsyncd-start.sh
@@ -52,13 +54,22 @@ for T in $TESTS; do
 	:> "$RSYNC_REQLOG"
 	mkdir -p "$SANDBOX/workdir"
 
-	$T/$TEST.sh || NFAILS=$((NFAILS+1))
-	NTESTS=$((NTESTS+1))
+	$T/$TEST.sh
+	case "$?" in
+	0)  NSUCCESSES=$((NSUCCESSES+1))  ;;
+	1)  NFAILS=$((NFAILS+1))          ;;
+	3)  NSKIPS=$((NSKIPS+1))          ;;
+	*)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;
+	esac
 done
 
 tools/rsyncd-stop.sh
 tools/apache2-stop.sh
 
 echo ""
-echo "Successes: $((NTESTS-NFAILS))"
+echo "Successes: $NSUCCESSES"
 echo "Failures : $NFAILS"
+echo "Skipped  : $NSKIPS"
+echo "Unknown  : $NUNKNOWNS"
+echo ""
+echo "Please remember that the test suite might be at fault for failures."

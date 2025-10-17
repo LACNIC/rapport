@@ -1,11 +1,15 @@
 #!/bin/sh
 
 fail() {
-	RESULT="$?"
-	if [ "$RESULT" -ne 0 ]; then
-		echo "$TEST: $1"
-		exit "$RESULT"
-	fi
+	echo "$TEST: $1" 1>&2
+	exit 1
+}
+
+# Use this result when the test does not apply to the RP.
+# It's neither a success nor a failure.
+skip() {
+	echo "$TEST skipped: $1"
+	exit 3
 }
 
 # $1: Name of the rd
