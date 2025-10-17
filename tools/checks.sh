@@ -70,19 +70,32 @@ check_vrp_output() {
 		|| fail "Unexpected VRPs; see $VRP_DIR"
 }
 
-# Checks the RP's logfile contains a line that matches the $3 regex string.
-# Needs work, because it currently only supports Fort.
+# Checks file $1 contains a line that matches the $3 regex string.
 # $1: file to grep in
 # $2: grep flags
 # $3: regex to search
 check_output() {
-	if [ "$RP" != "fort2" ]; then
-		# Haven't figured out how this is going to work for other RPs
-		return
-	fi
+	grep -q $2 -- "$3" "$1" || fail "$1 does not contain '$3'"
+}
 
-	grep -q $2 -- "$3" "$SANDBOX/$1" \
-		|| fail "$SANDBOX/$1 does not contain '$3'"
+# Checks the RP's report file contains the error message $3.
+# However, it only performs the check if the RP is $1.
+# $1: RP
+# $2: grep flags
+# $3: regex to search
+check_report() {
+	test "$RP" = "$1" || return 0
+	check_output $(rp_report_path) "$2" "$3"
+}
+
+# Checks the RP's logfile contains the error message $3.
+# However, it only performs the check if the RP is $1.
+# $1: RP
+# $2: grep flags
+# $3: regex to search
+check_logfile() {
+	test "$RP" = "$1" || return 0
+	check_output "$SANDBOX/$RP.log" "$2" "$3"
 }
 
 # Checks the Apache server received the $@ sequence of requests (and nothing

@@ -43,3 +43,9 @@ rp_tal_path() {
 rp_vrp_path() {
 	echo "$SANDBOX/vrps.csv"
 }
+
+# Echoes the location where rp_run() dropped the file listing the validation
+# errors.
+rp_report_path() {
+	echo "$SANDBOX/report.txt"
+}

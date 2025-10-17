@@ -24,3 +24,7 @@ rp_tal_path() {
 rp_vrp_path() {
 	echo "$SANDBOX/vrps.csv"
 }
+
+rp_report_path() {
+	echo "$SANDBOX/$RP.log"
+}

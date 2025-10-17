@@ -24,6 +24,10 @@ esac
 run_barry "$TEST.rd"
 run_rp $MAXDEPTH_ARG
 
+check_report fort2       -F "Certificate chain maximum depth exceeded."
+check_report rpki-client -F "maximum certificate chain depth exhausted"
+# TODO prover & routinator
+
 check_vrp_output \
 	"1.0.0.0/8-8 => AS1234" \
 	"100::/8-8 => AS1234" \

@@ -7,7 +7,11 @@ run_barry "$TEST.rd"
 run_rp
 
 check_vrp_count 0
-check_output "report.txt" -F "ROA's version (2) is nonzero."
+
+check_report fort2       -F "ROA's version (2) is nonzero."
+check_report rpki-client -F "unexpected version (expected 0, got 2)"
+# TODO prover & routinator
+
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \
