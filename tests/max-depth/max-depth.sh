@@ -5,17 +5,16 @@
 
 case "$RP" in
 	"fort2")
-		MAXDEPTH_ARG="--maximum-certificate-depth 10"
+		MAXDEPTH_ARG="--maximum-certificate-depth 13"
 		;;
 	"routinator")
-		MAXDEPTH_ARG="--max-ca-depth 10"
+		MAXDEPTH_ARG="--max-ca-depth 11"
 		;;
 	"rpki-client")
-		# It has a limit of 12, but it's not configurable.
-		skip "rpki-client seems to lack a maxdepth arg"
+		MAXDEPTH_ARG="" # Hardcoded
 		;;
 	"rpki-prover")
-		MAXDEPTH_ARG="--max-certificate-path-depth 10"
+		MAXDEPTH_ARG="--max-certificate-path-depth 12"
 		;;
 	*)
 		fail "Test '$TEST' does not support $RP"
@@ -36,6 +35,9 @@ check_vrp_output \
 	"202:202:202:100::/56-56 => AS1234" \
 	"202:202:202:201::/64-64 => AS1234" \
 	"202:202:202:202:100::/72-72 => AS1234" \
+	"202:202:202:202:201::/80-80 => AS1234" \
+	"202:202:202:202:202:100::/88-88 => AS1234" \
+	"202:202:202:202:202:201::/96-96 => AS1234" \
 	"2.1.0.0/16-16 => AS1234" \
 	"2.2.1.0/24-24 => AS1234" \
 	"2.2.2.1/32-32 => AS1234" \

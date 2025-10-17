@@ -13,7 +13,7 @@ mkdir -p "sandbox/rsyncd"
 mkdir -p "sandbox/tests"
 
 if [ -z "$(ls -A sandbox/keys)" ]; then    # "If sandbox/keys is empty"
-	for i in $(seq 0 30); do
+	for i in $(seq 0 40); do
 		echo "Creating sandbox/keys/$i.pem"
 		openssl genrsa -out "sandbox/keys/$i.pem" 2048
 	done
