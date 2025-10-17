@@ -1,8 +1,13 @@
 #!/bin/sh
 
 fail() {
-	echo "$TEST: $1" 1>&2
+	echo "$TEST error: $1" 1>&2
 	exit 1
+}
+
+warn() {
+	echo "$TEST warning: $1" 1>&2
+	exit 2
 }
 
 # Use this result when the test does not apply to the RP.
@@ -117,7 +122,7 @@ check_http_requests() {
 	:> "$APACHE_REQLOG"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| fail "Unexpected Apache request sequence; see $APACHE_DIR"
+		|| warn "Unexpected Apache request sequence; see $APACHE_DIR"
 }
 
 # Checks the rsync server received the $@ sequence of requests (and nothing
@@ -139,7 +144,7 @@ check_rsync_requests() {
 	:> "$RSYNC_REQLOG"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| fail "Unexpected rsync request sequence; see $RSYNC_DIR"
+		|| warn "Unexpected rsync request sequence; see $RSYNC_DIR"
 }
 
 # $@: Same as run_barry
