@@ -26,16 +26,16 @@ Sample commands are for Ubuntu.
 Create the RRDP HTTPS certificate:
 
 ```sh
-# Notice the 'localhost' commonName (CN)
+mkdir -p custom/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/C=AU/ST=Some-State/O=IWPL/CN=localhost" \
-	-keyout "tools/rpt.key" -out "tools/rpt.crt"
+	-keyout "custom/rpt.key" -out "custom/rpt.crt"
 ```
 
 Install the certificate (so the RP will trust it):
 
 ```sh
-sudo cp "tools/rpt.crt" "/usr/local/share/ca-certificates/"
+sudo cp "custom/rpt.crt" "/usr/local/share/ca-certificates/"
 sudo update-ca-certificates
 ```
 

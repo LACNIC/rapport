@@ -7,15 +7,15 @@ if [ -f "sandbox/rsyncd/rsyncd.pid" ]; then
 	kill $(cat "sandbox/rsyncd/rsyncd.pid")
 fi
 
-mkdir -p "sandbox/keys"
+mkdir -p "custom/keys"
 mkdir -p "sandbox/apache2"
 mkdir -p "sandbox/rsyncd"
 mkdir -p "sandbox/tests"
 
-if [ -z "$(ls -A sandbox/keys)" ]; then    # "If sandbox/keys is empty"
-	for i in $(seq 0 40); do
-		echo "Creating sandbox/keys/$i.pem"
-		openssl genrsa -out "sandbox/keys/$i.pem" 2048
+if [ ! -f "custom/keys/50.pem" ]; then
+	for i in $(seq 0 50); do
+		echo "Creating custom/keys/$i.pem"
+		openssl genrsa -out "custom/keys/$i.pem" 2048
 	done
 fi
 

@@ -26,7 +26,7 @@ run_barry() {
 		--rsync-path "sandbox/rsyncd/content/$TEST" \
 		--rrdp-uri "https://localhost:8443/$TEST" \
 		--rrdp-path "sandbox/apache2/content/$TEST" \
-		--keys "sandbox/keys" \
+		--keys "custom/keys" \
 		-vv --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
 		"$@" \
