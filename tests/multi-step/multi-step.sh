@@ -61,4 +61,5 @@ check_http_requests \
 	"/$TEST/ta.cer 404" \
 	"/$TEST/notification.xml 404"
 check_rsync_requests \
+	"rpki/multi-step/ta.cer" \
 	"rpki/"

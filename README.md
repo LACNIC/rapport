@@ -26,6 +26,7 @@ Sample commands are for Ubuntu.
 Create the RRDP HTTPS certificate:
 
 ```sh
+cd /path/to/where/you/cloned/rapport
 mkdir -p custom/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-subj "/C=AU/ST=Some-State/O=IWPL/CN=localhost" \
@@ -81,7 +82,7 @@ If there's an open source implementation I've missed, let me know. If you can pr
 
 ### `$FORT`
 
-The string that can be used to invoke Fort 2's binary. It's optional; defaults to `fort`.
+The string that can be used to invoke Fort 2's binary. It's optional; defaults to `fort2`.
 
 You can override this to point to an installation outside of `$PATH`. In particular, I use it it to test Fort's development builds:
 

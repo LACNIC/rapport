@@ -10,6 +10,7 @@ rp_run() {
 		-r "$SANDBOX/workdir" \
 		--no-rir-tals --extra-tals-dir "$SANDBOX/tal" \
 		--log-repository-issues --logfile "$SANDBOX/$RP.log" \
+		-vv \
 		--rsync-command "$RSYNC" \
 		--allow-dubious-hosts \
 		"$@" \
