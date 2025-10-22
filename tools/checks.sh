@@ -1,53 +1,20 @@
 #!/bin/sh
 
 fail() {
-	echo "$TEST error: $1" 1>&2
+	echo "Test '$TEST' error: $1" 1>&2
 	exit 1
 }
 
 warn() {
-	echo "$TEST warning: $1" 1>&2
+	echo "Test '$TEST' warning: $1" 1>&2
 	exit 2
 }
 
 # Use this result when the test does not apply to the RP.
 # It's neither a success nor a failure.
 skip() {
-	echo "$TEST skipped: $1"
+	echo "Test '$TEST' skipped: $1"
 	exit 3
-}
-
-# $1: Name of the rd
-# $2, $3, $4...: Additional arguments for Barry
-run_barry() {
-	RD="$1"
-	shift
-	$BARRY	--rsync-uri "rsync://localhost:8873/rpki/$TEST" \
-		--rsync-path "sandbox/rsyncd/content/$TEST" \
-		--rrdp-uri "https://localhost:8443/$TEST" \
-		--rrdp-path "sandbox/apache2/content/$TEST" \
-		--keys "custom/keys" \
-		-vv --print-objects "csv" \
-		--tal-path "$(rp_tal_path)" \
-		"$@" \
-		"$SRCDIR/$RD" \
-		> "$SANDBOX/barry.txt" 2>&1 \
-		|| fail "Barry returned $?; see $SANDBOX/barry.txt"
-}
-
-# $@: Additional arguments
-run_rp() {
-	rp_run "$@" || fail "$RP returned $?"
-}
-
-# Checks the RP generated $1 VRPs.
-# This test is redundant if you also do check_vrp_output().
-# $1: Expected VRP count
-check_vrp_count() {
-	ROWS=$(wc -l < "$(rp_vrp_path)")
-	ACTUAL=$((ROWS-1))
-	test "$1" -eq "$ACTUAL" \
-		|| fail "Expected $1 VRP(s), $RP produced $ACTUAL"
 }
 
 # Checks the RP generated the $@ VRPs.
@@ -67,40 +34,12 @@ check_vrp_output() {
 
 	# Lucky: All supported RPs print the same first 3 columns,
 	# so there's no need for a callback.
-	tail -n +2 "$(rp_vrp_path)" |
+	tail -n +2 "$SANDBOX/vrps.csv" |
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
 		sort > "$ACTUAL"
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected VRPs; see $VRP_DIR"
-}
-
-# Checks file $1 contains a line that matches the $3 regex string.
-# $1: file to grep in
-# $2: grep flags
-# $3: regex to search
-check_output() {
-	grep -q $2 -- "$3" "$1" || fail "$1 does not contain '$3'"
-}
-
-# Checks the RP's report file contains the error message $3.
-# However, it only performs the check if the RP is $1.
-# $1: RP
-# $2: grep flags
-# $3: regex to search
-check_report() {
-	test "$RP" = "$1" || return 0
-	check_output $(rp_report_path) "$2" "$3"
-}
-
-# Checks the RP's logfile contains the error message $3.
-# However, it only performs the check if the RP is $1.
-# $1: RP
-# $2: grep flags
-# $3: regex to search
-check_logfile() {
-	test "$RP" = "$1" || return 0
-	check_output "$SANDBOX/$RP.log" "$2" "$3"
 }
 
 # Checks the Apache server received the $@ sequence of requests (and nothing
@@ -145,36 +84,4 @@ check_rsync_requests() {
 
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| warn "Unexpected rsync request sequence; see $RSYNC_DIR"
-}
-
-# $@: Same as run_barry
-create_delta() {
-	sleep 1 # Wait out HTTP IMS. TODO May be unnecessary
-
-	APACHEDIR="sandbox/apache2/content/$TEST"
-	TMPDIR="sandbox/tmp/$TEST"
-
-	rm -r "sandbox/rsyncd/content/$TEST"
-
-	mkdir -p "$TMPDIR"
-	mv "$APACHEDIR" "$TMPDIR/old"
-
-	run_barry "$@"
-	mv "$APACHEDIR" "$TMPDIR/new"
-
-	mkdir "$APACHEDIR"
-	$BARRY-delta \
-		--old.notification	"$TMPDIR/old/notification.xml" \
-		--old.snapshot		"$TMPDIR/old/notification.xml.snapshot" \
-		--new.notification	"$TMPDIR/new/notification.xml" \
-		--new.snapshot		"$TMPDIR/new/notification.xml.snapshot" \
-		--output.notification	"$APACHEDIR/notification.xml" \
-		--output.delta.path	"$APACHEDIR/delta-$1.xml" \
-		--output.delta.uri	"https://localhost:8443/$TEST/delta-$1.xml" \
-		> "$SANDBOX/barry-delta.txt" 2>&1 \
-		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
-
-	mv "$TMPDIR/new/notification.xml.snapshot" "$APACHEDIR"
-	mv "$TMPDIR/new/ta.cer" "$APACHEDIR"
-	rm -r "$TMPDIR"
 }

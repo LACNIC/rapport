@@ -3,9 +3,6 @@
 # Among a few others, all tests inherit the following environment variables:
 #
 # - $TEST: Name of the test (in this case, "simple")
-# - $SRCDIR: Path to the test's source directory ("tests/simple").
-#   This directory contains all the (constant) files that will build and run
-#   the test (usually this script and likely a Barry RD).
 # - $SANDBOX: Path to the test's sandbox directory ("sandbox/tests/simple"),
 #   which is supposed to be its workspace. Here, the test will dump needed
 #   temporal files and output, and is the place the user needs to be directed
@@ -16,8 +13,6 @@
 # Import common checking functions.
 # (Recall that this script is being run from ../../.)
 . tools/checks.sh
-# Import the RP's callbacks (which makes this portable).
-. rp/$RP.sh
 
 
 # Test scripts (like this one) need to return nonzero if an error was detected.
@@ -26,19 +21,14 @@
 # `|| fail "error message"`.
 
 
-# Step 1: Generate the test repository.
-# I expect most tests will require a very similar single Barry invocation,
-# so I made this quick wrapper.
-run_barry "$TEST.rd"
+# ==== Run the RP ====
+$RP_BIN	-c "routinator.conf" -vv vrps \
+	> "$SANDBOX/vrps.csv" \
+	2> "$SANDBOX/stderr.txt" \
+	|| fail "Routinator returned $?. (See sandbox/tests/simple/routinator.log)"
 
 
-# Step 2: Run the RP.
-# I expect most tests will require a very similar single RP invocation,
-# so I made this quick wrapper.
-run_rp
-
-
-# Step 3: Check the results.
+# ==== Check the results ====
 
 # Here's a very typical check that should probably be defined for all tests:
 # Verify the RP's output VRP file lists the expected VRPs.

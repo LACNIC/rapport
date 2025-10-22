@@ -1,30 +1,19 @@
 #!/bin/sh
 
+# Kill Apache, if it was left hanging in a previous run.
 if [ -f "sandbox/apache2/apache2.pid" ]; then
 	kill $(cat "sandbox/apache2/apache2.pid")
 fi
+# Kill rsync, if it was left hanging in a previous run.
 if [ -f "sandbox/rsyncd/rsyncd.pid" ]; then
 	kill $(cat "sandbox/rsyncd/rsyncd.pid")
 fi
 
-mkdir -p "custom/keys"
-mkdir -p "sandbox/apache2"
-mkdir -p "sandbox/rsyncd"
-mkdir -p "sandbox/tests"
-
-if [ ! -f "custom/keys/50.pem" ]; then
-	for i in $(seq 0 50); do
-		echo "Creating custom/keys/$i.pem"
-		openssl genrsa -out "custom/keys/$i.pem" 2048
-	done
-fi
-
-rm -rf sandbox/apache2/*
-rm -rf sandbox/rsyncd/*
-rm -rf sandbox/tests/*
-
-cp "tools/apache2.conf" "sandbox/apache2"
-mkdir -p "sandbox/apache2/content"
-mkdir -p "sandbox/apache2/logs"
-cp "tools/rsyncd.conf" "sandbox/rsyncd"
-mkdir -p "sandbox/rsyncd/content"
+rm -fr "sandbox/apache2/logs"
+rm -f  "sandbox/rsyncd/rsyncd.log"
+rm -fr "sandbox/tests/simple/apache2"
+rm -f  "sandbox/tests/simple/routinator.log"
+rm -f  "sandbox/tests/simple/stderr.txt"
+rm -fr "sandbox/tests/simple/vrp"
+rm -f  "sandbox/tests/simple/vrps.csv"
+rm -fr "sandbox/tests/simple/workdir"

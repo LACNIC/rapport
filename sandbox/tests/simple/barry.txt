@@ -1,0 +1,417 @@
+ta.cer,type,File Type,cer
+ta.cer,uri,C String,rsync://localhost:8873/rpki/simple/ta.cer
+ta.cer,path,C String,ta.cer
+ta.cer,rpp.uri,C String,rsync://localhost:8873/rpki/simple/ta
+ta.cer,rpp.path,C String,ta
+ta.cer,rpp.notification,C String,https://localhost:8443/simple/notification.xml
+ta.cer,obj.tbsCertificate.version,INTEGER,0x02
+ta.cer,obj.tbsCertificate.serialNumber,INTEGER,0x00
+ta.cer,obj.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.cer,obj.tbsCertificate.signature.parameters,ANY,0x0500
+ta.cer,obj.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+ta.cer,obj.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+ta.cer,obj.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+ta.cer,obj.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,ta.cer
+ta.cer,obj.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+ta.cer,obj.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+ta.cer,obj.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100B964D61B133BAC4C62D5D04D6CFB081097AD29D2EED1D34D798076FD4480E52D82FB7E0FAC19D0413DFDF2227FF5E0812DF358034C3D546C8996F8E20F42B723B70712BF959ED6FADB8AA293B02D5E5BDF8D1E965BD9BEA0FA68E30ECC044ABBF40AAEFE9BA470B85960863BCEBE7AE938B42302CFD45F2AC1478389B37642EC5D31C5004817784CB66AC7BB5AAF1267A18B13EAB9F42F829D8824A78F3E8ED4F82BB72EC8F10803F971282C51A4C442DD965C4ED171EA3F408F09BE2247BDC4D7115018FA4ADA993390230141E06E519E6F8E670E143EAE82B6D985C1750795DCB425830B5BEC68A69EE523179F42439295D8904887F759EB0D74A1CD4B1FA30203010001
+ta.cer,obj.tbsCertificate.extensions,Extensions,"{ bc=bc, ski=ski, ku=ku, sia=sia, cp=cp, ip=ip, asn=asn }"
+ta.cer,obj.tbsCertificate.extensions.bc.extnID,OBJECT IDENTIFIER,2.5.29.19 (X509v3 Basic Constraints)
+ta.cer,obj.tbsCertificate.extensions.bc.critical,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.bc.extnValue.cA,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.bc.extnValue.pathLenConstraint,INTEGER,
+ta.cer,obj.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+ta.cer,obj.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+ta.cer,obj.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0xED7F48BD2E978D7315FD2DB0808C26E73182330A
+ta.cer,obj.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+ta.cer,obj.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x06/7
+ta.cer,obj.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+ta.cer,obj.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.5 (CA Repository)
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.10 (RPKI Manifest)
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.type,GeneralName type,uniformResourceIdentifier
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta/ta.mft
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.13 (RPKI Notify)
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessLocation.type,GeneralName type,uniformResourceIdentifier
+ta.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessLocation.value,IA5String,https://localhost:8443/simple/notification.xml
+ta.cer,obj.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+ta.cer,obj.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+ta.cer,obj.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ [ 0.0.0.0/0 ], [ ::/0 ] ]"
+ta.cer,obj.tbsCertificate.extensions.asn.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.8 (sbgp-autonomousSysNum)
+ta.cer,obj.tbsCertificate.extensions.asn.critical,BOOLEAN,true
+ta.cer,obj.tbsCertificate.extensions.asn.extnValue.asnum,AS Resources,[ 0x00-0x00FFFFFFFF ]
+ta.cer,obj.tbsCertificate.extensions.asn.extnValue.rdi,AS Resources,
+ta.cer,obj.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.cer,obj.signatureAlgorithm.parameters,ANY,0x0500
+ta.cer,obj.signature,BIT STRING,0x99AD4B93EC680AB8BF79885347D7396943ABA770B71219B67186DF3FE2ADEC077825B15C55E727592AA25E088EA113F277D25E6F089A03CD3B742D6669EEA1EDCF33959DC86CEDBE926C825E80C7F092E9118D931810D3A476BC4898715B980266EE94215EC2EE5D3293807218F3336299568EF01CE69FB1748A79EDAC63C35C987C831846C06EEE22FCE908968F567BA6F552D35D2A6F59F4E991F66C72246093FF0A968587E5AFAAB3BDEDBE3D016A4A078ECBBD7B0C75999534163CB05FDA7F041016CEA1F6CC0F9C5F4AE62811E2D300D976B08B599341CA8B44183AD63B450F163091AB2055A4CDCFCEE2DF0DAD5A3C2E67E3CD420722DC2C9CD9C3068E
+A.cer,type,File Type,cer
+A.cer,uri,C String,rsync://localhost:8873/rpki/simple/ta/A.cer
+A.cer,path,C String,ta/A.cer
+A.cer,rpp.uri,C String,rsync://localhost:8873/rpki/simple/A
+A.cer,rpp.path,C String,A
+A.cer,rpp.notification,C String,https://localhost:8443/simple/notification.xml
+A.cer,obj.tbsCertificate.version,INTEGER,0x02
+A.cer,obj.tbsCertificate.serialNumber,INTEGER,0x01
+A.cer,obj.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.cer,obj.tbsCertificate.signature.parameters,ANY,0x0500
+A.cer,obj.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+A.cer,obj.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+A.cer,obj.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+A.cer,obj.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,A.cer
+A.cer,obj.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A.cer,obj.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+A.cer,obj.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100F218D8AA0B412287A5E9D18BF4BD19D5D671FF20D6CC4633CFAEBC6F4D85E8564F91B1DEF18A26C2FDE1C71301213E0CC89D8D7DD05EA875DBEA0028B52C5139BEB29AA49614F2F1BC98F6320B80C44D778A4EC9E3F648321AB07357035053F47E3DE918243B7B50A2378FF70E419765B19CC87995CBF7A30306481BD34A3FE981C415092F7F1EF052CE7CCB02C0364923FEE55E968E1759CEBD9F4427DE1598F12C55066B2506B41A03C90AB0586E1425EF60765DE1E9A34FADCC072692C559B5F04AAD155957904970D7A9AEB6DAD6B4201D73980B5AC57C796035FE03A8BFC89E4F28E147CA1651B325B0366A5E33683A64AE844572619153958A269776250203010001
+A.cer,obj.tbsCertificate.extensions,Extensions,"{ bc=bc, ski=ski, aki=aki, ku=ku, crldp=crldp, aia=aia, sia=sia, cp=cp, ip=ip, asn=asn }"
+A.cer,obj.tbsCertificate.extensions.bc.extnID,OBJECT IDENTIFIER,2.5.29.19 (X509v3 Basic Constraints)
+A.cer,obj.tbsCertificate.extensions.bc.critical,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.bc.extnValue.cA,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.bc.extnValue.pathLenConstraint,INTEGER,
+A.cer,obj.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+A.cer,obj.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+A.cer,obj.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0x056091413121EA1F1E86E581D30315C071389D41
+A.cer,obj.tbsCertificate.extensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+A.cer,obj.tbsCertificate.extensions.aki.critical,BOOLEAN,false
+A.cer,obj.tbsCertificate.extensions.aki.extnValue.keyIdentifier,OCTET STRING,0xED7F48BD2E978D7315FD2DB0808C26E73182330A
+A.cer,obj.tbsCertificate.extensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+A.cer,obj.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+A.cer,obj.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x06/7
+A.cer,obj.tbsCertificate.extensions.crldp.extnID,OBJECT IDENTIFIER,2.5.29.31 (X509v3 CRL Distribution Points)
+A.cer,obj.tbsCertificate.extensions.crldp.critical,BOOLEAN,false
+A.cer,obj.tbsCertificate.extensions.aia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.1 (Authority Information Access)
+A.cer,obj.tbsCertificate.extensions.aia.critical,BOOLEAN,false
+A.cer,obj.tbsCertificate.extensions.aia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.2 (CA Issuers)
+A.cer,obj.tbsCertificate.extensions.aia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.cer,obj.tbsCertificate.extensions.aia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta.cer
+A.cer,obj.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+A.cer,obj.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.5 (CA Repository)
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/A
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.10 (RPKI Manifest)
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/A/A.mft
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.13 (RPKI Notify)
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.cer,obj.tbsCertificate.extensions.sia.extnValue.2.accessLocation.value,IA5String,https://localhost:8443/simple/notification.xml
+A.cer,obj.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+A.cer,obj.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+A.cer,obj.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ [ 1.0.0.0/8 ], [ 100::/8 ] ]"
+A.cer,obj.tbsCertificate.extensions.asn.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.8 (sbgp-autonomousSysNum)
+A.cer,obj.tbsCertificate.extensions.asn.critical,BOOLEAN,true
+A.cer,obj.tbsCertificate.extensions.asn.extnValue.asnum,AS Resources,[ 0x01000000-0x01FFFFFF ]
+A.cer,obj.tbsCertificate.extensions.asn.extnValue.rdi,AS Resources,
+A.cer,obj.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.cer,obj.signatureAlgorithm.parameters,ANY,0x0500
+A.cer,obj.signature,BIT STRING,0x4782BF1031826E56A258F284A5CB62D4EB0C7C13F5C23FBD44CE8415169A2101CF9363529A2D2675F7DB651D0B806C93EEFBE64133F4E9607D1EDAFA95E1A53764C02B6360087290551D4500C7D743E46677F1499405FE5B7E9EB62E5CEA115D8770E3A282CBCDBBB886D9D107350FAFC64E6421AA10D52D7A040F3CF5A3020409EF9EC082343FCD3A21765D10104CC5DC60A2C8BE5CEF62393BB37072F7420A1793594D00BF4F541EEE760F49B4C7C0C0BE636F9E1B9CFC739ADB23C0E230FF78FC8A753CB58925DAA218CE7E7E3230C9F7775D2B38D09D420155CDB198C53CD3AC322C42AECEF43D33395F45746FE48B66E40F22997DBA10BB23199CAAB804
+A1.roa,type,File Type,roa
+A1.roa,uri,C String,rsync://localhost:8873/rpki/simple/A/A1.roa
+A1.roa,path,C String,A/A1.roa
+A1.roa,obj.contentType,OBJECT IDENTIFIER,1.2.840.113549.1.7.2 (pkcs7-signedData)
+A1.roa,obj.content.version,INTEGER,0x03
+A1.roa,obj.content.encapContentInfo.eContentType,OBJECT IDENTIFIER,1.2.840.113549.1.9.16.1.24 (id-ct-routeOriginAuthz)
+A1.roa,obj.content.encapContentInfo.eContent,ANY,0x3024020204D2301E300D04020001300730050303000101300D04020002300730050303000101
+A1.roa,obj.content.encapContentInfo.eContent.version,INTEGER,0x00
+A1.roa,obj.content.encapContentInfo.eContent.asId,INTEGER,0x04D2
+A1.roa,obj.content.encapContentInfo.eContent.ipAddrBlocks,IP Resources (ROA),"[ [ 1.1.0.0/16 ], [ 101::/16 ] ]"
+A1.roa,obj.content.certificates.0.tbsCertificate.version,INTEGER,0x02
+A1.roa,obj.content.certificates.0.tbsCertificate.serialNumber,INTEGER,0x01
+A1.roa,obj.content.certificates.0.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A1.roa,obj.content.certificates.0.tbsCertificate.signature.parameters,ANY,0x0500
+A1.roa,obj.content.certificates.0.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+A1.roa,obj.content.certificates.0.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+A1.roa,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+A1.roa,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,A1.roa
+A1.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A1.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+A1.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100DCD53D3B5229C1973676DC8939A603C629FA5308D081C6C2C1D4F69E405C5E7F711FDB71C035AAB7940004FB31F075BC239B1B3E614095221FE968CDD2BD7CC9A039E7E07502C40655B73E4B9280921168F8E56B5B76A02C47965D2D8A2925E5E4AB382A2B7DBBAAEB7E4AB47E924A1F653AC8FD88A11EB33C1D882C1062A256D39907AD3C3F7572A072E9FAE00BFDE8154C934EB11A6BDD1C4D2A011E0326066693DFC1B58AE45B0AF9138BFE501DCA881B0F1E26B1397EFD42DE73A3C4CD4EAED3D4E26C0E5CE46549223B77A4489BFE466A1136AF602FD0B30F6BD709557970604FD1C6FBD2F4EC280FFFAFF980D35C28E60EC6A4818BA22C8E6AEC6E849D0203010001
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions,Extensions,"{ ski=ski, aki=aki, ku=ku, crldp=crldp, aia=aia, sia=sia, cp=cp, ip=ip }"
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0xAB9190F74320814F2EDD7EAF422220583C37F876
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.critical,BOOLEAN,false
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.keyIdentifier,OCTET STRING,0x056091413121EA1F1E86E581D30315C071389D41
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x80/1
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.crldp.extnID,OBJECT IDENTIFIER,2.5.29.31 (X509v3 CRL Distribution Points)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.crldp.critical,BOOLEAN,false
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.1 (Authority Information Access)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.critical,BOOLEAN,false
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.2 (CA Issuers)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta/A.cer
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.11 (Signed Object)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/A/A1.roa
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+A1.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ [ 1.1.0.0/16 ], [ 101::/16 ] ]"
+A1.roa,obj.content.certificates.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A1.roa,obj.content.certificates.0.signatureAlgorithm.parameters,ANY,0x0500
+A1.roa,obj.content.certificates.0.signature,BIT STRING,0xBDBCE7735B3D662CCDD511CCEBC379A58151D924DE413BE65C4AA42D5F4D0B6AD4B9EA91FE8DD5A33E1654F893AC293935C41BAD083F6C501E889C9B4FAFBA5D324877C8D4881C5302ADB906F07ACC79D3A2386FE4CC4FC4AB66B765F547F7380A0539C18FCE6E11D87F46B6F178BDE08C80793EAF56A0864DBB45A20C00916269DEBB406483D4714BF3D7827580C67AEE891CF54D62DA84C39B3971CB6D48995A70C1B8A25398A9C42FA0F5213DF205981560B682A784F83DC192276D06CE850B95650174A2021B60402E7949B1BAF33C736C3ADDEA885BEFFBD9B541D17A33AC54927B8843A1AF066BD2E6CEA532B0F9B372D311FA3CA48DE6615659D25D42
+A1.roa,obj.content.signerInfos.0.version,INTEGER,0x03
+A1.roa,obj.content.signerInfos.0.digestAlgorithm.algorithm,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+A1.roa,obj.content.signerInfos.0.digestAlgorithm.parameters,ANY,
+A1.roa,obj.content.signerInfos.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A1.roa,obj.content.signerInfos.0.signatureAlgorithm.parameters,ANY,
+A1.roa,obj.content.signerInfos.0.signature,OCTET STRING,0xB67F26056316E74DF4DAE9D71E07118A36D8630F5B2FBADFE9486E5F267C1F4FF5EA7BDBAF45C4A7F77DEFF427E7C844ACD7F0DB74F71D8D544A26EFDD1089E0E69E2DE3360C8CD6FA21AB0C62ADC56AF82FEDC214F2EE8CA3FC32159F60CC21FC3D18D10C7BF1A6826B9A23B2B988B1EC5E12EA48679B5DECF1AF0796EF1AEF4B76A7FA064062E33A5B44F862811C4BB03E786288D5444C0BC76BBD8EE0259A479A827E6481B6DA58DCB2C33AB9D0F81B482926DEE951D87A589C543BE730CAC5309CDBFD8B6AFB550650F4057C1DEACA580A1F4C69279142EB647D1106671C12721B72FB1F82D240D7FEF03560ED1987ABA4BA6A74ADD1E8138DA218576425
+A2.roa,type,File Type,roa
+A2.roa,uri,C String,rsync://localhost:8873/rpki/simple/A/A2.roa
+A2.roa,path,C String,A/A2.roa
+A2.roa,obj.contentType,OBJECT IDENTIFIER,1.2.840.113549.1.7.2 (pkcs7-signedData)
+A2.roa,obj.content.version,INTEGER,0x03
+A2.roa,obj.content.encapContentInfo.eContentType,OBJECT IDENTIFIER,1.2.840.113549.1.9.16.1.24 (id-ct-routeOriginAuthz)
+A2.roa,obj.content.encapContentInfo.eContent,ANY,0x3024020204D2301E300D04020001300730050303000102300D04020002300730050303000102
+A2.roa,obj.content.encapContentInfo.eContent.version,INTEGER,0x00
+A2.roa,obj.content.encapContentInfo.eContent.asId,INTEGER,0x04D2
+A2.roa,obj.content.encapContentInfo.eContent.ipAddrBlocks,IP Resources (ROA),"[ [ 1.2.0.0/16 ], [ 102::/16 ] ]"
+A2.roa,obj.content.certificates.0.tbsCertificate.version,INTEGER,0x02
+A2.roa,obj.content.certificates.0.tbsCertificate.serialNumber,INTEGER,0x02
+A2.roa,obj.content.certificates.0.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A2.roa,obj.content.certificates.0.tbsCertificate.signature.parameters,ANY,0x0500
+A2.roa,obj.content.certificates.0.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+A2.roa,obj.content.certificates.0.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+A2.roa,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+A2.roa,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,A2.roa
+A2.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A2.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+A2.roa,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100B502A9DA5B80E70A7D3F1841E5082B9697F3A26BFB7721D04D00022997E741461DE6D7AF20C65E3BB7FB065BF7948FA69775D0222C243076F548F0A8289A7895BBA11079F4D7A598FEFBA08C257A72C31A96B6F79FB50041783B9B9D2250F38C61C84837AF4722342A609D8C584A9993A879E53B714D5999F7C546CC61163CEB1508539177803BB7189B7E0AA80FA68FB7307903F0040EE171E8ECE10E65F38A3AAB6D701D208F5CBAA14AA5F4734EAD50CCEFE3B8C6C9F9BA541793E94398EE8206645F0E0A63181D27322201AA7DD289E9A6DD16CE14F69161C3C12EEF98816599434FA6BFA2C8DC239E93AC9E48F7AD0C8D142479FA435DA5A44CC97EE4610203010001
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions,Extensions,"{ ski=ski, aki=aki, ku=ku, crldp=crldp, aia=aia, sia=sia, cp=cp, ip=ip }"
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0xF0FB7AFADE01AFE87442BF6EDEF59E8EB26C975F
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.critical,BOOLEAN,false
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.keyIdentifier,OCTET STRING,0x056091413121EA1F1E86E581D30315C071389D41
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x80/1
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.crldp.extnID,OBJECT IDENTIFIER,2.5.29.31 (X509v3 CRL Distribution Points)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.crldp.critical,BOOLEAN,false
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.1 (Authority Information Access)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.critical,BOOLEAN,false
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.2 (CA Issuers)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta/A.cer
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.11 (Signed Object)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/A/A2.roa
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+A2.roa,obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ [ 1.2.0.0/16 ], [ 102::/16 ] ]"
+A2.roa,obj.content.certificates.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A2.roa,obj.content.certificates.0.signatureAlgorithm.parameters,ANY,0x0500
+A2.roa,obj.content.certificates.0.signature,BIT STRING,0x95C48BCFACA130DB20D29F263364F0FE31BB8E1116C6EA1DC8AF0F118414E3C7A00B62DF35D83D2095A4B0A94E5C3808B3F8E2670D9E6669F4EFA9A9361B721DEFA79267EF3852FEBF3A8676DF72513AC283B867297E7F370897E488838EAA26B5B7AEAFEFD027FDDC1A7A3DC566DB9795402C6613E8E3B6406C0D0C5856BA90F26FDB10A4C4D982541AAD3BE7D1525BBEF44B07AE27D3507BCFB7AD920DC7D01AC69DC74B416E2A6BA841FCBC005D5F72FD7780638032DE509C67C1FF48C7850D6FBF08B1B982D41DF63CC85AED9BB5E86CF1445195E4C6844CAB8984253A14107CF31C84868E1265A315ACA3F81371F93F12A9BE507731B7F1833992BDC0A7
+A2.roa,obj.content.signerInfos.0.version,INTEGER,0x03
+A2.roa,obj.content.signerInfos.0.digestAlgorithm.algorithm,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+A2.roa,obj.content.signerInfos.0.digestAlgorithm.parameters,ANY,
+A2.roa,obj.content.signerInfos.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A2.roa,obj.content.signerInfos.0.signatureAlgorithm.parameters,ANY,
+A2.roa,obj.content.signerInfos.0.signature,OCTET STRING,0x3FB29CE7FB3F89930BE32850564593D33424A12B951E13ADC2F58F294649AE43C4FE96E0EF6070628385F05C35D6942C42004BDA507F69D44E68888B621DF205FC8FB2C4219870516BE984AFA20534D63B1F76711B64CEAA323A6A69FB7FD29A5AB388665C1D8DEF3E0D17A72187C27C5B9439C74149E98AD76666F7D3BBFD377F2C4B443B3D6C2D868963BE45703E4F6C17222A1110E144E6A22AF4E649FCE2B4B31A10524045A630A51CBA7E7E963DF2CDE7E76F845C3C770A6382A7E880F8AE4EDF20DCD44282277E1FB6EA02566CDF844AAD5087B041E06EA9704CF0848CED7FDFCB26C5218F5E3931E31BF5347BB96851F6E09DA40FA35249448B723ED8
+ta.mft,type,File Type,mft
+ta.mft,uri,C String,rsync://localhost:8873/rpki/simple/ta/ta.mft
+ta.mft,path,C String,ta/ta.mft
+ta.mft,obj.contentType,OBJECT IDENTIFIER,1.2.840.113549.1.7.2 (pkcs7-signedData)
+ta.mft,obj.content.version,INTEGER,0x03
+ta.mft,obj.content.encapContentInfo.eContentType,OBJECT IDENTIFIER,1.2.840.113549.1.9.16.1.26 (id-ct-rpkiManifest)
+ta.mft,obj.content.encapContentInfo.eContent,ANY,0x30818B020101180F32303235313032323230333533345A180F32303236313032323230333533345A06096086480165030402013059302A1605412E636572032100946AF21802706EE89DA1C8B2C0AA3E54AAB8594C28519574D8E518B29FA04000302B160674612E63726C032100792E643B921C7013A84EA0AD2547CD1A6FB3931B119B636599AD643679293EED
+ta.mft,obj.content.encapContentInfo.eContent.version,INTEGER,0x00
+ta.mft,obj.content.encapContentInfo.eContent.manifestNumber,INTEGER,0x01
+ta.mft,obj.content.encapContentInfo.eContent.thisUpdate,GeneralizedTime,2025-10-22T20:35:34Z
+ta.mft,obj.content.encapContentInfo.eContent.nextUpdate,GeneralizedTime,2026-10-22T20:35:34Z
+ta.mft,obj.content.encapContentInfo.eContent.fileHashAlg,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+ta.mft,obj.content.encapContentInfo.eContent.fileList,File List,"{ A.cer=0x946AF21802706EE89DA1C8B2C0AA3E54AAB8594C28519574D8E518B29FA04000, ta.crl=0x792E643B921C7013A84EA0AD2547CD1A6FB3931B119B636599AD643679293EED }"
+ta.mft,obj.content.encapContentInfo.eContent.fileList.0.file,IA5String,A.cer
+ta.mft,obj.content.encapContentInfo.eContent.fileList.0.hash,BIT STRING,0x946AF21802706EE89DA1C8B2C0AA3E54AAB8594C28519574D8E518B29FA04000
+ta.mft,obj.content.encapContentInfo.eContent.fileList.1.file,IA5String,ta.crl
+ta.mft,obj.content.encapContentInfo.eContent.fileList.1.hash,BIT STRING,0x792E643B921C7013A84EA0AD2547CD1A6FB3931B119B636599AD643679293EED
+ta.mft,obj.content.certificates.0.tbsCertificate.version,INTEGER,0x02
+ta.mft,obj.content.certificates.0.tbsCertificate.serialNumber,INTEGER,0x02
+ta.mft,obj.content.certificates.0.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.mft,obj.content.certificates.0.tbsCertificate.signature.parameters,ANY,0x0500
+ta.mft,obj.content.certificates.0.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+ta.mft,obj.content.certificates.0.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+ta.mft,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+ta.mft,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,ta.mft
+ta.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+ta.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+ta.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100B700E735F06846A8BA752B41703C33EEAEC2465786CDC091CE1FD8B3F948790482235EEDFAFF71BE75A5A9ED765A5F92070D99AACD9276453C707BFBBEAF95CAD763D5CEFDBC7922251E36A83F5ADEDC3FB852494D48AFC1A34BC5ED338F1260018CD2E4BA7F7F1896C913CF4DD28DED6C24D8C204A26C57A8F5F2E899CB527BE4E9BD437DC060EF29FABAC719D4C4AF92C412855DAEBE06DC4EC8493685F95DB9152D6685494C63A59C3508EAB50EBED7E50830FDC9138E15196DB8D0BA3E9632F23F6FA8928AFB4F6B02EA711447B054F832800D4BCD846ADB4C7E52E49090B6FCBB9553266BF30C0D6E030B7C900CCEABC31F1DA940814890C7867F8B13CD0203010001
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions,Extensions,"{ ski=ski, aki=aki, ku=ku, crldp=crldp, aia=aia, sia=sia, cp=cp, ip=ip, asn=asn }"
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0x5F0750AE6B708D8F3C334195FCDCD9FD7DE69F86
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.critical,BOOLEAN,false
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.keyIdentifier,OCTET STRING,0xED7F48BD2E978D7315FD2DB0808C26E73182330A
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x80/1
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.crldp.extnID,OBJECT IDENTIFIER,2.5.29.31 (X509v3 CRL Distribution Points)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.crldp.critical,BOOLEAN,false
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.1 (Authority Information Access)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.critical,BOOLEAN,false
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.2 (CA Issuers)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta.cer
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.11 (Signed Object)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta/ta.mft
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ inherit, inherit ]"
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.8 (sbgp-autonomousSysNum)
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.critical,BOOLEAN,true
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnValue.asnum,AS Resources,inherit
+ta.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnValue.rdi,AS Resources,
+ta.mft,obj.content.certificates.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.mft,obj.content.certificates.0.signatureAlgorithm.parameters,ANY,0x0500
+ta.mft,obj.content.certificates.0.signature,BIT STRING,0x16B906C7EC2BDE4676735481AA4CE0C5CA5689EEF88BD2A7BAEE3BD6D07BCAC23592FFC2674FD0BE8B8D97C1F45358C1F0BEFCF8EA98072B7B22B4C7AA6728DE7D24FA03A2729CA5C66624C5BED4DCDDF29AD78436398560558534F98557FFA64E56841A6AAC19732B2969CBF3D149184E3F531059A38A9B5ABE129903562DC679C367B8D53A8050AE45C8E942F71A6E2AC42848B389C2966C0398F9C8DF7AFC3147172620F661C641981F597EE2AC5D785E80D890010AA023DC7C0BC1F42F6CC751E9D8E63BCF7D074C942111D375DF571F5471DE5A7C993FEE99D63CE44EA40AE0E22DEB96E07F614650EB04E8060C315DDBEA98208842B06AFB7C1F09BD90
+ta.mft,obj.content.signerInfos.0.version,INTEGER,0x03
+ta.mft,obj.content.signerInfos.0.digestAlgorithm.algorithm,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+ta.mft,obj.content.signerInfos.0.digestAlgorithm.parameters,ANY,
+ta.mft,obj.content.signerInfos.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+ta.mft,obj.content.signerInfos.0.signatureAlgorithm.parameters,ANY,
+ta.mft,obj.content.signerInfos.0.signature,OCTET STRING,0xB6FA53E58F57BF14FED56DFB1F129CC545F7DAAB0C9CCA03EF3C20F6019CE175A33005FC6BD936F04960235F0D394E47DA5472EE0BD559DCBC6BFD8E4482984C021FC62D5E53C17E84F28064C9BFA03CCF52E8F91F9D3601FF0997062711D04A535D17413CD703A18F963DB494B828BE4AE11B16B680387E985659BD34E6D01CD963D1F230A9FA502A684FE11EC38EA801E575219806F481B88B6EF1BF4AE78E8FDF79E4F03D0B6A33009C8993514431ED0ABAE49E1031BA40B2D0635BD262B9B24ADD1ACB5D0AD89755DE1F2296367A11B79BA0FCC0C00345DF108974A926078DF330B13E4A09FF2A8A72EA59491521D37687D25C159BE2543AB7EFFC08BEE9
+ta.crl,type,File Type,crl
+ta.crl,uri,C String,rsync://localhost:8873/rpki/simple/ta/ta.crl
+ta.crl,path,C String,ta/ta.crl
+ta.crl,obj.tbsCertList.version,INTEGER,0x01
+ta.crl,obj.tbsCertList.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.crl,obj.tbsCertList.signature.parameters,ANY,0x0500
+ta.crl,obj.tbsCertList.thisUpdate,Time,2025-10-22T20:35:34Z
+ta.crl,obj.tbsCertList.nextUpdate,Time,2026-10-22T20:35:34Z
+ta.crl,obj.tbsCertList.revokedCertificates,Revoked Certificates,
+ta.crl,obj.tbsCertList.crlExtensions,Extensions,"{ aki=aki, crln=crln }"
+ta.crl,obj.tbsCertList.crlExtensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+ta.crl,obj.tbsCertList.crlExtensions.aki.critical,BOOLEAN,false
+ta.crl,obj.tbsCertList.crlExtensions.aki.extnValue.keyIdentifier,OCTET STRING,0xED7F48BD2E978D7315FD2DB0808C26E73182330A
+ta.crl,obj.tbsCertList.crlExtensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+ta.crl,obj.tbsCertList.crlExtensions.crln.extnID,OBJECT IDENTIFIER,2.5.29.20 (X509v3 CRL Number)
+ta.crl,obj.tbsCertList.crlExtensions.crln.critical,BOOLEAN,false
+ta.crl,obj.tbsCertList.crlExtensions.crln.extnValue,INTEGER,0x01
+ta.crl,obj.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+ta.crl,obj.signatureAlgorithm.parameters,ANY,0x0500
+ta.crl,obj.signature,BIT STRING,0x0A891AB808753A888F6EB822A24D083AF01AF5409D2AD82C149CDEF3C76E65FBE6BC997A0A8C0010934C0F3D14B01C2578987B9AC93EEA39B6EF379F1A50593B851283411774B13CC02281AD2EB5846262B7F4D02C3E7D3E20FF44FC7C929C199420AD7C10A387F0C5B2A65364B28AF6D2082E6DC508C51EF61D7FE371735B609322F56D560892AF7B402419CFAABCAFFF4852A54278DDCF682020101DA786597FCAD9D2B5175C0A45FDC19BBA0E2AA8A9A72F607929DCAD496E772A539421DC892FFD09FD5EEBAD198C41076218EC886E6753165C392EE790057C3762DA6C5D27234EAC7D6C3C633EF22F9000861E8BD039560BC53841E48C915AE4CA46785C
+A.mft,type,File Type,mft
+A.mft,uri,C String,rsync://localhost:8873/rpki/simple/A/A.mft
+A.mft,path,C String,A/A.mft
+A.mft,obj.contentType,OBJECT IDENTIFIER,1.2.840.113549.1.7.2 (pkcs7-signedData)
+A.mft,obj.content.version,INTEGER,0x03
+A.mft,obj.content.encapContentInfo.eContentType,OBJECT IDENTIFIER,1.2.840.113549.1.9.16.1.26 (id-ct-rpkiManifest)
+A.mft,obj.content.encapContentInfo.eContent,ANY,0x3081B9020101180F32303235313032323230333533345A180F32303236313032323230333533345A0609608648016503040201308186302B160641312E726F61032100697B34640012BFB12842D100DD3BFF96351599675034294D086CE7DE91DBDDC2302B160641322E726F6103210095DCDD247F5E961C4B9CDA78317CD48BF15025619C6F7D110C7571DA57638E1A302A1605412E63726C032100CE2A521D3415E1F1A31EF0C4383BCC970A02B07ADC026127C8187C4D69C95FF0
+A.mft,obj.content.encapContentInfo.eContent.version,INTEGER,0x00
+A.mft,obj.content.encapContentInfo.eContent.manifestNumber,INTEGER,0x01
+A.mft,obj.content.encapContentInfo.eContent.thisUpdate,GeneralizedTime,2025-10-22T20:35:34Z
+A.mft,obj.content.encapContentInfo.eContent.nextUpdate,GeneralizedTime,2026-10-22T20:35:34Z
+A.mft,obj.content.encapContentInfo.eContent.fileHashAlg,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+A.mft,obj.content.encapContentInfo.eContent.fileList,File List,"{ A1.roa=0x697B34640012BFB12842D100DD3BFF96351599675034294D086CE7DE91DBDDC2, A2.roa=0x95DCDD247F5E961C4B9CDA78317CD48BF15025619C6F7D110C7571DA57638E1A, A.crl=0xCE2A521D3415E1F1A31EF0C4383BCC970A02B07ADC026127C8187C4D69C95FF0 }"
+A.mft,obj.content.encapContentInfo.eContent.fileList.0.file,IA5String,A1.roa
+A.mft,obj.content.encapContentInfo.eContent.fileList.0.hash,BIT STRING,0x697B34640012BFB12842D100DD3BFF96351599675034294D086CE7DE91DBDDC2
+A.mft,obj.content.encapContentInfo.eContent.fileList.1.file,IA5String,A2.roa
+A.mft,obj.content.encapContentInfo.eContent.fileList.1.hash,BIT STRING,0x95DCDD247F5E961C4B9CDA78317CD48BF15025619C6F7D110C7571DA57638E1A
+A.mft,obj.content.encapContentInfo.eContent.fileList.2.file,IA5String,A.crl
+A.mft,obj.content.encapContentInfo.eContent.fileList.2.hash,BIT STRING,0xCE2A521D3415E1F1A31EF0C4383BCC970A02B07ADC026127C8187C4D69C95FF0
+A.mft,obj.content.certificates.0.tbsCertificate.version,INTEGER,0x02
+A.mft,obj.content.certificates.0.tbsCertificate.serialNumber,INTEGER,0x03
+A.mft,obj.content.certificates.0.tbsCertificate.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.mft,obj.content.certificates.0.tbsCertificate.signature.parameters,ANY,0x0500
+A.mft,obj.content.certificates.0.tbsCertificate.validity.notBefore,Time,2025-10-22T20:35:34Z
+A.mft,obj.content.certificates.0.tbsCertificate.validity.notAfter,Time,2026-10-22T20:35:34Z
+A.mft,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.type,OBJECT IDENTIFIER,2.5.4.3 (commonName)
+A.mft,obj.content.certificates.0.tbsCertificate.subject.rdnSequence.0.0.value,PrintableString in ANY,A.mft
+A.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.algorithm.parameters,ANY,0x0500
+A.mft,obj.content.certificates.0.tbsCertificate.subjectPublicKeyInfo.subjectPublicKey,BIT STRING,0x3082010A0282010100E84717468227CFCD4BC9B4C218069263B1ABAF56CFD558F18D67C47FC55D77163DCCFC30EDBD470577DAF5B3043537E31C159A54DD1775C46C978D5101D6E90EC45B885EAA0C491317FA09997CEF6583881018C70D16226FC2D51783105DC80050B89845B9AF9BAEB01B803AA623CDB1BF21E5E7AAC21C424524DDBC059F8D72F925FA575CD08155F500DE2AE19CDD6D58FFA521D40F47EF211FE0F1C0AFEE59BBC0033D2B430F79EE625AD906DD09CD954D38B7DADFA664971FFCE6F28A2AEEB12950393C63CF66660F105260A23D6856BFD3EFEAE5FF625B1ACC5FA75FBA0E44148B67BC821367CFDCA01B8C5E658D02997827B8CF65F7CB5B0EA8E30B2C2D0203010001
+A.mft,obj.content.certificates.0.tbsCertificate.extensions,Extensions,"{ ski=ski, aki=aki, ku=ku, crldp=crldp, aia=aia, sia=sia, cp=cp, ip=ip, asn=asn }"
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.extnID,OBJECT IDENTIFIER,2.5.29.14 (X509v3 Subject Key Identifier)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.critical,BOOLEAN,false
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ski.extnValue,OCTET STRING,0x856A0F6AFF1DF7BEA531168DA273FD6F0E356C02
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.critical,BOOLEAN,false
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.keyIdentifier,OCTET STRING,0x056091413121EA1F1E86E581D30315C071389D41
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.extnID,OBJECT IDENTIFIER,2.5.29.15 (X509v3 Key Usage)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.critical,BOOLEAN,true
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ku.extnValue,BIT STRING,0x80/1
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.crldp.extnID,OBJECT IDENTIFIER,2.5.29.31 (X509v3 CRL Distribution Points)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.crldp.critical,BOOLEAN,false
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.1 (Authority Information Access)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.critical,BOOLEAN,false
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.2 (CA Issuers)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.aia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/ta/A.cer
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.11 (Subject Information Access)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.critical,BOOLEAN,false
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessMethod,OBJECT IDENTIFIER,1.3.6.1.5.5.7.48.11 (Signed Object)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.type,GeneralName type,uniformResourceIdentifier
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value,IA5String,rsync://localhost:8873/rpki/simple/A/A.mft
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.cp.extnID,OBJECT IDENTIFIER,2.5.29.32 (X509v3 Certificate Policies)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.cp.critical,BOOLEAN,true
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.7 (sbgp-ipAddrBlock)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.critical,BOOLEAN,true
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue,IP Resources (Certificate),"[ inherit, inherit ]"
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnID,OBJECT IDENTIFIER,1.3.6.1.5.5.7.1.8 (sbgp-autonomousSysNum)
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.critical,BOOLEAN,true
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnValue.asnum,AS Resources,inherit
+A.mft,obj.content.certificates.0.tbsCertificate.extensions.asn.extnValue.rdi,AS Resources,
+A.mft,obj.content.certificates.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.mft,obj.content.certificates.0.signatureAlgorithm.parameters,ANY,0x0500
+A.mft,obj.content.certificates.0.signature,BIT STRING,0x724F6A3BE90E344EE0FCA1321FEEE2F1E19728543D8844AFA45F02FE64A1DEF3F275F392BA48FB5190D03BDC0B62DE69F4559D04533067BFDC44F27F1086F12B37FCC6914E77AF286A363E06A9AF1DE14F70888769A05A1277AAFC63AFCAE46463684318CEB434C4F052403BBA91A3EC9628A09D13B110EB82DC3C95B48294AC1C993A54D556A773020D4E41114A52228CEBC0E595CCE575BF65C4E0922B37C2189C71D20E4F5EF45D2E03C2BC13860C145C7CD2DA0EB94FA75D48126F1B4530E55CE217F5C8D0DA7B9D66DA0B69306CB852F90A4EF92BDB30ABDB98B11F2A20CAB37FDC3F8553D2CA1BDF64D7C32D861A9EB1844196C69A106C857B0715954F
+A.mft,obj.content.signerInfos.0.version,INTEGER,0x03
+A.mft,obj.content.signerInfos.0.digestAlgorithm.algorithm,OBJECT IDENTIFIER,2.16.840.1.101.3.4.2.1 (sha256)
+A.mft,obj.content.signerInfos.0.digestAlgorithm.parameters,ANY,
+A.mft,obj.content.signerInfos.0.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.1 (rsaEncryption)
+A.mft,obj.content.signerInfos.0.signatureAlgorithm.parameters,ANY,
+A.mft,obj.content.signerInfos.0.signature,OCTET STRING,0x83D160B51C1F653D363FC0A67C3CC4EE98BD182B402839D80892ACDA1280EB91870A03CB25A2A1F6A04E3703EB3900AE1C0837AE51CCC48DD9042C05BBD7EEE6AAFA699C826519E83752D92701F7EEECEAF6F04718BB8FD5966BF853DE47DC654AC4D2D930B6ECC9E6BAEF8277DBEC7434AE8D7FE47F6A46E75633181A819394D7CC0FC5DB5A225A1AD33F9730595086C8DD7AECCC155D0C80F1852673AADEC9CA81702C0DCA13156EE6586D8326609A158DF98FBD9BEA7BB10FA04981442993B634C3811E9638BAC00FC3D980849C70D9F608DB6E19252BB07DFB17F32F78BEED18FF66234EFB3E8706C3EC76FD656FDDD665C6284FDF6082CD6B15C17F91F3
+A.crl,type,File Type,crl
+A.crl,uri,C String,rsync://localhost:8873/rpki/simple/A/A.crl
+A.crl,path,C String,A/A.crl
+A.crl,obj.tbsCertList.version,INTEGER,0x01
+A.crl,obj.tbsCertList.signature.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.crl,obj.tbsCertList.signature.parameters,ANY,0x0500
+A.crl,obj.tbsCertList.thisUpdate,Time,2025-10-22T20:35:34Z
+A.crl,obj.tbsCertList.nextUpdate,Time,2026-10-22T20:35:34Z
+A.crl,obj.tbsCertList.revokedCertificates,Revoked Certificates,
+A.crl,obj.tbsCertList.crlExtensions,Extensions,"{ aki=aki, crln=crln }"
+A.crl,obj.tbsCertList.crlExtensions.aki.extnID,OBJECT IDENTIFIER,2.5.29.35 (X509v3 Authority Key Identifier)
+A.crl,obj.tbsCertList.crlExtensions.aki.critical,BOOLEAN,false
+A.crl,obj.tbsCertList.crlExtensions.aki.extnValue.keyIdentifier,OCTET STRING,0x056091413121EA1F1E86E581D30315C071389D41
+A.crl,obj.tbsCertList.crlExtensions.aki.extnValue.authorityCertSerialNumber,INTEGER,
+A.crl,obj.tbsCertList.crlExtensions.crln.extnID,OBJECT IDENTIFIER,2.5.29.20 (X509v3 CRL Number)
+A.crl,obj.tbsCertList.crlExtensions.crln.critical,BOOLEAN,false
+A.crl,obj.tbsCertList.crlExtensions.crln.extnValue,INTEGER,0x01
+A.crl,obj.signatureAlgorithm.algorithm,OBJECT IDENTIFIER,1.2.840.113549.1.1.11 (sha256WithRSAEncryption)
+A.crl,obj.signatureAlgorithm.parameters,ANY,0x0500
+A.crl,obj.signature,BIT STRING,0x516804BE8BC8EC4DBC52E65EC305B5901A77E87160AD97A87B63E7A3C8B3E6D3377370602E078804A9C28DAE297CA56661EA0CA75A26AEFDEE1A13F6B4783C03648939C41C7B4CDE1F59552FCC05904C3F71AF90ED5077E5E8E0C33AB2FF52E0F67BB93997BF593B4EA535D80C4365200D5D6FECDE18430D3528319A0C4A428A6085AF0948DE457BBE58B2DC6FCBFB3AFA2643FE21E6EC658CED0F5BAD676C612A566AC19B457AC9EA75128E17CAA0672A2B9CD587D44546950F7BAF9510F2321FAE1323E56E8361EA0B569FA92A6D0BC3CD1366547FE960B72A7EBEE9D7BEC77C6350E7CE7704D7D645560032CAA161A84F45A39B7DB4BCBFA691FE8D356D49
+https://localhost:8443/simple/notification.xml,path,C String,notification.xml
+https://localhost:8443/simple/notification.xml,session,C String,9df4b597-af9e-4dca-bdda-719cce2c4e28
+https://localhost:8443/simple/notification.xml,serial,INTEGER,0x01
+https://localhost:8443/simple/notification.xml,snapshot.uri,C String,https://localhost:8443/simple/notification.xml.snapshot
+https://localhost:8443/simple/notification.xml,snapshot.path,C String,notification.xml.snapshot
+https://localhost:8443/simple/notification.xml,snapshot.session,C String,
+https://localhost:8443/simple/notification.xml,snapshot.serial,INTEGER,
+https://localhost:8443/simple/notification.xml,snapshot.files,Snapshot Files,"[ A.cer, A1.roa, A2.roa, A.mft, A.crl, ta.mft, ta.crl ]"

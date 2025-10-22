@@ -1,5 +1,10 @@
-# User files
 custom
 
-# Runtime temporal files
-sandbox
+sandbox/apache2/logs
+sandbox/rsyncd/rsyncd.log
+sandbox/tests/simple/apache2
+sandbox/tests/simple/routinator.log
+sandbox/tests/simple/stderr.txt
+sandbox/tests/simple/vrp
+sandbox/tests/simple/vrps.csv
+sandbox/tests/simple/workdir

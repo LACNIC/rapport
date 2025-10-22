@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# Import rp/$RP.sh before this script.
-
 check_exists() {
 	if ! $1 > /dev/null 2> /dev/null; then
 		echo "'$1' returns nonzero."
@@ -34,20 +32,4 @@ export RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
 if [ -z "$RP_BIN" ]; then
 	export RP_BIN="$RP_BIN_DEFAULT"
 fi
-check_exists "$RP_BIN $RP_TEST" "$RP_EV"
-
-
-if [ -z "$MEMCHECK" ]; then
-	MEMCHECK="$MEMCHECK_DEFAULT"
-fi
-if [ "$MEMCHECK" -ne 0 ]; then
-	if [ -z "$VALGRIND" ]; then
-		VALGRIND=valgrind
-	fi
-	check_exists "$VALGRIND --help" "VALGRIND"
-	export VALGRIND="$VALGRIND --error-exitcode=1 --leak-check=full \
-		--show-leak-kinds=all --errors-for-leak-kinds=all \
-		--track-origins=yes"
-else
-	export VALGRIND=""
-fi
+check_exists "$RP_BIN -V" "ROUTINATOR"

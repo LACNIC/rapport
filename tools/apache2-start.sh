@@ -1,4 +1,5 @@
 #!/bin/sh
 
 echo "Starting apache2 ($APACHE2) from ${PWD}"
+mkdir -p "${PWD}/sandbox/apache2/logs"
 $APACHE2 -f "${PWD}/sandbox/apache2/apache2.conf"
