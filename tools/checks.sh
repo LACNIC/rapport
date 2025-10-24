@@ -37,7 +37,7 @@ run_barry() {
 
 # $@: Additional arguments
 run_rp() {
-	rp_run "$@" || fail "$RP returned $?"
+	rp_run "$@" || fail "$RP returned $? (See $SANDBOX/$RP.log)"
 }
 
 # Checks the RP generated $1 VRPs.
