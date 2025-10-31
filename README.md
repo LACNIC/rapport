@@ -16,6 +16,7 @@ This project is in early development.
 - [`tmpfs`](https://man7.org/linux/man-pages/man5/tmpfs.5.html) (optional)
 - A means to create x509 certificates (`openssl` exampled below)
 - [`valgrind`](https://valgrind.org/) (optional)
+- `jq` (if testing Fort)
 
 The project is just a bunch of shell scripts, so it needs no installation.
 

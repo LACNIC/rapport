@@ -1,10 +1,15 @@
 ta.cer
-	A.cer
-		A1.roa
-		A2.roa
-	B.cer
-		B1.roa
-		B2.roa
+	A.cer			# Stays the same
+		A.roa
+	B.cer			# File changes
+		B.roa
+	C.cer			# Gets new file
+		C1.roa
+
+	D.cer			# File disappears
+		D.roa
+	E.cer			# Disappears
+		E.roa
 	ta.mft
 
 [node: ta.mft]

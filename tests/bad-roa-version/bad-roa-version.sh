@@ -17,3 +17,9 @@ check_http_requests \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/notification.xml.snapshot 200"
 check_rsync_requests
+
+check_fort_cache 0 1 1 2
+check_fort_cache_file https
+check_fort_cache_cage rrdp "ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_file fallback
+check_fort_cache_cage fallback "ta/roa.roa" "ta/ta.crl" "ta/ta.mft"

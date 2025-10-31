@@ -1,19 +1,19 @@
 #!/bin/sh
 
 fail() {
-	echo "$TEST error: $1" 1>&2
+	echo "$TEST error: $@" 1>&2
 	exit 1
 }
 
 warn() {
-	echo "$TEST warning: $1" 1>&2
+	echo "$TEST warning: $@" 1>&2
 	exit 2
 }
 
 # Use this result when the test does not apply to the RP.
 # It's neither a success nor a failure.
 skip() {
-	echo "$TEST skipped: $1"
+	echo "$TEST skipped: $@"
 	exit 3
 }
 
@@ -157,6 +157,7 @@ create_delta() {
 	rm -r "sandbox/rsyncd/content/$TEST"
 
 	mkdir -p "$TMPDIR"
+	rm -rf "$TMPDIR/"*
 	mv "$APACHEDIR" "$TMPDIR/old"
 
 	run_barry "$@"
@@ -175,6 +176,79 @@ create_delta() {
 		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
 
 	mv "$TMPDIR/new/notification.xml.snapshot" "$APACHEDIR"
-	mv "$TMPDIR/new/ta.cer" "$APACHEDIR"
+	diff "$TMPDIR/old/ta.cer" "$TMPDIR/new/ta.cer" > /dev/null \
+		&& mv "$TMPDIR/new/ta.cer" "$APACHEDIR" \
+		|| mv "$TMPDIR/old/ta.cer" "$APACHEDIR"
 	rm -r "$TMPDIR"
+}
+
+# Private
+check_fort_cache_cages() {
+	LOC="$SANDBOX/workdir/$1"
+	ACTUAL=$(ls -Ub1 "$LOC" | grep -c "\\.json$")
+	test $2 = "$ACTUAL" || fail "$LOC contains $ACTUAL cages ($2 expected)"
+}
+
+# Checks the cache contains only the given cages.
+# Fort-only.
+#
+# $1: Number of rsync cages
+# $2: Number of https cages
+# $3: Number of rrdp cages
+# $4: Number of fallback cages
+check_fort_cache() {
+	test "$RP" = "fort2" || return
+
+	check_fort_cache_cages "rsync" "$1"
+	check_fort_cache_cages "https" "$2"
+	check_fort_cache_cages "rrdp" "$3"
+	check_fort_cache_cages "fallback" "$4"
+}
+
+# Checks Fort cached the file whose HTTP URL is $1.
+# Fort-only.
+#
+# $1: Cage type
+# $2: URL (optional; defaults to the default HTTP TA)
+check_fort_cache_file() {
+	test "$RP" = "fort2" || return
+
+	test -z "$2" && URI="https://localhost:8443/$TEST/ta.cer" || URI="$2"
+
+	for JSON in "$SANDBOX/workdir/$1/"*.json; do
+		FILEURI=$(jq -r '.http' "$JSON")
+		test "$URI" = "$FILEURI" && return
+	done
+
+	fail "$2 was not cached in $SANDBOX/workdir/$1"
+}
+
+# Checks Fort cached a cage that contains only the given URI files.
+# Fort-only.
+#
+# $1: Cage type (rrdp or fallback)
+# $2..: URIs
+check_fort_cache_cage() {	
+	test "$RP" = "fort2" || return
+
+	TYPE="$1"
+	shift
+
+	WS="$SANDBOX/$TYPE"
+	mkdir -p "$WS"
+
+	EXPCTD="$WS/expected.txt"
+	ACTUAL="$WS/actual.txt"
+
+	:> "$EXPCTD"
+	for i in "$@"; do
+		echo "rsync://localhost:8873/rpki/$TEST/$i" >> "$EXPCTD"
+	done
+
+	for JSON in "$SANDBOX/workdir/$TYPE/"*.json; do
+		jq -rS '.rrdp.files | try(keys[])' "$JSON" > "$ACTUAL"
+		diff "$EXPCTD" "$ACTUAL" > /dev/null && return
+	done
+
+	fail "No $SANDBOX/workdir/$TYPE/ cage contains the following URIs: $@"
 }

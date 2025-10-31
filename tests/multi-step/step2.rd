@@ -1,20 +1,27 @@
 ta.cer
 	A.cer
-		A1.roa
-		A2.roa
-	C.cer			# 2/8
-		C1.roa		# 2.1/16
-		C2.roa		# 2.2/16
+		A.roa
+	B.cer
+		B.roa
+	C.cer
+		C1.roa
+		C2.roa
+	D.cer
+
+	F.cer
+		F.roa
 	ta.mft
 
 [node: ta.mft]
 obj.content.encapContentInfo.eContent.manifestNumber = 2
 
-[node: C1.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.111.0/24 ]
+[node: B.roa]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.22.0.0/16, 222::/16 ]
 
-[node: C2.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 202::AAAA:0/112 ]
+[node: F.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 6.0.0.0/8, 600::/8 ]
+[node: F.roa]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 6.1.0.0/16, 601::/16 ]
 
 [notification: https://localhost:8443/multi-step/notification.xml]
 serial = 2

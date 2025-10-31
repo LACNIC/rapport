@@ -57,3 +57,13 @@ check_http_requests \
 # Check the RP made the logical sequence of rsync requests
 # (In this case, that would be none):
 check_rsync_requests
+
+# Check the cache files (Fort only)
+check_fort_cache 0 1 1 3
+check_fort_cache_file https
+check_fort_cache_cage rrdp \
+	"A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa" \
+	"ta/A.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_file fallback
+check_fort_cache_cage fallback "ta/A.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_cage fallback "A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa"
