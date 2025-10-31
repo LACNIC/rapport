@@ -35,7 +35,6 @@ tools/cleanup-sandbox.sh
 
 NSUCCESSES=0
 NFAILS=0
-NWARNS=0
 NSKIPS=0
 NUNKNOWNS=0
 
@@ -59,7 +58,6 @@ for T in $TESTS; do
 	case "$?" in
 	0)  NSUCCESSES=$((NSUCCESSES+1))  ;;
 	1)  NFAILS=$((NFAILS+1))          ;;
-	2)  NWARNS=$((NWARNS+1))          ;;
 	3)  NSKIPS=$((NSKIPS+1))          ;;
 	*)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;
 	esac
@@ -71,9 +69,11 @@ tools/apache2-stop.sh
 echo ""
 echo "Successes: $NSUCCESSES"
 echo "Failures : $NFAILS"
-echo "Warnings : $NWARNS"
 echo "Skipped  : $NSKIPS"
 echo "Unknown  : $NUNKNOWNS"
+echo ""
+echo "Total checks: $(cat sandbox/checks/total.txt | wc -c)"
+echo "Warnings    : $(cat sandbox/checks/warns.txt | wc -c)"
 echo ""
 echo "Please remember that the test suite might be at fault for issues."
 echo "Also, the tests are presently built around Fort."

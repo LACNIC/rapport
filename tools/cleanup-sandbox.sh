@@ -8,6 +8,7 @@ if [ -f "sandbox/rsyncd/rsyncd.pid" ]; then
 fi
 
 mkdir -p "custom/keys"
+mkdir -p "sandbox/checks"
 mkdir -p "sandbox/apache2"
 mkdir -p "sandbox/rsyncd"
 mkdir -p "sandbox/tests"
@@ -19,9 +20,13 @@ if [ ! -f "custom/keys/50.pem" ]; then
 	done
 fi
 
+rm -rf sandbox/checks/*
 rm -rf sandbox/apache2/*
 rm -rf sandbox/rsyncd/*
 rm -rf sandbox/tests/*
+
+touch "sandbox/checks/totals.txt"
+touch "sandbox/checks/warns.txt"
 
 cp "tools/apache2.conf" "sandbox/apache2"
 mkdir -p "sandbox/apache2/content"

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+ck_inc() {
+	echo -n "1" >> "sandbox/checks/total.txt"
+}
+
 fail() {
 	echo "$TEST error: $@" 1>&2
 	exit 1
@@ -7,7 +11,7 @@ fail() {
 
 warn() {
 	echo "$TEST warning: $@" 1>&2
-	exit 2
+	echo -n "1" >> "sandbox/checks/warns.txt"
 }
 
 # Use this result when the test does not apply to the RP.
@@ -37,6 +41,7 @@ run_barry() {
 
 # $@: Additional arguments
 run_rp() {
+	ck_inc # Counts because we check result value and Valgrind
 	rp_run "$@" || fail "$RP returned $? (See $SANDBOX/$RP.log)"
 }
 
@@ -44,6 +49,7 @@ run_rp() {
 # This test is redundant if you also do check_vrp_output().
 # $1: Expected VRP count
 check_vrp_count() {
+	ck_inc
 	ROWS=$(wc -l < "$(rp_vrp_path)")
 	ACTUAL=$((ROWS-1))
 	test "$1" -eq "$ACTUAL" \
@@ -71,6 +77,7 @@ check_vrp_output() {
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
 		sort > "$ACTUAL"
 
+	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| fail "Unexpected VRPs; see $VRP_DIR"
 }
@@ -80,6 +87,7 @@ check_vrp_output() {
 # $2: grep flags
 # $3: regex to search
 check_output() {
+	ck_inc
 	grep -q $2 -- "$3" "$1" || fail "$1 does not contain '$3'"
 }
 
@@ -121,6 +129,7 @@ check_http_requests() {
 	cp "$APACHE_REQLOG" "$ACTUAL"
 	:> "$APACHE_REQLOG"
 
+	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| warn "Unexpected Apache request sequence; see $APACHE_DIR"
 }
@@ -143,6 +152,7 @@ check_rsync_requests() {
 	grep -o "rsync on .* from localhost" "$RSYNC_REQLOG" > "$ACTUAL"
 	:> "$RSYNC_REQLOG"
 
+	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
 		|| warn "Unexpected rsync request sequence; see $RSYNC_DIR"
 }
@@ -184,6 +194,7 @@ create_delta() {
 
 # Private
 check_fort_cache_cages() {
+	ck_inc
 	LOC="$SANDBOX/workdir/$1"
 	ACTUAL=$(ls -Ub1 "$LOC" | grep -c "\\.json$")
 	test $2 = "$ACTUAL" || fail "$LOC contains $ACTUAL cages ($2 expected)"
@@ -213,8 +224,9 @@ check_fort_cache() {
 check_fort_cache_file() {
 	test "$RP" = "fort2" || return 0
 
-	test -z "$2" && URI="https://localhost:8443/$TEST/ta.cer" || URI="$2"
+	ck_inc
 
+	test -z "$2" && URI="https://localhost:8443/$TEST/ta.cer" || URI="$2"
 	for JSON in "$SANDBOX/workdir/$1/"*.json; do
 		FILEURI=$(jq -r '.http' "$JSON")
 		test "$URI" = "$FILEURI" && return
@@ -245,6 +257,7 @@ check_fort_cache_cage() {
 		echo "rsync://localhost:8873/rpki/$TEST/$i" >> "$EXPCTD"
 	done
 
+	ck_inc
 	for JSON in "$SANDBOX/workdir/$TYPE/"*.json; do
 		jq -rS '.rrdp.files | try(keys[])' "$JSON" > "$ACTUAL"
 		diff "$EXPCTD" "$ACTUAL" > /dev/null && return
