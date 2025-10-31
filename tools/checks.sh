@@ -197,7 +197,7 @@ check_fort_cache_cages() {
 # $3: Number of rrdp cages
 # $4: Number of fallback cages
 check_fort_cache() {
-	test "$RP" = "fort2" || return
+	test "$RP" = "fort2" || return 0
 
 	check_fort_cache_cages "rsync" "$1"
 	check_fort_cache_cages "https" "$2"
@@ -211,7 +211,7 @@ check_fort_cache() {
 # $1: Cage type
 # $2: URL (optional; defaults to the default HTTP TA)
 check_fort_cache_file() {
-	test "$RP" = "fort2" || return
+	test "$RP" = "fort2" || return 0
 
 	test -z "$2" && URI="https://localhost:8443/$TEST/ta.cer" || URI="$2"
 
@@ -229,7 +229,7 @@ check_fort_cache_file() {
 # $1: Cage type (rrdp or fallback)
 # $2..: URIs
 check_fort_cache_cage() {	
-	test "$RP" = "fort2" || return
+	test "$RP" = "fort2" || return 0
 
 	TYPE="$1"
 	shift
