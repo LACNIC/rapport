@@ -93,11 +93,9 @@ check_vrp_output \
 check_http_requests \
 	"/$TEST/ta.cer 404" \
 	"/$TEST/notification.xml 404"
-#check_rsync_requests \
-#	"rpki/multi-step/ta.cer" \
-#	"rpki/"
-# TODO
-check_rsync_requests "rpki/"
+check_rsync_requests \
+	"rpki/$TEST/ta.cer" \
+	"rpki/"
 
 # Nothing changes
 check_fort_cache 0 1 1 8
