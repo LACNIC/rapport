@@ -59,11 +59,14 @@ check_http_requests \
 check_rsync_requests
 
 # Check the cache files (Fort only)
-check_fort_cache 0 1 1 3
-check_fort_cache_file https
-check_fort_cache_cage rrdp \
-	"A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa" \
+check_fort_cache 0 2
+check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
+check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+check_fort_cache_rrdp_step "1" "1" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft" \
 	"ta/A.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_file fallback
-check_fort_cache_cage fallback "ta/A.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_cage fallback "A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"ta/A.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft"
+check_fort_cache_cage_end

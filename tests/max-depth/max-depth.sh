@@ -54,9 +54,10 @@ check_rsync_requests
 
 ######################### Fort-Only #########################
 
-check_fort_cache 0 1 1 13 # 0-C
-check_fort_cache_file https
-check_fort_cache_cage rrdp \
+check_fort_cache 0 2
+check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
+check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+check_fort_cache_rrdp_step "1" "1" \
 	"1/1.crl" "1/1.mft" "1/2.cer" "1/2.roa" \
 	"2/2.crl" "2/2.mft" "2/3.cer" "2/3.roa" \
 	"3/3.crl" "3/3.mft" "3/4.cer" "3/4.roa" \
@@ -72,11 +73,17 @@ check_fort_cache_cage rrdp \
 	"d/d.crl" "d/d.mft" "d/e.cer" "d/e.roa" \
 	"e/e.crl" "e/e.mft" \
 	"ta/1.cer" "ta/1.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_cage fallback "ta/1.cer" "ta/1.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_file fallback
-check_fort_cache_cage fallback "1/1.crl" "1/1.mft" "1/2.cer" "1/2.roa"
-check_fort_cache_cage fallback "2/2.crl" "2/2.mft" "2/3.cer" "2/3.roa"
-check_fort_cache_cage fallback "3/3.crl" "3/3.mft" "3/4.cer" "3/4.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"ta/1.cer" "ta/1.roa" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/1" \
+	"1/1.crl" "1/1.mft" "1/2.cer" "1/2.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/2" \
+	"2/2.crl" "2/2.mft" "2/3.cer" "2/3.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/3" \
+	"3/3.crl" "3/3.mft" "3/4.cer" "3/4.roa"
 # ...
-check_fort_cache_cage fallback "a/a.crl" "a/a.mft" "a/b.cer" "a/b.roa"
-check_fort_cache_cage fallback "b/b.crl" "b/b.mft" "b/c.cer" "b/c.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/a" \
+	"a/a.crl" "a/a.mft" "a/b.cer" "a/b.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/b" \
+	"b/b.crl" "b/b.mft" "b/c.cer" "b/c.roa"
+check_fort_cache_cage_end

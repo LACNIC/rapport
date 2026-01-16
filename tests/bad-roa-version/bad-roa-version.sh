@@ -18,8 +18,11 @@ check_http_requests \
 	"/$TEST/notification.xml.snapshot 200"
 check_rsync_requests
 
-check_fort_cache 0 1 1 2
-check_fort_cache_file https
-check_fort_cache_cage rrdp "ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_file fallback
-check_fort_cache_cage fallback "ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache 0 2
+check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
+check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+check_fort_cache_rrdp_step "1" "1" \
+	"ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_cage_end

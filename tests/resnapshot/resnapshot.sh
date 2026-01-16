@@ -25,16 +25,24 @@ check_http_requests \
 	"/$TEST/notification.xml.snapshot 200"
 check_rsync_requests
 
-check_fort_cache 0 1 1 4
-check_fort_cache_file https
-check_fort_cache_cage rrdp \
-	"A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa" \
-	"B/B.crl" "B/B.mft" "B/B1.roa" "B/B2.roa" \
+check_fort_cache 0 2
+check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
+check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+check_fort_cache_rrdp_step "cafe-1" "1" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft" \
+	"B/B1.roa" "B/B2.roa" "B/B.crl" "B/B.mft" \
 	"ta/A.cer" "ta/B.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_file fallback
-check_fort_cache_cage fallback "ta/A.cer" "ta/B.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_cage fallback "A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa"
-check_fort_cache_cage fallback "B/B.crl" "B/B.mft" "B/B1.roa" "B/B2.roa"
+check_fort_cache_rrdp_fallback "cafe-1" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"ta/A.cer" "ta/B.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "cafe-1" "rsync://localhost:8873/rpki/$TEST/A" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft"
+check_fort_cache_rrdp_fallback "cafe-1" "rsync://localhost:8873/rpki/$TEST/B" \
+	"B/B1.roa" "B/B2.roa" "B/B.crl" "B/B.mft"
+check_fort_cache_cage_end
+
+# TODO cleanup properly
+rm "$REFD_FILES"
+rm sandbox/tests/$TEST/rrdp/*
 
 # Stage 2: Some ROAs change
 
@@ -56,15 +64,17 @@ check_http_requests \
 	"/$TEST/notification.xml.snapshot 200"
 check_rsync_requests
 
-check_fort_cache 0 1 1 5
-check_fort_cache_file https
-check_fort_cache_cage rrdp \
-	"A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa" \
-	"C/C.crl" "C/C.mft" "C/C1.roa" "C/C2.roa" \
+check_fort_cache 0 2
+check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
+check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+check_fort_cache_rrdp_step "cafe-2" "1" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft" \
+	"C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft" \
 	"ta/A.cer" "ta/C.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_file fallback 
-check_fort_cache_cage fallback \
-	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_cage fallback "A/A.crl" "A/A.mft" "A/A1.roa" "A/A2.roa"
-check_fort_cache_cage fallback "B/B.crl" "B/B.mft" "B/B1.roa" "B/B2.roa"
-check_fort_cache_cage fallback "C/C.crl" "C/C.mft" "C/C1.roa" "C/C2.roa"
+check_fort_cache_rrdp_fallback "cafe-2" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"ta/A.cer" "ta/C.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "cafe-2" "rsync://localhost:8873/rpki/$TEST/A" \
+	"A/A1.roa" "A/A2.roa" "A/A.crl" "A/A.mft"
+check_fort_cache_rrdp_fallback "cafe-2" "rsync://localhost:8873/rpki/$TEST/C" \
+	"C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft"
+check_fort_cache_cage_end

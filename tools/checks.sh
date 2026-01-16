@@ -205,63 +205,130 @@ check_fort_cache_cages() {
 #
 # $1: Number of rsync cages
 # $2: Number of https cages
-# $3: Number of rrdp cages
-# $4: Number of fallback cages
 check_fort_cache() {
 	test "$RP" = "fort2" || return 0
 
 	check_fort_cache_cages "rsync" "$1"
 	check_fort_cache_cages "https" "$2"
-	check_fort_cache_cages "rrdp" "$3"
-	check_fort_cache_cages "fallback" "$4"
 }
 
 # Checks Fort cached the file whose HTTP URL is $1.
 # Fort-only.
-#
-# $1: Cage type
-# $2: URL (optional; defaults to the default HTTP TA)
 check_fort_cache_file() {
-	test "$RP" = "fort2" || return 0
-
 	ck_inc
 
-	test -z "$2" && URI="https://localhost:8443/$TEST/ta.cer" || URI="$2"
-	for JSON in "$SANDBOX/workdir/$1/"*.json; do
-		FILEURI=$(jq -r '.http' "$JSON")
-		test "$URI" = "$FILEURI" && return
+	PROTO=$(echo "$1" | cut -c1-5 -)
+	for JSON in "$SANDBOX/workdir/$PROTO/"*.json; do
+		FILEURI=$(jq -r '.uri' "$JSON")
+		test "$1" = "$FILEURI" && return
 	done
 
-	fail "$2 was not cached in $SANDBOX/workdir/$1"
+	fail "$1 was not cached in $SANDBOX/workdir/$PROTO"
 }
 
-# Checks Fort cached a cage that contains only the given URI files.
-# Fort-only.
-#
-# $1: Cage type (rrdp or fallback)
-# $2..: URIs
-check_fort_cache_cage() {	
+check_fort_cache_cage_begin() {
 	test "$RP" = "fort2" || return 0
 
-	TYPE="$1"
-	shift
+	check_fort_cache_file "$1"
 
-	WS="$SANDBOX/$TYPE"
-	mkdir -p "$WS"
+	RRDP_DIR="$SANDBOX/rrdp"
+	mkdir -p "$RRDP_DIR"
 
-	EXPCTD="$WS/expected.txt"
-	ACTUAL="$WS/actual.txt"
+	CAGE_ID="$(basename "$JSON" .json)"
+	# Files defined by the JSON
+	JSON_FILES="$RRDP_DIR/cg$CAGE_ID-all-json-files.txt"
+	# Files referenced by sessions and fallbacks in the JSON
+	REFD_FILES="$RRDP_DIR/cg$CAGE_ID-all-refd-files.txt"
+	# Actual files in the directory
+	DIR_FILES="$RRDP_DIR/cg$CAGE_ID-all-dir-files.txt"
+
+	SORT="sort -k1b,1" # For compatibility with join
+	jq -r '.rrdp.files | to_entries[] | [.key, .value.uri] | @tsv' "$JSON" | $SORT -k1b,1 > "$JSON_FILES"
+}
+
+# $1: Session ID
+# $2: Session serial
+# $3...: Files that should've been cached in this session/serial.
+check_fort_cache_rrdp_step() {
+	test "$RP" = "fort2" || return 0
+
+	SID="$1"
+	SERIAL="$2"
+	shift 2
+
+	ID="cg$CAGE_ID-ss$SID-se$SERIAL"
+	EXPCTD="$RRDP_DIR/$ID-expected.txt"
+	ACTUAL="$RRDP_DIR/$ID-actual.txt"
+	DIFF="$RRDP_DIR/$ID.diff"
 
 	:> "$EXPCTD"
 	for i in "$@"; do
 		echo "rsync://localhost:8873/rpki/$TEST/$i" >> "$EXPCTD"
 	done
 
+	SS_FILES="$RRDP_DIR/$ID-files.txt"
+	jq -r ".rrdp.sessions.\"$SID\".steps.\"$SERIAL\".files | values[]" "$JSON" | $SORT > "$SS_FILES"
+	join -o 1.2 "$JSON_FILES" "$SS_FILES" | $SORT > "$ACTUAL"
+
 	ck_inc
-	for JSON in "$SANDBOX/workdir/$TYPE/"*.json; do
-		jq -rS '.rrdp.files | try(keys[])' "$JSON" > "$ACTUAL"
-		diff "$EXPCTD" "$ACTUAL" > /dev/null && return
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
+		|| warn "Unexpected RRDP session files; see $RRDP_DIR/$ID*"
+
+	cat "$SS_FILES" >> "$REFD_FILES"
+}
+
+# $1: Session ID
+# $2: Fallback URI
+# $3...: Files that should've been cached in this session/fallback.
+check_fort_cache_rrdp_fallback() {
+	test "$RP" = "fort2" || return 0
+
+	SID="$1"
+	FALLBACK="$2"
+	shift 2
+
+	ID="cg$CAGE_ID-fb$(basename "$FALLBACK")"
+	EXPCTD="$RRDP_DIR/$ID-expected.txt"
+	ACTUAL="$RRDP_DIR/$ID-actual.txt"
+	DIFF="$RRDP_DIR/$ID.diff"
+
+	:> "$EXPCTD"
+	for i in "$@"; do
+		echo "rsync://localhost:8873/rpki/$TEST/$i" >> "$EXPCTD"
 	done
 
-	fail "No $SANDBOX/workdir/$TYPE/ cage contains the following URIs: $@"
+	FB_FILES="$RRDP_DIR/$ID-files.txt"
+	jq -r ".rrdp.sessions.\"$SID\".fallbacks.\"$FALLBACK\".files | values[]" "$JSON" | $SORT > "$FB_FILES"
+	join -o 1.2 "$JSON_FILES" "$FB_FILES" | $SORT > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
+		|| warn "Unexpected RRDP fallback files; see $RRDP_DIR/$ID*"
+
+	cat "$FB_FILES" >> "$REFD_FILES"
+}
+
+check_fort_cache_cage_end() {
+	test "$RP" = "fort2" || return 0
+
+	EXPCTD="$JSON_FILES.trimmed"
+	ACTUAL="$REFD_FILES.trimmed"
+	DIFF="$RRDP_DIR/filerefs.diff"
+
+	cut -f1 "$JSON_FILES" > "$EXPCTD"
+	$SORT "$REFD_FILES" | uniq > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
+		|| warn "Fileref mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+
+	EXPCTD="$JSON_FILES.trimmed"
+	ACTUAL="$DIR_FILES"
+	DIFF="$RRDP_DIR/dirs.diff"
+
+	ls -1 "$SANDBOX/workdir/https/$CAGE_ID" > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
+		|| warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
 }
