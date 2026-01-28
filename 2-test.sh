@@ -1,13 +1,11 @@
 #!/bin/sh
 
-#set -x     # Decomment to print all commands
+# $1: Category of the test(s) you want to run.
+#     Send nothing to run all categories.
+# $2: Name of the test you want to run.
+#     Send nothing to run all tests in $1.
 
-# $1 is the name of the test you want to run. Send nothing to run all tests.
-if [ -z "$1" ]; then
-	TESTS=tests/*
-else
-	TESTS="tests/$1"
-fi
+#set -x     # Decomment to print all commands
 
 case "$RP" in
 	"fort2")
@@ -41,12 +39,14 @@ NUNKNOWNS=0
 tools/apache2-start.sh
 tools/rsyncd-start.sh
 
-for T in $TESTS; do
-	export TEST="$(basename $T)"
-	export SRCDIR="$T"
-	export SANDBOX="sandbox/tests/$TEST"
+run_test() {
+	export SRCDIR="$1"		 # tests/cat/simple
+	export SANDBOX="sandbox/$SRCDIR" # sandbox/tests/cat/simple
+	export TESTID="${SRCDIR#tests/}" # cat/simple
+    	export CATEGORY="${TESTID%/*}"	 # cat
+	export TEST="${TESTID#*/}"	 # simple
 
-	echo "Test: $TEST"
+	echo "Test: $TESTID"
 
 	rm -rf sandbox/apache2/content/*
 	rm -rf sandbox/rsyncd/content/*
@@ -54,14 +54,28 @@ for T in $TESTS; do
 	:> "$RSYNC_REQLOG"
 	mkdir -p "$SANDBOX/workdir"
 
-	$T/$TEST.sh
+	"$SRCDIR"/run.sh
 	case "$?" in
 	0)  NSUCCESSES=$((NSUCCESSES+1))  ;;
 	1)  NFAILS=$((NFAILS+1))          ;;
 	3)  NSKIPS=$((NSKIPS+1))          ;;
 	*)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;
 	esac
-done
+}
+
+if [ -z "$1" ]; then
+	for CATEGORY in tests/*; do
+		for T in "$CATEGORY"/*; do
+			run_test "$T"
+		done
+	done
+elif [ -z "$2" ]; then
+	for T in "tests/$1"/*; do
+		run_test "$T"
+	done
+else
+	run_test "tests/$1/$2"
+fi
 
 tools/rsyncd-stop.sh
 tools/apache2-stop.sh

@@ -5,27 +5,32 @@ ck_inc() {
 }
 
 fail() {
-	echo "$TEST error: $@" 1>&2
+	echo "$TESTID error: $@" 1>&2
 	exit 1
 }
 
 warn() {
-	echo "$TEST warning: $@" 1>&2
+	echo "$TESTID warning: $@" 1>&2
 	echo -n "1" >> "sandbox/checks/warns.txt"
 }
 
 # Use this result when the test does not apply to the RP.
 # It's neither a success nor a failure.
 skip() {
-	echo "$TEST skipped: $@"
+	echo "$TESTID skipped: $@"
 	exit 3
 }
 
-# $1: Name of the rd
+# $1: Basename of the rd (default: "rd")
 # $2, $3, $4...: Additional arguments for Barry
 run_barry() {
-	RD="$1"
-	shift
+	if [ -z "$1" ]; then
+		RD="rd"
+	else
+		RD="$1"
+		shift
+	fi
+
 	$BARRY	--rsync-uri "rsync://localhost:8873/rpki/$TEST" \
 		--rsync-path "sandbox/rsyncd/content/$TEST" \
 		--rrdp-uri "https://localhost:8443/$TEST" \

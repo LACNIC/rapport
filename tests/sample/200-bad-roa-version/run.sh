@@ -3,7 +3,7 @@
 . tools/checks.sh
 . rp/$RP.sh
 
-run_barry "$TEST.rd"
+run_barry
 run_rp
 
 check_vrp_count 0

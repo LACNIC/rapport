@@ -21,7 +21,7 @@ case "$RP" in
 		;;
 esac
 
-run_barry "$TEST.rd"
+run_barry
 run_rp $MAXDEPTH_ARG
 
 check_report fort2       -F "Certificate chain maximum depth exceeded."

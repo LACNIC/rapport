@@ -6,7 +6,7 @@
 
 # Stage 1: Normal, simple run
 
-echo "$TEST: Step 1"
+echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -55,12 +55,11 @@ check_fort_cache_rrdp_fallback \
 check_fort_cache_cage_end
 
 # TODO cleanup properly
-rm "$REFD_FILES"
-rm sandbox/tests/multi-step/rrdp/*
+rm "$SANDBOX/rrdp/"*
 
 # Stage 2: Some ROAs change
 
-echo "$TEST: Step 2"
+echo "  Step 2"
 create_delta "step2.rd"
 run_rp
 
@@ -97,12 +96,11 @@ check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F" "F/F.cr
 check_fort_cache_cage_end
 
 # TODO cleanup properly
-rm "$REFD_FILES"
-rm sandbox/tests/multi-step/rrdp/*
+rm "$SANDBOX/rrdp/"*
 
 # Stage 3: Both RRDP and rsync die, RP needs to fallback
 
-echo "$TEST: Step 3"
+echo "  Step 3"
 mv "sandbox/apache2/content/$TEST" "$SANDBOX/tmp-apache2"
 mv "sandbox/rsyncd/content/$TEST" "$SANDBOX/tmp-rsync"
 run_rp
@@ -142,12 +140,11 @@ check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F" "F/F.cr
 check_fort_cache_cage_end
 
 # TODO cleanup properly
-rm "$REFD_FILES"
-rm sandbox/tests/multi-step/rrdp/*
+rm "$SANDBOX/rrdp/"*
 
 # Stage 4: RRDP and rsync come back, RP recovers via delta
 
-echo "$TEST: Step 4"
+echo "  Step 4"
 mv "$SANDBOX/tmp-apache2" "sandbox/apache2/content/$TEST"
 mv "$SANDBOX/tmp-rsync" "sandbox/rsyncd/content/$TEST"
 create_delta "step4.rd"

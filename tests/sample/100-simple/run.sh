@@ -2,14 +2,16 @@
 
 # Among a few others, all tests inherit the following environment variables:
 #
-# - $TEST: Name of the test (in this case, "simple")
-# - $SRCDIR: Path to the test's source directory ("tests/simple").
+# - $TEST: Name of the test (in this case, "100-simple")
+# - $CATEGORY: Category of the test (in this case, "sample")
+# - $TESTID: "$CATEGORY/$TEST" (in this case, "sample/100-simple")
+# - $SRCDIR: Path to the test's source directory ("tests/sample/100-simple").
 #   This directory contains all the (constant) files that will build and run
-#   the test (usually this script and likely a Barry RD).
-# - $SANDBOX: Path to the test's sandbox directory ("sandbox/tests/simple"),
-#   which is supposed to be its workspace. Here, the test will dump needed
-#   temporal files and output, and is the place the user needs to be directed
-#   if debugging needs to take place.
+#   the test, which is this script (run.sh) plus (usually) some Barry RDs.
+# - $SANDBOX: Path to the test's sandbox ("sandbox/tests/sample/100-simple"),
+#   which is supposed to be its workspace. Here, the test can dump temporal
+#   files and output, and is the place the user needs to be directed to if
+#   debugging needs to take place.
 # - All the environment variables defined in the README.
 
 
@@ -29,7 +31,7 @@
 # Step 1: Generate the test repository.
 # I expect most tests will require a very similar single Barry invocation,
 # so I made this quick wrapper.
-run_barry "$TEST.rd"
+run_barry
 
 
 # Step 2: Run the RP.

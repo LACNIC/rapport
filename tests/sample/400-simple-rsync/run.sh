@@ -4,7 +4,7 @@
 . rp/$RP.sh
 
 
-run_barry "$TEST.rd" --rrdp-uri "" --rrdp-path ""
+run_barry "rd" --rrdp-uri "" --rrdp-path ""
 run_rp
 
 

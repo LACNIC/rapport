@@ -16,6 +16,6 @@ obj.content.encapContentInfo.eContent.manifestNumber = 1
 
 
 
-[notification: https://localhost:8443/resnapshot/notification.xml]
+[notification: https://localhost:8443/600-resnapshot/notification.xml]
 session = cafe-1
 serial = 1

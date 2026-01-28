@@ -6,7 +6,7 @@
 
 # Stage 1: Normal, simple run
 
-echo "$TEST: Step 1"
+echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -41,12 +41,11 @@ check_fort_cache_rrdp_fallback "cafe-1" "rsync://localhost:8873/rpki/$TEST/B" \
 check_fort_cache_cage_end
 
 # TODO cleanup properly
-rm "$REFD_FILES"
-rm sandbox/tests/$TEST/rrdp/*
+rm "$SANDBOX/rrdp/"*
 
 # Stage 2: Some ROAs change
 
-echo "$TEST: Step 2"
+echo "  Step 2"
 sleep 1
 run_barry "step2.rd"
 run_rp

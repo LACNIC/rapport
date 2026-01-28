@@ -16,6 +16,6 @@ obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.111.0/24 ]
 [node: C2.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 202::AAAA:0/112 ]
 
-[notification: https://localhost:8443/resnapshot/notification.xml]
+[notification: https://localhost:8443/600-resnapshot/notification.xml]
 session = cafe-2
 serial = 1
