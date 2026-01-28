@@ -40,6 +40,8 @@ tools/apache2-start.sh
 tools/rsyncd-start.sh
 
 run_test() {
+	test -d "$1" || return 0
+
 	export SRCDIR="$1"		 # tests/cat/simple
 	export SANDBOX="sandbox/$SRCDIR" # sandbox/tests/cat/simple
 	export TESTID="${SRCDIR#tests/}" # cat/simple
