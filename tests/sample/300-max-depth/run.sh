@@ -1,8 +1,17 @@
 #!/bin/sh
 
+# Compared to 200-bad-roa-version, this sample test targets a somewhat more
+# complicated repository tree.
+# 
+# The tree is not inherently flawed, but it exceeds the maximum certificate
+# chain length the RP is told to accept.
+
 . tools/checks.sh
 . rp/$RP.sh
 
+# The maximum allowed depth often depends on configuration,
+# and different RPs tend to ship with different defaults.
+# Hence, we need to send a custom argument to the RP.
 case "$RP" in
 	"fort2")
 		MAXDEPTH_ARG="--maximum-certificate-depth 13"
@@ -22,11 +31,14 @@ case "$RP" in
 esac
 
 run_barry
+# run_rp() proxies its (optional) arguments to the RP,
+# to customize its run according to the test's needs.
+# (run_barry() also does it.)
 run_rp $MAXDEPTH_ARG
 
 check_report fort2       -F "Certificate chain maximum depth exceeded."
 check_report rpki-client -F "maximum certificate chain depth exhausted"
-# TODO prover & routinator
+# TODO Add prover & routinator
 
 check_vrp_output \
 	"1.0.0.0/8-8 => AS1234" \

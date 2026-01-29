@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# This file is a "test". A test is a script consisting of a setup, a run and
+# some checks.
+# 
+# More specifically, this file is a "sample" test. It's not really connected
+# to a particular RFC or requirement, but rather, it's meant as a simple
+# introduction to Rapport's framework.
+
+# This sample test verifies a (somewhat minimal) correct RPKI repository,
+# checking that the RP is capable of downloading, parsing and accepting the
+# valid objects and producing the corresponding few VRPs.
+
 # Among a few others, all tests inherit the following environment variables:
 #
 # - $TEST: Name of the test (in this case, "100-simple")
@@ -57,5 +68,6 @@ check_http_requests \
 	"/$TEST/notification.xml.snapshot 200"
 
 # Check the RP made the logical sequence of rsync requests
-# (In this case, that would be none):
+# (In this case, that would be none, because RRDP has higher priority,
+# and worked fine in this test):
 check_rsync_requests

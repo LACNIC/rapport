@@ -135,3 +135,7 @@ If you exclude memory leak checks, you can ditch the `valgrind` dependency.
 ### `$VALGRIND`
 
 Valgrind's equivalent to [`$FORT`](#fort). Optional; defaults to `valgrind`.
+
+## Creating new tests
+
+See the [sample tests](tests/sample).

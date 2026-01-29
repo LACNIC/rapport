@@ -1,10 +1,14 @@
 #!/bin/sh
 
+# This sample test is a somewhat alternate version of 500-multi-step.
+# Instead of relying on deltas, we force the RP to re-snapshot,
+# to test that particular pipeline.
+
 . tools/checks.sh
 . rp/$RP.sh
 
 
-# Stage 1: Normal, simple run
+# Stage 1: Normal simple startup run
 
 echo "  Step 1"
 run_barry "step1.rd"
@@ -29,7 +33,9 @@ check_rsync_requests
 # Stage 2: Some ROAs change
 
 echo "  Step 2"
+# Force the HTTP IMS to change
 sleep 1
+# No delta; we change the session instead
 run_barry "step2.rd"
 run_rp
 

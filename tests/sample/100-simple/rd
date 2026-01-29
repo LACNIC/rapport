@@ -1,3 +1,7 @@
+# A very simple RPKI tree.
+# The TA has a single CA,
+# and that CA has two correct ROAs.
+
 ta.cer
 	A.cer
 		A1.roa
