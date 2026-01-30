@@ -8,7 +8,7 @@
 #set -x     # Decomment to print all commands
 
 case "$RP" in
-	"fort2")
+	fort*)
 		export RP_BIN="$FORT"
 		;;
 	"routinator")

@@ -1,0 +1,12 @@
+ta.cer
+	correct.asa
+	bad-encapContentInfo.asa
+
+[node: correct.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x01000100
+obj.content.encapContentInfo.eContent.providers = [ 123, 70000, 4294967295 ]
+
+[node: bad-encapContentInfo.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x02000100
+obj.content.encapContentInfo.eContent.providers = [ 123, 70000, 4294967295 ]
+obj.content.encapContentInfo.eContentType = 1.2.840.113549.1.9.16.1.24

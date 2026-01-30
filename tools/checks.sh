@@ -87,6 +87,29 @@ check_vrp_output() {
 		|| fail "Unexpected VRPs; see $VRP_DIR"
 }
 
+# Each argument is 1 ASPA.
+# Format: "$customerASID:[$providerASIDs]"
+# $providerASIDs is a comma-separated list of ASs.
+# Example: "10000:[100,200,300]"
+check_aspa_output() {
+	ASPA_DIR="$SANDBOX/aspa"
+	EXPECTED="$ASPA_DIR/expected.txt"
+	ACTUAL="$ASPA_DIR/actual.txt"
+	DIFF="$ASPA_DIR/diff.txt"
+	mkdir -p "$ASPA_DIR"
+
+	:> "$EXPECTED"
+	for i in "$@"; do
+		echo "$i" >> "$EXPECTED"
+	done
+
+	rp_print_aspas "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
+		|| fail "Unexpected ASPAs; see $ASPA_DIR"
+}
+
 # Checks file $1 contains a line that matches the $3 regex string.
 # $1: file to grep in
 # $2: grep flags
