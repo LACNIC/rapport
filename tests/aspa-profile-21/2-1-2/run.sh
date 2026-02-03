@@ -9,7 +9,7 @@ run_rp
 check_vrp_count 0
 check_aspa_output "16777472:[123,70000,4294967295]"
 
-check_report fort1 -F "The OID of the SignedObject's encapContentInfo is not 'aspa'."
+check_report fort1 -F "The OID of the SignedObject's content type attribute is not 'aspa'."
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \

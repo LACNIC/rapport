@@ -1,0 +1,13 @@
+# "Each element contained in the providers field
+# is an instance of ASID."
+
+ta.cer
+	correct.asa
+	not-as.asa
+
+[node: correct.asa]
+obj.content.encapContentInfo.eContent.providers = [ 100, 200, 300 ]
+
+[node: not-as.asa]
+# Number too big to be an AS
+obj.content.encapContentInfo.eContent.providers = [ 100, 0x0100000000, 300 ]

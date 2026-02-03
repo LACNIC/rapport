@@ -1,0 +1,25 @@
+ta.cer
+	correct.asa
+	not-1.asa
+	implicit.asa
+
+[node: correct.asa]
+obj.content.encapContentInfo.eContent = {
+	version = 1,
+	customerASID = 0x01000111,
+	providers = [ 0x1111 ],
+}
+
+[node: not-1.asa]
+obj.content.encapContentInfo.eContent = {
+	version = 2,
+	customerASID = 0x02000222,
+	providers = [ 0x2222 ],
+}
+
+[node: implicit.asa]
+obj.content.encapContentInfo.eContent = {
+	version = NULL,
+	customerASID = 0x03000333,
+	providers = [ 0x3333 ],
+}

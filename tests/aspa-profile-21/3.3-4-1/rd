@@ -1,0 +1,21 @@
+# "The CustomerASID value MUST NOT appear in any ASID in the
+# providers field."
+
+ta.cer
+	good.asa
+	bad.asa
+
+[node: good.asa]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x01000000,
+	providers = [
+		0x00FFFFFF,
+		0x01000001,
+	],
+}
+
+[node: bad.asa]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x02000000,
+	providers = [ 0x02000000 ],
+}

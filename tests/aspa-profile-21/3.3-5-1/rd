@@ -1,0 +1,25 @@
+# "The elements of providers MUST be ordered in ascending numerical
+# order."
+
+ta.cer
+	good1.asa
+	good2.asa
+	bad.asa
+
+[node: good1.asa]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x01000000,
+	providers = [ 1, 2, 3, 4, 5 ],
+}
+
+[node: good2.asa]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x02000000,
+	providers = [ 111, 2121, 3838, 3839, 10000 ],
+}
+
+[node: bad.asa]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x03000000,
+	providers = [ 1, 2, 4, 3, 5 ],
+}

@@ -1,0 +1,10 @@
+ta.cer
+	correct.asa
+	not-as.asa
+
+[node: correct.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x01000000
+
+[node: not-as.asa]
+# Number too big to be an AS
+obj.content.encapContentInfo.eContent.customerASID = 0x0100000000
