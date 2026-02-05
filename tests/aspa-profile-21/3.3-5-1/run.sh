@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_vrp_count 0
+check_vrps
 check_aspa_output \
 	"16777216:[1,2,3,4,5]" \
 	"33554432:[111,2121,3838,3839,10000]"

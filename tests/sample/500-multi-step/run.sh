@@ -13,7 +13,7 @@ echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234" \
 	"201::/16-16 => AS1234" "2.1.0.0/16-16 => AS1234" \
 	"301::/16-16 => AS1234" "3.1.0.0/16-16 => AS1234" \
@@ -36,7 +36,7 @@ echo "  Step 2"
 create_delta "step2.rd"
 run_rp
 
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234" \
 	"2.22.0.0/16-16 => AS1234" "222::/16-16 => AS1234" \
 	"301::/16-16 => AS1234" "302::/16-16 => AS1234" \
@@ -44,7 +44,7 @@ check_vrp_output \
 	"601::/16-16 => AS1234" "6.1.0.0/16-16 => AS1234"
 # This time we expect the RP to not query the snapshot;
 # we want it to apply the smaller delta instead.
-# Notice that the TA will be queried but not re-downloaded.
+# Notice that the TA is queried but not re-downloaded.
 check_http_requests \
 	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \
@@ -73,7 +73,7 @@ check_rsync_requests \
 
 # In spite of the hiccup, the RP continues serving the same VRPs as in the
 # previous cycle, because it falls back to its cache.
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234" \
 	"2.22.0.0/16-16 => AS1234" "222::/16-16 => AS1234" \
 	"301::/16-16 => AS1234" "302::/16-16 => AS1234" \
@@ -89,7 +89,7 @@ mv "$SANDBOX/tmp-rsync" "sandbox/rsyncd/content/$TEST"
 create_delta "step4.rd"
 run_rp
 
-check_vrp_output "101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234"
+check_vrps "101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234"
 check_http_requests \
 	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \

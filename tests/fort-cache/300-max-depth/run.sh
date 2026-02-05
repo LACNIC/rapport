@@ -31,7 +31,7 @@ run_rp $MAXDEPTH_ARG
 
 check_report fort2       -F "Certificate chain maximum depth exceeded."
 check_report rpki-client -F "maximum certificate chain depth exhausted"
-check_vrp_output \
+check_vrps \
 	"1.0.0.0/8-8 => AS1234" \
 	"100::/8-8 => AS1234" \
 	"201::/16-16 => AS1234" \

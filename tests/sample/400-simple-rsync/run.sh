@@ -24,7 +24,7 @@ check_rsync_requests \
 
 
 # In spite of RRDP's absence, the validation should succeed via rsync.
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" \
 	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \

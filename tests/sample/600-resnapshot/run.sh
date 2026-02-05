@@ -14,7 +14,7 @@ echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" \
 	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \
@@ -39,7 +39,7 @@ sleep 1
 run_barry "step2.rd"
 run_rp
 
-check_vrp_output \
+check_vrps \
 	"101::/16-16 => AS1234" \
 	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \

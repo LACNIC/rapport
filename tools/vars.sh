@@ -30,6 +30,10 @@ fi
 check_exists "$RSYNC --help" "RSYNC"
 export RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
 
+if [ -z "$RTRCLIENT" ]; then
+	export RTRCLIENT=rtrclient
+fi
+check_exists "$RTRCLIENT -l" "RTRCLIENT"
 
 if [ -z "$RP_BIN" ]; then
 	export RP_BIN="$RP_BIN_DEFAULT"

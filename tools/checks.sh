@@ -46,29 +46,38 @@ run_barry() {
 
 # $@: Additional arguments
 run_rp() {
-	ck_inc # Counts because we check result value and Valgrind
-	rp_run "$@" || fail "$RP returned $? (See $SANDBOX/$RP.log)"
-}
+	ck_inc # Counts because we check result, Valgrind and timeout
 
-# Checks the RP generated $1 VRPs.
-# This test is redundant if you also do check_vrp_output().
-# $1: Expected VRP count
-check_vrp_count() {
-	ck_inc
-	ROWS=$(wc -l < "$(rp_vrp_path)")
-	ACTUAL=$((ROWS-1))
-	test "$1" -eq "$ACTUAL" \
-		|| fail "Expected $1 VRP(s), $RP produced $ACTUAL"
+	rp_start # TODO Must send it to the backgroud now
+	RP_PID="$!" # TODO there's no need for a PID file anymore
+
+	# 3s timeout
+	for i in $(seq 15); do
+		sleep 0.2
+
+		if ! kill -0 "$RP_PID" 2> /dev/null; then
+			fail "$RP died. (See $SANDBOX/$RP.log)"
+		fi
+		if grep -q "$(rp_ready_string)" "$SANDBOX/$RP.log"; then
+			$RTRCLIENT -e tcp -pa 127.0.0.1 8323 \
+				> "$SANDBOX/rtrclient.out" 2>&1
+			kill "$RP_PID"
+			return 0
+		fi
+	done
+
+	kill "$RP_PID"
+	fail "Timeout. $RP did not finish the validation cycle."
 }
 
 # Checks the RP generated the $@ VRPs.
 # $@: Sequence of VRPs in "PREFIX-MAXLEN => AS" format.
 #     It must be sorted in accordance to `sort`'s default rules.
-check_vrp_output() {
+check_vrps() {
 	VRP_DIR="$SANDBOX/vrp"
 	EXPECTED="$VRP_DIR/expected.txt"
-	ACTUAL="$VRP_DIR/actual.txt"
-	DIFF="$VRP_DIR/diff.txt"
+	ACTUAL_FILE="$VRP_DIR/file.txt"
+	ACTUAL_RTR="$VRP_DIR/rtr.txt"
 	mkdir -p "$VRP_DIR"
 
 	:> "$EXPECTED"
@@ -80,11 +89,19 @@ check_vrp_output() {
 	# so there's no need for a callback.
 	tail -n +2 "$(rp_vrp_path)" |
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
-		sort > "$ACTUAL"
+		sort > "$ACTUAL_FILE"
+
+	grep "^\\+ .[^S]" "$SANDBOX/rtrclient.out" |
+		awk '{ printf "%s/%s-%s => AS%s\n", $2, $3, $5, $6 }' |
+		sort > "$ACTUAL_RTR"
 
 	ck_inc
-	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| fail "Unexpected VRPs; see $VRP_DIR"
+	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" ||
+		fail "Unexpected file VRPs; see $VRP_DIR"
+
+	ck_inc
+	diff -B "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" ||
+		fail "Unexpected RTR VRPs; see $VRP_DIR"
 }
 
 # Each argument is 1 ASPA.
@@ -94,8 +111,8 @@ check_vrp_output() {
 check_aspa_output() {
 	ASPA_DIR="$SANDBOX/aspa"
 	EXPECTED="$ASPA_DIR/expected.txt"
-	ACTUAL="$ASPA_DIR/actual.txt"
-	DIFF="$ASPA_DIR/diff.txt"
+	ACTUAL_FILE="$ASPA_DIR/file.txt"
+	ACTUAL_RTR="$ASPA_DIR/rtr.txt"
 	mkdir -p "$ASPA_DIR"
 
 	:> "$EXPECTED"
@@ -103,11 +120,19 @@ check_aspa_output() {
 		echo "$i" >> "$EXPECTED"
 	done
 
-	rp_print_aspas "$ACTUAL"
+	rp_print_aspas "$ACTUAL_FILE"
+
+	grep "^\\+ ASPA" "$SANDBOX/rtrclient.out" |
+		sed "s/+ ASPA //" | sed "s/ //g" | sed "s/=>/:/" |
+		sort > "$ACTUAL_RTR"
 
 	ck_inc
-	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| fail "Unexpected ASPAs; see $ASPA_DIR"
+	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" \
+		|| fail "Unexpected file ASPAs; see $ASPA_DIR"
+
+	ck_inc
+	diff -Bb "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" \
+		|| fail "Unexpected RTR ASPAs; see $ASPA_DIR"
 }
 
 # Checks file $1 contains a line that matches the $3 regex string.

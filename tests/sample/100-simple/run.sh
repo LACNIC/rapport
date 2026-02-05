@@ -55,13 +55,15 @@ run_rp
 
 # Here's a very typical check that should probably be defined for all tests:
 # Verify the RP's output VRP file lists the expected VRPs.
-check_vrp_output \
+# (This function checks both the RP's output file and the RTR payload.)
+check_vrps \
 	"101::/16-16 => AS1234" \
 	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \
 	"1.2.0.0/16-16 => AS1234"
 
 # Check the RP made the logical sequence of HTTP requests:
+# (This function checks both the RP's output file and the RTR payload.)
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \

@@ -7,9 +7,11 @@ export RP_EV="FORT"
 export RP_TEST="-V"
 export MEMCHECK_DEFAULT=1
 
-rp_run() {
-	$VALGRIND $RP_BIN \
-		--mode standalone \
+rp_start() {
+	$RP_BIN \
+		--mode "server" \
+		--server.address "127.0.0.1" \
+		--server.port "8323" \
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
 		--output.roa "$SANDBOX/vrps.csv" \
@@ -20,7 +22,11 @@ rp_run() {
 		--validation-log.level=debug \
 		--validation-log.color \
 		"$@" \
-		> "$SANDBOX/$RP.log" 2>&1
+		> "$SANDBOX/$RP.log" 2>&1 &
+}
+
+rp_ready_string() {
+	echo "First validation cycle successfully ended"
 }
 
 rp_tal_path() {

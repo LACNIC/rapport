@@ -12,6 +12,7 @@ This project is in early development.
 - `rsync` (tested 3.2.7)
 - `apache2` (tested 2.4.52)
 - [`barry`](https://github.com/LACNIC/barry/)
+- [`rtrclient`](https://github.com/rtrlib/rtrlib) (Must be compiled, as the latest release does not include ASPA yet.)
 - The Relying Party you want to test
 - [`tmpfs`](https://man7.org/linux/man-pages/man5/tmpfs.5.html) (optional)
 - A means to create x509 certificates (`openssl` exampled below)
@@ -116,6 +117,10 @@ Apache HTTP Server's equivalent to [`$FORT`](#fort). Optional; defaults to `apac
 ### `$RSYNC`
 
 rsync's equivalent to [`$FORT`](#fort). Optional; defaults to `rsync`.
+
+### `$RTRCLIENT`
+
+[`rtrclient`](https://github.com/rtrlib/rtrlib)'s equivalent to [`$FORT`](#fort). Optional; defaults to `rtrclient`.
 
 ### `$MEMCHECK`
 

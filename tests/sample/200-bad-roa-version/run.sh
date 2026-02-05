@@ -18,7 +18,7 @@
 run_barry
 run_rp
 
-check_vrp_count 0
+check_vrps
 
 # Check the RP rejected the object for the intended reason,
 # by querying its output.

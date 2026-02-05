@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_vrp_count 0
+check_vrps
 check_aspa_output "16777489:[4369]"
 
 check_logfile fort1 -F "correct.asa: Adding ASPA for customer 16777489"
