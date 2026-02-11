@@ -23,5 +23,5 @@ obj.tbsCertificate.extensions.ip.extnValue = [ 6.0.0.0/8, 600::/8 ]
 [node: F.roa]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 6.1.0.0/16, 601::/16 ]
 
-[notification: https://localhost:8443/500-multi-step/notification.xml]
+[notification: https://localhost:8443/$TEST/notification.xml]
 serial = 2
