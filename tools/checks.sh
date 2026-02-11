@@ -48,7 +48,7 @@ run_barry() {
 run_rp() {
 	ck_inc # Counts because we check result, Valgrind and timeout
 
-	rp_start # TODO Must send it to the backgroud now
+	rp_start "$@" # TODO Must send it to the backgroud now
 	RP_PID="$!" # TODO there's no need for a PID file anymore
 
 	# 3s timeout

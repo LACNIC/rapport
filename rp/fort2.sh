@@ -21,16 +21,23 @@ export MEMCHECK_DEFAULT=1
 
 # Typical, common, single-run RP invocation.
 # $@: Additional arguments
-rp_run() {
+rp_start() {
 	$VALGRIND $RP_BIN \
-		--mode standalone \
+		--mode "server" \
+		--server.address "127.0.0.1" \
+		--server.port "8323" \
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
 		--report "$SANDBOX/report.txt" \
 		--output.roa "$SANDBOX/vrps.csv" \
 		--rsync.program "$RSYNC" \
 		"$@" \
-		> "$SANDBOX/$RP.log" 2>&1
+		> "$SANDBOX/$RP.log" 2>&1 &
+
+}
+
+rp_ready_string() {
+	echo "First validation cycle successfully ended"
 }
 
 # Echoes the location where rp_run() expects to find the TAL file.
