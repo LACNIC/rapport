@@ -25,7 +25,7 @@ check_vrps \
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \
-	"/$TEST/notification.xml.snapshot 200"
+	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
 check_fort_cache 0 2
@@ -64,7 +64,7 @@ check_vrps \
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \
-	"/$TEST/notification.xml.snapshot 200"
+	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
 check_fort_cache 0 2

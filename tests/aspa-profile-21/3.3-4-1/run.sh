@@ -15,5 +15,5 @@ check_logfile fort1 -F "bad.asa: The Providers list contains the customer's ASID
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \
-	"/$TEST/notification.xml.snapshot 200"
+	"/$TEST/snapshot.xml 200"
 check_rsync_requests

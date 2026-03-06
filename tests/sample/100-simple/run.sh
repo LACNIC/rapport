@@ -67,7 +67,7 @@ check_vrps \
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \
-	"/$TEST/notification.xml.snapshot 200"
+	"/$TEST/snapshot.xml 200"
 
 # Check the RP made the logical sequence of rsync requests
 # (In this case, that would be none, because RRDP has higher priority,
