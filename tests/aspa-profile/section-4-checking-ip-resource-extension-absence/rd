@@ -1,0 +1,13 @@
+ta.cer
+        ca.cer
+                invalid.asa
+
+[node: invalid.asa]
+obj.content.certificates.0.tbsCertificate.extensions = [ ski, aki, ku, cdp, aia, sia, cp, ip, as ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnID = 1.3.6.1.5.5.7.1.7
+obj.content.certificates.0.tbsCertificate.extensions.ip.critical = true
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.0.0.0/8 ]
+obj.content.encapContentInfo = {
+        eContent.customerASID = 0x01000000,
+        eContent.providers = [ 13001, 70001, 80001 ]
+}

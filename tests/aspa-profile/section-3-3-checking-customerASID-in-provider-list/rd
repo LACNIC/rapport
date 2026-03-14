@@ -1,0 +1,9 @@
+ta.cer
+	ca.cer
+		invalid.asa
+
+[node: invalid.asa]
+obj.content.encapContentInfo = {
+	eContent.customerASID = 0x01000000,
+	eContent.providers = [ 0x01000000, 70001, 80001 ]
+}
