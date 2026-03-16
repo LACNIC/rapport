@@ -7,7 +7,7 @@ run_barry
 run_rp
 
 check_vrps
-check_aspa_output "16777216:[0]"
+check_aspas "16777216:[0]"
 
 check_logfile fort1 -F "correct.asa: Adding ASPA for customer 16777216"
 check_logfile fort1 -F "not-as.asa: customerASID out of range. (0-4294967295)"

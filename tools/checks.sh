@@ -57,8 +57,8 @@ run_rp() {
 
 # Alternative to run_rp().
 # Starts the RP in perpetual mode, leaves it running in the background.
-# Enables RTR checks during check_vrps() and check_aspa_output(), and maybe
-# others in the future.
+# Enables RTR checks during check_vrps() and check_aspas(), and maybe more in
+# the future.
 # The test MUST eventually call stop_rp().
 # 
 # $@: Additional arguments for RP
@@ -92,6 +92,9 @@ stop_rp() {
 }
 
 # Checks the RP generated the $@ VRPs.
+# Checks file output VRPs. If the RP is running in perpetual mode,
+# also checks the RTR VRPs.
+# 
 # $@: Sequence of VRPs in "PREFIX-MAXLEN => AS" format.
 #     It must be sorted in accordance to `sort`'s default rules.
 check_vrps() {
@@ -129,7 +132,10 @@ check_vrps() {
 # Format: "$customerASID:[$providerASIDs]"
 # $providerASIDs is a comma-separated list of ASs.
 # Example: "10000:[100,200,300]"
-check_aspa_output() {
+# 
+# Checks file output ASPAs. If the RP is running in perpetual mode,
+# also checks the RTR ASPAs.
+check_aspas() {
 	ASPA_DIR="$SANDBOX/aspa"
 	EXPECTED="$ASPA_DIR/expected.txt"
 	ACTUAL_FILE="$ASPA_DIR/actual-file.txt"

@@ -7,7 +7,7 @@ run_barry
 run_rp
 
 check_vrps
-check_aspa_output \
+check_aspas \
 	"16777216:[1,2,3,4,5]" \
 	"33554432:[111,2121,3838,3839,10000]"
 

@@ -6,4 +6,4 @@
 run_barry
 run_rp
 
-check_aspa_output "1:[8,9]"
+check_aspas "1:[8,9]"

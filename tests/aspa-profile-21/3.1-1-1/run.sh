@@ -7,7 +7,7 @@ run_barry
 run_rp
 
 check_vrps
-check_aspa_output "16777216:[4369]"
+check_aspas "16777216:[4369]"
 
 check_logfile fort1 -F "correct.asa: Adding ASPA for customer 16777216"
 check_logfile fort1 -F "not-1.asa: Version number is not 1: 2"
