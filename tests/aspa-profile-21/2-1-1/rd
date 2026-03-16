@@ -4,13 +4,11 @@ ta.cer
 
 [node: correct.asa]
 obj.content.encapContentInfo.eContent = {
-	customerASID = 0x01000100,
 	providers = [ 123, 70000, 4294967295 ]
 }
 
 [node: bad-encapContentInfo.asa]
 obj.content.encapContentInfo = {
-	eContent.customerASID = 0x02000100,
 	eContent.providers = [ 123, 70000, 4294967295 ],
 	eContentType = 1.2.840.113549.1.9.16.1.24,
 }

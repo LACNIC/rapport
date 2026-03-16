@@ -4,6 +4,6 @@ ta.cer
 
 [node: invalid.asa]
 obj.content.encapContentInfo = {
-	eContent.customerASID = 0x01000000,
+	eContent.customerASID = 0x01010000,
 	eContent.providers = [ 13000, 13001, 65001, 65002, 80001, 80002, 90005, 102500, 102501, 102502 ]
 }

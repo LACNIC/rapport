@@ -8,6 +8,6 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnID = 1.3.6.1.5.5.7.1
 obj.content.certificates.0.tbsCertificate.extensions.ip.critical = true
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.0.0.0/8 ]
 obj.content.encapContentInfo = {
-        eContent.customerASID = 0x01000000,
+        eContent.customerASID = 0x01010000,
         eContent.providers = [ 13001, 70001, 80001 ]
 }

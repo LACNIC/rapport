@@ -6,16 +6,10 @@ ta.cer
 	bad.asa
 
 [node: good.asa]
-obj.content.encapContentInfo.eContent = {
-	customerASID = 0x01000000,
-	providers = [
+obj.content.encapContentInfo.eContent.providers = [
 		0x00FFFFFF,
 		0x01000001,
-	],
-}
+]
 
 [node: bad.asa]
-obj.content.encapContentInfo.eContent = {
-	customerASID = 0x02000000,
-	providers = [ 0x02000000 ],
-}
+obj.content.encapContentInfo.eContent.providers = [ 0x02000000 ]

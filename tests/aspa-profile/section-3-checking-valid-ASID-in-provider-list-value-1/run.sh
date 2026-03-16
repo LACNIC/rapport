@@ -6,4 +6,4 @@
 run_barry
 run_rp
 
-check_aspa_output "16777216:[1]"
+check_aspa_output "16842752:[1]"
