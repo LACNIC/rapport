@@ -20,10 +20,12 @@ export MEMCHECK_DEFAULT=1
 
 
 # Typical, common, single-run RP invocation.
-# $@: Additional arguments
-rp_start() {
-	$VALGRIND $RP_BIN \
-		--mode "server" \
+# Must include timeout and Valgrind.
+# 
+# $@: Additional arguments for RP.
+rp_run() {
+	timeout 3s $VALGRIND $RP_BIN \
+		--mode "standalone" \
 		--server.address "127.0.0.1" \
 		--server.port "8323" \
 		--tal "$SANDBOX/$TEST.tal" \
@@ -32,8 +34,8 @@ rp_start() {
 		--output.roa "$SANDBOX/vrps.csv" \
 		--rsync.program "$RSYNC" \
 		"$@" \
-		> "$SANDBOX/$RP.log" 2>&1 &
-
+		> "$SANDBOX/$RP.log" 2>&1 \
+		|| fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
 }
 
 rp_ready_string() {

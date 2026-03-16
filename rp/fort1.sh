@@ -7,7 +7,27 @@ export RP_EV="FORT"
 export RP_TEST="-V"
 export MEMCHECK_DEFAULT=1
 
+rp_run() {
+	timeout 3s $VALGRIND $RP_BIN \
+		--mode "standalone" \
+		--tal "$SANDBOX/$TEST.tal" \
+		--local-repository "$SANDBOX/workdir" \
+		--output.roa "$SANDBOX/vrps.csv" \
+		--output.aspa "$SANDBOX/aspa.json" \
+		--log.level=debug \
+		--log.color \
+		--validation-log.enabled \
+		--validation-log.level=debug \
+		--validation-log.color \
+		"$@" \
+		> "$SANDBOX/$RP.log" 2>&1 \
+		|| fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
+}
+
 rp_start() {
+	# TODO Valgrind?
+	# Since we'll have to SIGTERM the RP later,
+	# I'm not sure if Valgrind makes sense here.
 	$RP_BIN \
 		--mode "server" \
 		--server.address "127.0.0.1" \
