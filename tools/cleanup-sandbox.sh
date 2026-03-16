@@ -25,7 +25,7 @@ rm -rf sandbox/apache2/*
 rm -rf sandbox/rsyncd/*
 rm -rf sandbox/tests/*
 
-touch "sandbox/checks/totals.txt"
+touch "sandbox/checks/total.txt"
 touch "sandbox/checks/warns.txt"
 
 cp "tools/apache2.conf" "sandbox/apache2"
