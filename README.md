@@ -12,7 +12,6 @@ This project is in early development.
 - `rsync` (tested 3.2.7)
 - `apache2` (tested 2.4.52)
 - [`barry`](https://github.com/LACNIC/barry/)
-- `rtrclient` (**See below**)
 - The Relying Party you want to test
 - [`tmpfs`](https://man7.org/linux/man-pages/man5/tmpfs.5.html) (optional)
 - A means to create x509 certificates (`openssl` exampled below)
@@ -20,8 +19,6 @@ This project is in early development.
 - `jq` (if testing Fort)
 
 The project is just a bunch of shell scripts, so it needs no installation.
-
-Try compiling [this version of `rtrclient`](https://github.com/ydahhrk/rtrlib), because upstream [crashes](https://github.com/rtrlib/rtrlib/pull/321) right now.
 
 ## Run
 
@@ -119,10 +116,6 @@ Apache HTTP Server's equivalent to [`$FORT`](#fort). Optional; defaults to `apac
 ### `$RSYNC`
 
 rsync's equivalent to [`$FORT`](#fort). Optional; defaults to `rsync`.
-
-### `$RTRCLIENT`
-
-[`rtrclient`](https://github.com/rtrlib/rtrlib)'s equivalent to [`$FORT`](#fort). Optional; defaults to `rtrclient`.
 
 ### `$MEMCHECK`
 

@@ -4,7 +4,7 @@
 . rp/$RP.sh
 
 run_barry
-run_rp
+start_rp
 
 check_vrps
 check_aspa_output "16777216:[123,70000,4294967295]"
@@ -16,3 +16,5 @@ check_http_requests \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
+
+stop_rp

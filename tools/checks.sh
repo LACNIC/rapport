@@ -6,6 +6,7 @@ ck_inc() {
 
 fail() {
 	echo "$TESTID error: $@" 1>&2
+	stop_rp
 	exit 1
 }
 
@@ -18,6 +19,7 @@ warn() {
 # It's neither a success nor a failure.
 skip() {
 	echo "$TESTID skipped: $@"
+	stop_rp
 	exit 3
 }
 
@@ -44,12 +46,27 @@ run_barry() {
 		|| fail "Barry returned $?; see $SANDBOX/barry.txt"
 }
 
-# $@: Additional arguments
+# Runs the RP in single-cycle mode.
+# 
+# $@: Additional arguments for RP
 run_rp() {
 	ck_inc # Counts because we check result, Valgrind and timeout
+	rp_run "$@"
+	export RP_PID="" # Not running
+}
 
-	rp_start "$@" # TODO Must send it to the backgroud now
-	RP_PID="$!" # TODO there's no need for a PID file anymore
+# Alternative to run_rp().
+# Starts the RP in perpetual mode, leaves it running in the background.
+# Enables RTR checks during check_vrps() and check_aspa_output(), and maybe
+# others in the future.
+# The test MUST eventually call stop_rp().
+# 
+# $@: Additional arguments for RP
+start_rp() {
+	ck_inc
+
+	rp_start "$@"
+	export RP_PID="$!"
 
 	# 3s timeout
 	for i in $(seq 15); do
@@ -59,15 +76,19 @@ run_rp() {
 			fail "$RP died. (See $SANDBOX/$RP.log)"
 		fi
 		if grep -q "$(rp_ready_string)" "$SANDBOX/$RP.log"; then
-			$RTRCLIENT -e tcp -pa 127.0.0.1 8323 \
-				> "$SANDBOX/rtrclient.out" 2>&1
-			kill "$RP_PID"
 			return 0
 		fi
 	done
 
-	kill "$RP_PID"
+	stop_rp
 	fail "Timeout. $RP did not finish the validation cycle."
+}
+
+stop_rp() {
+	if [ ! -z "$RP_PID" ]; then
+		kill "$RP_PID"
+		export RP_PID=""
+	fi
 }
 
 # Checks the RP generated the $@ VRPs.
@@ -76,8 +97,8 @@ run_rp() {
 check_vrps() {
 	VRP_DIR="$SANDBOX/vrp"
 	EXPECTED="$VRP_DIR/expected.txt"
-	ACTUAL_FILE="$VRP_DIR/file.txt"
-	ACTUAL_RTR="$VRP_DIR/rtr.txt"
+	ACTUAL_FILE="$VRP_DIR/actual-file.txt"
+	ACTUAL_RTR="$VRP_DIR/actual-rtr.txt"
 	mkdir -p "$VRP_DIR"
 
 	:> "$EXPECTED"
@@ -85,23 +106,23 @@ check_vrps() {
 		echo "$i" >> "$EXPECTED"
 	done
 
+	ck_inc
 	# Lucky: All supported RPs print the same first 3 columns,
 	# so there's no need for a callback.
 	tail -n +2 "$(rp_vrp_path)" |
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
 		sort > "$ACTUAL_FILE"
-
-	grep "^\\+ .[^S]" "$SANDBOX/rtrclient.out" |
-		awk '{ printf "%s/%s-%s => AS%s\n", $2, $3, $5, $6 }' |
-		sort > "$ACTUAL_RTR"
-
-	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" ||
 		fail "Unexpected file VRPs; see $VRP_DIR"
 
-	ck_inc
-	diff -B "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" ||
-		fail "Unexpected RTR VRPs; see $VRP_DIR"
+	if [ ! -z "$TEST_PID" ]; then
+		ck_inc
+		$BARRY-rtr -f rapport reset 127.0.0.1 8323 \
+			| grep "^VRP" | cut -f2- | sort \
+			> "$ACTUAL_RTR"
+		diff -B "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" ||
+			fail "Unexpected RTR VRPs; see $VRP_DIR"
+	fi
 }
 
 # Each argument is 1 ASPA.
@@ -111,8 +132,8 @@ check_vrps() {
 check_aspa_output() {
 	ASPA_DIR="$SANDBOX/aspa"
 	EXPECTED="$ASPA_DIR/expected.txt"
-	ACTUAL_FILE="$ASPA_DIR/file.txt"
-	ACTUAL_RTR="$ASPA_DIR/rtr.txt"
+	ACTUAL_FILE="$ASPA_DIR/actual-file.txt"
+	ACTUAL_RTR="$ASPA_DIR/actual-rtr.txt"
 	mkdir -p "$ASPA_DIR"
 
 	:> "$EXPECTED"
@@ -120,19 +141,19 @@ check_aspa_output() {
 		echo "$i" >> "$EXPECTED"
 	done
 
-	rp_print_aspas "$ACTUAL_FILE"
-
-	grep "^\\+ ASPA" "$SANDBOX/rtrclient.out" |
-		sed "s/+ ASPA //" | sed "s/ //g" | sed "s/=>/:/" |
-		sort > "$ACTUAL_RTR"
-
 	ck_inc
+	rp_print_aspas "$ACTUAL_FILE"
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" \
 		|| fail "Unexpected file ASPAs; see $ASPA_DIR"
 
-	ck_inc
-	diff -Bb "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" \
-		|| fail "Unexpected RTR ASPAs; see $ASPA_DIR"
+	if [ ! -z "$RP_PID" ]; then
+		ck_inc
+		$BARRY-rtr -f rapport reset 127.0.0.1 8323 \
+			| grep "^ASPA" | cut -f2- | sort \
+			> "$ACTUAL_RTR"
+		diff -Bb "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" \
+			|| fail "Unexpected RTR ASPAs; see $ASPA_DIR"
+	fi
 }
 
 # Checks file $1 contains a line that matches the $3 regex string.
