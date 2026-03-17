@@ -7,6 +7,7 @@ ck_inc() {
 fail() {
 	echo "$TESTID error: $@" 1>&2
 	stop_rp
+	stop_router
 	exit 1
 }
 
@@ -20,6 +21,7 @@ warn() {
 skip() {
 	echo "$TESTID skipped: $@"
 	stop_rp
+	stop_router
 	exit 3
 }
 
@@ -162,6 +164,129 @@ check_aspas() {
 	fi
 }
 
+start_router() {
+	test -z "$BARRY_RTR_PID" || fail "The router is already running."
+
+	$BARRY-rtr --input "$SANDBOX/barry-rtr.sk" interactive 127.0.0.1 8323 \
+		> "$SANDBOX/barry-rtr.stdout" &
+	export BARRY_RTR_PID="$!"
+}
+
+send_router_pdu() {
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+
+	echo "$@" | $BARRY-ncu "$SANDBOX/barry-rtr.sk"
+}
+
+# $1: Expect notify?
+# $2-: Expected resource PDUs
+check_cache_response() {
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+
+	PDU_DIR="$SANDBOX/pdu"
+	EXPECTED="$PDU_DIR/expected.txt"
+	ACTUAL="$PDU_DIR/actual.txt"
+	DIFF="$PDU_DIR/diff.txt"
+	mkdir -p "$PDU_DIR"
+
+	if [ "$1" -eq 0 ]; then
+		STATE="2"
+	else
+		STATE="1"
+	fi
+	shift
+
+	while read LINE; do
+		case "$STATE" in
+		"1")
+			echo "$LINE" |
+				grep -qE "serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+" ||
+				fail "Serial Notify PDU does not match the Serial Notify regex."
+			STATE="2"
+			;;
+		"2")
+			echo "$LINE" |
+				grep -qE "cache-response version 2 session [0-9]+ length 8" - ||
+				fail "Cache Response PDU does not match the Cache Response regex."
+			STATE="3"
+			;;
+		"3")
+			case "$LINE" in
+			ipv4-prefix*|ipv6-prefix*|aspa-pdu*)
+				echo "$LINE" >> "$ACTUAL.tmp"
+				;;
+			end-of-data*)
+				echo "$LINE" |
+					grep -qE "end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+" - ||
+					fail "End of Data PDU does not match the End of Data regex."
+				STATE="4"
+				;;
+			*)
+				fail "Unexpected PDU: $LINE"
+			esac
+			;;
+		"4")
+			fail "PDU found after End Of Data: $LINE"
+			;;
+		*)
+			fail "Invalid state: $STATE"
+			;;
+		esac
+	done < "$SANDBOX/barry-rtr.stdout"
+
+	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
+
+	:> "$EXPECTED"
+	for i in "$@"; do
+		echo "$i" >> "$EXPECTED"
+	done
+
+	sort "$ACTUAL.tmp" > "$ACTUAL"
+	rm "$ACTUAL.tmp"
+
+	#while read LINE; do
+	#	echo "$LINE" | grep -Eq "$1" - || fail "Line '$LINE' does not match its regular expression. See $PDU_DIR"
+	#	shift
+	#done < "$ACTUAL"
+	#if [ "$#" -ne 0 ]; then
+	#	fail "Received less PDUs than expected. See $PDU_DIR"
+	#fi
+
+	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
+		fail "Unexpected RTR PDUs; see $PDU_DIR"
+}
+
+revalidate_rp() {
+	test ! -z "$RP_PID" || fail "The RP is not running."
+
+	truncate -s 0 "$SANDBOX/$RP.log"
+	# TODO Fort hardcode
+	kill -USR1 "$RP_PID"
+
+	# 3s timeout
+	for i in $(seq 15); do
+		sleep 0.2
+
+		if ! kill -0 "$RP_PID" 2> /dev/null; then
+			fail "$RP died. (See $SANDBOX/$RP.log)"
+		fi
+		# TODO Fort hardcode
+		if grep -q "Main loop: Sleeping." "$SANDBOX/$RP.log"; then
+			return 0
+		fi
+	done
+
+	stop_rp
+	fail "Timeout. $RP did not finish the validation cycle."
+}
+
+stop_router() {
+	if [ ! -z "$BARRY_RTR_PID" ]; then
+		kill "$BARRY_RTR_PID"
+		export BARRY_RTR_PID=""
+	fi
+}
+
 # Checks file $1 contains a line that matches the $3 regex string.
 # $1: file to grep in
 # $2: grep flags
@@ -256,16 +381,16 @@ create_delta() {
 	mkdir "$APACHEDIR"
 	$BARRY-delta \
 		--old.notification	"$TMPDIR/old/notification.xml" \
-		--old.snapshot		"$TMPDIR/old/notification.xml.snapshot" \
+		--old.snapshot		"$TMPDIR/old/snapshot.xml" \
 		--new.notification	"$TMPDIR/new/notification.xml" \
-		--new.snapshot		"$TMPDIR/new/notification.xml.snapshot" \
+		--new.snapshot		"$TMPDIR/new/snapshot.xml" \
 		--output.notification	"$APACHEDIR/notification.xml" \
 		--output.delta.path	"$APACHEDIR/delta-$1.xml" \
 		--output.delta.uri	"https://localhost:8443/$TEST/delta-$1.xml" \
 		> "$SANDBOX/barry-delta.txt" 2>&1 \
 		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
 
-	mv "$TMPDIR/new/notification.xml.snapshot" "$APACHEDIR"
+	mv "$TMPDIR/new/snapshot.xml" "$APACHEDIR"
 	diff "$TMPDIR/old/ta.cer" "$TMPDIR/new/ta.cer" > /dev/null \
 		&& mv "$TMPDIR/new/ta.cer" "$APACHEDIR" \
 		|| mv "$TMPDIR/old/ta.cer" "$APACHEDIR"

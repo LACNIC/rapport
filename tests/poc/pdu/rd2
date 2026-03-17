@@ -1,0 +1,20 @@
+ta.cer
+	1.roa
+	2.roa
+	3.roa
+	1.asa
+	2.asa
+	3.asa
+	ta.mft
+
+[node: 1.roa]
+obj.content.encapContentInfo.eContent.asId = 4321
+
+[node: 1.asa]
+obj.content.encapContentInfo.eContent.providers = [ 1, 2, 3 ]
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 2
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 2
