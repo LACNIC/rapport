@@ -252,8 +252,51 @@ check_cache_response() {
 	#	fail "Received less PDUs than expected. See $PDU_DIR"
 	#fi
 
+	ck_inc
 	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
 		fail "Unexpected RTR PDUs; see $PDU_DIR"
+}
+
+# $@: PDU regexs
+check_pdus() {
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+
+	PDU_DIR="$SANDBOX/pdu"
+	EXPECTED="$PDU_DIR/regex.txt"
+	ACTUAL="$PDU_DIR/actual.txt"
+	mkdir -p "$PDU_DIR"
+	rm "$PDU_DIR"/*
+
+	:> "$EXPECTED"
+	for i in "$@"; do
+		echo "$i" >> "$EXPECTED"
+	done
+
+	cp "$SANDBOX/barry-rtr.stdout" "$ACTUAL"
+	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
+	
+	ck_inc
+	while read A; do
+		test "$#" -ne 0 ||
+			fail "Unexpected RTR PDUs; see $PDU_DIR"
+		echo "$A" | grep -Eqx "$1" - ||
+			fail "Unexpected RTR PDUs; see $PDU_DIR"
+		shift
+	done < "$ACTUAL"
+
+	test "$#" -eq 0 || fail "Unexpected RTR PDUs; see $PDU_DIR"
+}
+
+# $1: RP
+# $2: Expected version
+# $3: Expected error code
+# $4: Expected Encapsulated PDU
+# $5: Expected error message for $1
+#
+# Arguments $2-$5 are regular expressions.
+check_error_report_pdu() {
+	test "$RP" = "$1" || return 0
+	check_pdus "error-report   version $2 error-code $3 length [0-9]+ encapsulated-pdu-length [0-9]+ encapsulated-pdu \[ $4 \] error-text-length ${#5} error-text $5"
 }
 
 revalidate_rp() {
