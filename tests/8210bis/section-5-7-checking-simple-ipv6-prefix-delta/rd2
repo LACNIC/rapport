@@ -1,0 +1,15 @@
+ta.cer
+        ca.cer
+                roa.roa
+        ta.mft
+
+[node: roa.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 101::/16 ]
+obj.content.encapContentInfo.eContent.asId = 13002
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 101::/16 ]
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 2
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 2

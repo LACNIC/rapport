@@ -6,5 +6,7 @@
 run_barry
 run_rp
 
+check_vrps
 check_aspas "16842752:[13001,70001,80001]"
 
+stop_rp

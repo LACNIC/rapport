@@ -6,5 +6,6 @@
 run_barry
 run_rp
 
-check_report fort1       -F "EE certificate's ASN extension does not exactly match customerASID 2."
-# TODO Add rpki-client, prover & routinator
+check_logfile fort1 -F "EE certificate's ASN extension does not exactly match customerASID 2."
+
+stop_rp

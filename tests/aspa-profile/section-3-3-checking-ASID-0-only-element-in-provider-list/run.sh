@@ -6,4 +6,7 @@
 run_barry
 run_rp
 
+check_vrps
 check_aspas "16842752:[0]"
+
+stop_rp

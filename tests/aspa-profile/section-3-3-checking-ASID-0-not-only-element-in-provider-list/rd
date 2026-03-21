@@ -3,7 +3,7 @@ ta.cer
 		invalid.asa
 
 [node: invalid.asa]
-obj.content.encapContentInfo = {
-	eContent.customerASID = 0x01010000,
-	eContent.providers = [ 0x00, 13001 ]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x01010000,
+	providers = [ 0x00, 13001 ]
 }

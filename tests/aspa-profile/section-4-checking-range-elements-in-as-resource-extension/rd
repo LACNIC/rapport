@@ -1,7 +1,5 @@
 ta.cer
-        ta.mft
         ca.cer
-                ca.mft
                 aspa.asa
 
 [node: ta.cer]

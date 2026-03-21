@@ -6,5 +6,9 @@
 run_barry
 run_rp
 
-check_report fort1       -F "ASN extension is not allowed to contain 'inherit' elements."
-# TODO Add rpki-client, prover & routinator
+check_logfile fort1       -F "ASN extension is not allowed to contain 'inherit' elements."
+
+check_vrps
+check_aspas
+
+stop_rp

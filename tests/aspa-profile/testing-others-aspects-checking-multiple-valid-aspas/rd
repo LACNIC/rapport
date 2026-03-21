@@ -1,0 +1,111 @@
+ta.cer
+	ca1.cer
+		ca1-1.cer
+			aspa1-1A.asa
+		ca1-2.cer
+			aspa1-2A.asa
+	ca2.cer
+		ca2-1.cer
+			aspa2-1A.asa
+			aspa2-1B.asa
+			aspa2-1C.asa
+			aspa2-1D.asa
+	ca3.cer
+		aspa3A.asa
+	ca4.cer
+		aspa4A.asa
+		aspa4B.asa
+	ca5.cer
+		aspa5A.asa
+
+
+[node: ta.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-100 ]
+
+[node: ca1.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-20 ]
+
+[node: ca2.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 21-40 ]
+
+[node: ca3.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 41-60 ]
+
+[node: ca4.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 61-80 ]
+
+[node: ca5.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 81-100 ]
+
+
+
+[node: aspa1-1A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 10 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 10,
+        providers = [10001,10002]
+}
+
+[node: aspa1-2A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 20 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 20,
+        providers = [20001,20002]
+}
+
+
+[node: aspa2-1A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 21 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 21,
+        providers = [21001,21002]
+}
+
+[node: aspa2-1B.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 22 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 22,
+        providers = [22001,22002]
+}
+
+[node: aspa2-1C.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 23 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 23,
+        providers = [23001,23002]
+}
+
+[node: aspa2-1D.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 24 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 24,
+        providers = [24001,24002]
+}
+
+[node: aspa3A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 45 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 45,
+        providers = [45001,45002]
+}
+
+[node: aspa4A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 65 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 65,
+        providers = [65001,65002]
+}
+
+[node: aspa4B.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 70 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 70,
+        providers = [70001,70002]
+}
+
+[node: aspa5A.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 85 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 85,
+        providers = [85001,85002]
+}

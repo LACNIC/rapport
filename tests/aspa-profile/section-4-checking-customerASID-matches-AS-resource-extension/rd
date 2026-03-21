@@ -1,7 +1,5 @@
 ta.cer
-	ta.mft
 	ca.cer
-		ca.mft
 		aspa.asa
 
 [node: ta.cer]
@@ -12,7 +10,7 @@ obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01-0x05 ]
 
 [node: aspa.asa]
 obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01 ]
-obj.content.encapContentInfo = {
-	eContent.customerASID = 0x01,
-	eContent.providers = [0x08,0x09]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x01,
+	providers = [0x08,0x09]
 }

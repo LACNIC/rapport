@@ -6,4 +6,9 @@
 run_barry
 run_rp
 
-check_report fort1       -F "Provider out of range. (0-4294967295)"
+check_logfile fort1 -F "Provider out of range. (0-4294967295)"
+
+check_vrps
+check_aspas
+
+stop_rp

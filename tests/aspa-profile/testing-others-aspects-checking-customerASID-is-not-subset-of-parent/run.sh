@@ -6,5 +6,9 @@
 run_barry
 run_rp
 
-check_report fort1       -F "Certificate validation failed: RFC 3779 resource not subset of parent's resources"
-# TODO Add rpki-client, prover & routinator
+check_logfile fort1 -F "Certificate validation failed: RFC 3779 resource not subset of parent's resources"
+
+check_vrps
+check_aspas
+
+stop_rp
