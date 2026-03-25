@@ -1,0 +1,31 @@
+ta.cer
+    ta.mft
+    ca.cer
+        aspa.asa
+        aspa2.asa
+
+[node: ta.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00-0x0A ]
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01-0x05 ]
+
+[node: aspa.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01,
+        providers = [11001,11002,11003,11004,11005]
+}
+
+[node: aspa2.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x02]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x02,
+        providers = [22001,22002,22003,22004,22005]
+}
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 4
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 4

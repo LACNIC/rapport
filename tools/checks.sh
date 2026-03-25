@@ -188,6 +188,7 @@ check_cache_response() {
 	ACTUAL="$PDU_DIR/actual.txt"
 	DIFF="$PDU_DIR/diff.txt"
 	mkdir -p "$PDU_DIR"
+	rm -f "$PDU_DIR"/*
 
 	if [ "$1" -eq 0 ]; then
 		STATE="2"
@@ -265,7 +266,7 @@ check_pdus() {
 	EXPECTED="$PDU_DIR/regex.txt"
 	ACTUAL="$PDU_DIR/actual.txt"
 	mkdir -p "$PDU_DIR"
-	rm "$PDU_DIR"/*
+	rm -f "$PDU_DIR"/*
 
 	:> "$EXPECTED"
 	for i in "$@"; do

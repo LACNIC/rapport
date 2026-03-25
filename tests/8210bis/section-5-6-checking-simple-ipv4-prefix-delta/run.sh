@@ -14,7 +14,7 @@ check_aspas
 
 send_router_pdu "reset-query"
 check_cache_response 0 \
-	"ipv4-prefix    version 2 zero 0 length 20 flags 1 plen 16 maxlen 16 zero 0 prefix 1.1.0.0 as 13001"
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13001"
 
 create_delta rd2
 revalidate_rp
@@ -22,8 +22,8 @@ revalidate_rp
 send_router_pdu "serial-query serial 1"
 
 check_cache_response 1 \
-	"ipv4-prefix    version 2 zero 0 length 20 flags 0 plen 16 maxlen 16 zero 0 prefix 1.1.0.0 as 13001" \
-	"ipv4-prefix    version 2 zero 0 length 20 flags 1 plen 16 maxlen 16 zero 0 prefix 1.1.0.0 as 13002" 
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13002" 
 
 stop_router
 stop_rp

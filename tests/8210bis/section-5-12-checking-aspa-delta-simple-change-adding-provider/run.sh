@@ -19,7 +19,6 @@ revalidate_rp
 send_router_pdu "serial-query serial 1"
 
 check_cache_response 1 \
-	"aspa-pdu       version 2 flags 0 zero 0 length 24 customer 1 providers [ 13001 13002 13003 ]" \
 	"aspa-pdu       version 2 flags 1 zero 0 length 28 customer 1 providers [ 13001 13002 13003 13004 ]"
 
 stop_router
