@@ -178,7 +178,19 @@ send_router_pdu() {
 	echo "$@" | $BARRY-ncu "$SANDBOX/barry-rtr.sk"
 }
 
-# $1: Expect notify?
+# Wait at most 3 seconds for $1 PDUs to arrive
+wait_pdus() {
+	test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
+
+	for i in 1 2 3; do
+		sleep 1
+		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
+	done
+
+	fail "Timeout. $RP didn't reply $1 PDUs; see $SANDBOX/barry-rtr.stdout"
+}
+
+# $1: Expect notify? (0 or 1)
 # $2-: Expected resource PDUs
 check_cache_response() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
@@ -190,25 +202,31 @@ check_cache_response() {
 	mkdir -p "$PDU_DIR"
 	rm -f "$PDU_DIR"/*
 
-	if [ "$1" -eq 0 ]; then
+	NOTIF="$1"
+	if [ "$NOTIF" -eq 0 ]; then
 		STATE="2"
 	else
 		STATE="1"
 	fi
 	shift
 
+	NEXPECTED="$#"
+	wait_pdus $((NOTIF+NEXPECTED+2))
+	unset NOTIF
+	unset NEXPECTED
+
 	while read LINE; do
 		case "$STATE" in
 		"1")
-			echo "$LINE" |
-				grep -qE "serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+" ||
-				fail "Serial Notify PDU does not match the Serial Notify regex."
+			REGEX="serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+"
+			echo "$LINE" | grep -qE "$REGEX" ||
+				fail "Expected Serial Notify PDU, got '$LINE'."
 			STATE="2"
 			;;
 		"2")
-			echo "$LINE" |
-				grep -qE "cache-response version 2 session [0-9]+ length 8" - ||
-				fail "Cache Response PDU does not match the Cache Response regex."
+			REGEX="cache-response version 2 session [0-9]+ length 8"
+			echo "$LINE" | grep -qE "$REGEX" - ||
+				fail "Expected Cache Response PDU, got '$LINE'."
 			STATE="3"
 			;;
 		"3")
@@ -245,14 +263,6 @@ check_cache_response() {
 	sort "$ACTUAL.tmp" > "$ACTUAL"
 	rm "$ACTUAL.tmp"
 
-	#while read LINE; do
-	#	echo "$LINE" | grep -Eq "$1" - || fail "Line '$LINE' does not match its regular expression. See $PDU_DIR"
-	#	shift
-	#done < "$ACTUAL"
-	#if [ "$#" -ne 0 ]; then
-	#	fail "Received less PDUs than expected. See $PDU_DIR"
-	#fi
-
 	ck_inc
 	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
 		fail "Unexpected RTR PDUs; see $PDU_DIR"
@@ -273,6 +283,7 @@ check_pdus() {
 		echo "$i" >> "$EXPECTED"
 	done
 
+	wait_pdus "$#"
 	cp "$SANDBOX/barry-rtr.stdout" "$ACTUAL"
 	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
 	
