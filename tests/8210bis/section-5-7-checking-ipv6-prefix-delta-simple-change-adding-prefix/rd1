@@ -1,0 +1,9 @@
+ta.cer
+    ca.cer
+        roa.roa
+
+[node: roa.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100::/17 ]
+obj.content.encapContentInfo.eContent.asId = 65001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
+

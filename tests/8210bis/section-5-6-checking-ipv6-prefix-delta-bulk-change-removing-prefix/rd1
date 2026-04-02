@@ -1,0 +1,32 @@
+ta.cer
+        ca.cer
+                roa.roa
+                roa2.roa
+                roa3.roa
+                roa4.roa
+                roa5.roa
+
+[node: roa.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:1000::/20, 100:2000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 1000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
+
+[node: roa2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:3000::/20, 100:4000::/20, 100:5000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 2000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
+
+[node: roa3.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:6000::/20, 100:7000::/20, 100:8000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 3000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
+
+[node: roa4.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:9000::/20, 100:a000::/20, 100:b000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 4000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
+
+[node: roa5.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:c000::/20, 100:d000::/20, 100:e000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 5000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]
