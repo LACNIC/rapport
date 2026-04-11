@@ -4,4 +4,4 @@
 # (This is completely optional.)
 
 mkdir -p sandbox
-sudo mount -o size=16M -t tmpfs none sandbox
+sudo mount -o size=512M -t tmpfs none sandbox

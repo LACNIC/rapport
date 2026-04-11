@@ -451,3 +451,51 @@ create_delta() {
 		|| mv "$TMPDIR/old/ta.cer" "$APACHEDIR"
 	rm -r "$TMPDIR"
 }
+
+# Normalize a VPRS output file from FORT in order to be compared.
+# $1: Original VRPs file
+# $2: Normalized file
+normalize_fort_vrps_file() {
+    input="$1"
+    output="$2"
+
+    # Fort: Skip header and sort
+    tail -n +2 "$input" | sort -V > "$output"
+}
+
+# Normalize a ASPA output file from Fort in order to be compared.
+# $1: Original VRPs file
+# $2: Normalized file
+normalize_fort_aspa_file() {
+    input="$1"
+    output="$2"
+
+    # Explanation of the sed command:
+    # 1d -> Removes the first line.
+    # $d -> Removes the last line ($ represents the end).
+    # s/^[[:space:]]*// -> Removes leading spaces or tabs (^) from each line.
+    # s/,$// -> Removes the trailing comma (,) ($) from the line.
+    sed -e '1d' -e '$d' -e 's/^[[:space:]]*//' -e 's/,$//' "$input" | sort -V > "$output"
+}
+
+# Divides the Routinator output file into VPRs file and ASPA file, 
+# normalizes them, and sorts them so they can be compared.
+# $1: Original Routinator file
+# $2: VPRs file (normalized and sorted)
+# $3: ASPA file (normalized and sorted)
+normalize_routinator_data() {
+    input_file="$1"
+    vrps_output="$2"
+    aspa_output="$3"
+
+	# Expected structure: { "asn": "AS13335", "prefix": "1.0.0.0/24", "maxLength": 24 ...
+    grep '^[[:space:]]*{ "asn":' "$input_file" | \
+    sed 's/[[:space:]]//g; s/{"asn":"//; s/","prefix":"/,/; s/","maxLength":/,/; s/,"ta":.*//' | \
+    sort -V > "$vrps_output"
+
+	grep '{.*"customer":' $input_file | \
+	sed 's/[[:space:]]//g; s/.*"customer":"AS//; s/","providers":\["AS/ /; s/","AS/ /g; s/"\],"ta":.*//' | \
+	awk '{ printf "\"%s\": [ ", $1; for(i=2; i<=NF; i++) printf "%s%s", $i, (i==NF ? "" : ", "); print " ]" }' | \
+	sort -V > "$aspa_output"
+
+}

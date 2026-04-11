@@ -25,10 +25,9 @@ start_router
 sleep 0.2
 
 send_router_pdu "reset-query"
-check_error_report_pdu "fort1" "2" "2"
+check_error_report_pdu "fort1" "2" "2" \
 	"reset-query   version 2 length 12" \
 	"No data available"
-
 
 stop_rp
 stop_router
