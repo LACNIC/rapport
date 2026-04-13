@@ -11,14 +11,17 @@ run_fort_validation_for_rir_tals() {
 	fort --init-tals --tal "$SANDBOX/tals" > /dev/null 2>&1
 
 	start_time=$(date +%s)
+	printf "FORT started validation...\n"
+
 	fort \
 		--mode "standalone" \
 		--tal "$SANDBOX/tals" \
 		--local-repository "$1" \
 		--output.roa "$2" \
 		--output.aspa "$3" 2>/dev/null
+
 	end_time=$(date +%s)
-	printf "FORT execution time:       %s seconds\n" "$((end_time - start_time))"
+	printf "FORT ended validation. Execution time:       %s seconds\n" "$((end_time - start_time))"
 }
 
 # Run the validation of the rpki repositories RIRs. 
@@ -26,13 +29,16 @@ run_fort_validation_for_rir_tals() {
 # $2: Path of the output file (including VRPs and ASPAs)
 run_routinator_validation_for_rir_tals() {
 	start_time=$(date +%s)
+	printf "Routinator started validation...\n"
+
 	routinator \
 		--enable-aspa \
 		--fresh \
 		--repository-dir "$1" \
 		vrps --format json > "$2" 2>/dev/null
+
 	end_time=$(date +%s)
-	printf "Routinator execution time:       %s seconds\n" "$((end_time - start_time))"
+	printf "Routinator ended validation. Execution time:       %s seconds\n" "$((end_time - start_time))"
 }
 
 # Divides the Routinator output file into VPRs file and ASPA file, 

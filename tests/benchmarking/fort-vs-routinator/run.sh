@@ -16,10 +16,15 @@ rm -rf "$CACHE_FORT"/*
 rm -f "$RESULTS_DIR"/*
 
 # Validators running in parallel
-run_fort_validation_for_rir_tals "$CACHE_FORT" "$RESULTS_DIR/fort-vrps.txt" "$RESULTS_DIR/fort-aspa.txt" &
+run_fort_validation_for_rir_tals \
+    "$CACHE_FORT" \
+    "$RESULTS_DIR/fort-vrps.txt" \
+    "$RESULTS_DIR/fort-aspa.txt" &
 PID_FORT=$!
 
-run_routinator_validation_for_rir_tals "$CACHE_ROUTINATOR" "$RESULTS_DIR/routinator-mixed.txt" &
+run_routinator_validation_for_rir_tals \
+    "$CACHE_ROUTINATOR" \
+    "$RESULTS_DIR/routinator-mixed.txt" &
 PID_ROUTINATOR=$!
 
 wait $PID_FORT $PID_ROUTINATOR
