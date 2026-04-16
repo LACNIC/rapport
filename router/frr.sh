@@ -11,6 +11,7 @@ frr_validate_prefix_table () {
 
     mkdir -p "$LOG_DIR"
 
+    #echo "===>TABLE: $table"
     ck_inc
     {
         # Process the arguments in blocks of 4
@@ -50,20 +51,56 @@ frr_validate_prefix_table () {
 }
 
 frr_load_and_restart () {
-    CONFIG_RTR="router/frr.conf"
-    cat "$CONFIG_RTR" > "/etc/frr/frr.conf"
+    CONFIG_FILE="router/frr.conf"
     
-    if sudo /usr/lib/frr/frrinit.sh restart >/dev/null 2>&1; then
+    # Force the removal of any previous RPKI sessions in RAM
+    # This ensures that the bgpd process closes old sockets.
+    vtysh -c "conf t" -c "no rpki" >/dev/null 2>&1
+    
+    # Load the new configuration from the file
+    # We remove error redirection to see if something specific is failing
+    if vtysh -f "$CONFIG_FILE" >/dev/null 2>&1; then
+        
+        # Force manual startup (some versions require this after a 'no rpki')
+        vtysh -c "rpki start" >/dev/null 2>&1
+        
+        # Sync to disk
+        vtysh -c "write memory" >/dev/null 2>&1
         return 0
     else
-        fail "[ERROR] FRR restart failed."
+        fail "[ERROR] FRR load failed."
     fi
 }
 
-frr_stop () {
-    if sudo /usr/lib/frr/frrinit.sh stop >/dev/null 2>&1; then
-        return 0
-    else
-        fail "[ERROR] FRR could not be stopped."
-    fi
+frr_reset () {
+    # Borrar la configuración de ruteo activa
+    _as=$(vtysh -c "show running-config" | grep "router bgp" | awk '{print $3}')
+    [ -n "$_as" ] && vtysh -c "conf t" -c "no router bgp $_as" >/dev/null 2>&1
+    
+    # Borrar RPKI específicamente
+    vtysh -c "conf t" -c "no rpki" >/dev/null 2>&1
+    
+    # Sincronizar para que el archivo /etc/frr/frr.conf también quede limpio
+    vtysh -c "write memory" >/dev/null 2>&1
+    
+    return 0
 }
+
+#frr_start () {
+#    CONFIG_RTR="router/frr.conf"
+#    cat "$CONFIG_RTR" > "/etc/frr/frr.conf"
+#    
+#    if sudo /usr/lib/frr/frrinit.sh start >/dev/null 2>&1; then
+#        return 0
+#    else
+#        fail "[ERROR] FRR restart failed."
+#    fi
+#}
+
+#frr_stop () {
+#    if sudo /usr/lib/frr/frrinit.sh stop >/dev/null 2>&1; then
+#        return 0
+#    else
+#        fail "[ERROR] FRR could not be stopped."
+#    fi
+#}
