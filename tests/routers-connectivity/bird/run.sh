@@ -21,6 +21,6 @@ bird_validate_aspa \
     "5:[15001, 15002, 15003, 15004, 15005]" \
     "2:[13001, 13002, 13003]"
  
- bird_stop
+bird_stop
 
- stop_rp
+stop_rp
