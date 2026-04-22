@@ -69,7 +69,7 @@ cisco_validate_ipv6_prefix(){
 }
 
 cisco_start() {
-    CISCO_IMAGE="router/csr1000v-universalk9.16.6.1.qcow2"
+    #CISCO_IMAGE="router/csr1000v-universalk9.16.6.1.qcow2"
     BRIDGE="br-lab"
     RTR_SERVER_IP="10.0.0.1"       # IP of br-lab interface
     ROUTER_IP="10.0.0.2"     # IP address that we will assign to the Cisco
