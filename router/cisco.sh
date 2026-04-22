@@ -42,13 +42,12 @@ cisco_validate_prefix() {
             PATTERN="${NET}/${MASK}[[:space:]]*${MLEN}[[:space:]]*${AS}"
 
             if echo "$TABLE" | grep -qE "$PATTERN"; then
-                echo "[OK] Validado: ${NET}/${MASK} (Max: ${MLEN}, AS: ${AS})"
+                echo "[OK] Found: ${NET}/${MASK} (Max: ${MLEN}, AS: ${AS})"
             else
-                echo "[FAIL] No encontrado: ${NET}/${MASK} (Max: ${MLEN}, AS: ${AS})"
+                echo "[ERROR] Not found: ${NET}/${MASK} (Max: ${MLEN}, AS: ${AS})"
                 FAILED=$((FAILED + 1))
             fi
 
-            # Saltamos a los siguientes 4 argumentos
             shift 4
         done
     } >> "$LOG_FILE"
