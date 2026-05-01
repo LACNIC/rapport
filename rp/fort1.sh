@@ -8,7 +8,7 @@ export RP_TEST="-V"
 export MEMCHECK_DEFAULT=1
 
 rp_run() {
-	timeout 3s $VALGRIND $RP_BIN \
+	timeout 30s $VALGRIND $RP_BIN \
 		--mode "standalone" \
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
@@ -34,10 +34,7 @@ rp_start() {
         SERVER_IP="127.0.0.1"
         # We do NOT shift: "$1" stays as "$@" for binary
     fi
-	# TODO Valgrind?
-	# Since we'll have to SIGTERM the RP later,
-	# I'm not sure if Valgrind makes sense here.
-	$RP_BIN \
+	$VALGRIND $RP_BIN \
 		--mode "server" \
 		--server.address "$SERVER_IP" \
 		--server.port "8323" \

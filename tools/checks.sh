@@ -4,11 +4,15 @@ ck_inc() {
 	echo -n "1" >> "sandbox/checks/total.txt"
 }
 
-fail() {
+__fail() {
 	echo "$TESTID error: $@" 1>&2
+	exit 1
+}
+
+fail() {
 	stop_rp
 	stop_router
-	exit 1
+	__fail "$@"
 }
 
 warn() {
@@ -70,8 +74,8 @@ start_rp() {
 	rp_start "$@"
 	export RP_PID="$!"
 
-	# 3s timeout
-	for i in $(seq 15); do
+	# 30s timeout
+	for i in $(seq 150); do
 		sleep 0.2
 
 		if ! kill -0 "$RP_PID" 2> /dev/null; then
@@ -89,6 +93,7 @@ start_rp() {
 stop_rp() {
 	if [ ! -z "$RP_PID" ]; then
 		kill "$RP_PID"
+		wait "$RP_PID" || __fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
 		export RP_PID=""
 	fi
 }
