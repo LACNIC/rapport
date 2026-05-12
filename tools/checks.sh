@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ck_inc() {
-	echo -n "1" >> "sandbox/checks/total.txt"
+	echo -n "1" >> "sandbox/counters/total.txt"
 }
 
 __fail() {
@@ -17,7 +17,7 @@ fail() {
 
 warn() {
 	echo "$TESTID warning: $@" 1>&2
-	echo -n "1" >> "sandbox/checks/warns.txt"
+	echo -n "1" >> "sandbox/counters/warns.txt"
 }
 
 # Use this result when the test does not apply to the RP.
