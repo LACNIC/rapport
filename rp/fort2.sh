@@ -24,10 +24,8 @@ export MEMCHECK_DEFAULT=1
 # 
 # $@: Additional arguments for RP.
 rp_run() {
-	timeout 3s $VALGRIND $RP_BIN \
+	timeout 30s $VALGRIND $RP_BIN \
 		--mode "standalone" \
-		--server.address "127.0.0.1" \
-		--server.port "8323" \
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
 		--report "$SANDBOX/report.txt" \
@@ -38,6 +36,21 @@ rp_run() {
 		|| fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
 }
 
+rp_start() {
+	$VALGRIND $RP_BIN \
+		--mode "server" \
+		--server.address "127.0.0.1" \
+		--server.port "8323" \
+		--tal "$SANDBOX/$TEST.tal" \
+		--local-repository "$SANDBOX/workdir" \
+		--output.roa "$SANDBOX/vrps.csv" \
+		--rsync.program "$RSYNC" \
+		"$@" \
+		> "$SANDBOX/$RP.log" 2>&1 &
+}
+
+# Echoes the logstring that signals when the RP is ready to serve
+# populated RTR.
 rp_ready_string() {
 	echo "First validation cycle successfully ended"
 }
@@ -51,6 +64,12 @@ rp_tal_path() {
 # Echoes the location where rp_run() dropped the VRP file.
 rp_vrp_path() {
 	echo "$SANDBOX/vrps.csv"
+}
+
+# Translates the RP's ASPA output to Rapport's ASPA validation format.
+rp_print_aspas() {
+	jq -r '.aspa | keys[] as $k | [$k, (.[$k] | tostring)] | join(":")' \
+		"$SANDBOX/aspa.json" > "$1"
 }
 
 # Echoes the location where rp_run() dropped the file listing the validation
