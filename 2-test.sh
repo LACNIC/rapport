@@ -7,6 +7,13 @@
 
 #set -x     # Decomment to print all commands
 
+# Run as `FORCE=1 ./2-test.sh` to skip this question.
+if [ -z "$1" -a -z "$FORCE" ]; then
+	echo -n "You sure you want to run everything? (y/*) "
+	read FORCE
+	test "$FORCE" = "y" || exit 0
+fi
+
 case "$RP" in
 	fort*)
 		export RP_BIN="$FORT"
