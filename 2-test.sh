@@ -36,6 +36,7 @@ esac
 
 . rp/$RP.sh
 . tools/vars.sh || exit 1
+. tools/checks.sh
 tools/cleanup-sandbox.sh
 
 NSUCCESSES=0
@@ -49,16 +50,19 @@ tools/rsyncd-start.sh
 run_test() {
 	test -d "$1" || return 0
 
-	export SRCDIR="$1"		 # tests/cat/simple
-	export SANDBOX="sandbox/$SRCDIR" # sandbox/tests/cat/simple
-	export TESTID="${SRCDIR#tests/}" # cat/simple
-    	export CATEGORY="${TESTID%/*}"	 # cat
-	export TEST="${TESTID#*/}"	 # simple
+	# Assume category "C" and test name "N"
+	export SRCDIR="$1"                      # tests/C/N
+	export SANDBOX="sandbox/$SRCDIR/latest" # sandbox/tests/C/N/latest
+	export TESTID="${SRCDIR#tests/}"        # C/N
+	export CATEGORY="${TESTID%/*}"          # C
+	export TEST="${TESTID#*/}"              # N
+	export STEP="1"                         # 1
+
+	# Don't mind this one.
+	export BARRY_RTR_SK="sandbox/$SRCDIR/barry-rtr.sk"
 
 	echo "Test: $TESTID"
 
-	rm -rf sandbox/apache2/content/*
-	rm -rf sandbox/rsyncd/content/*
 	:> "$APACHE_REQLOG"
 	:> "$RSYNC_REQLOG"
 	mkdir -p "$SANDBOX/workdir"
@@ -70,6 +74,13 @@ run_test() {
 	3)  NSKIPS=$((NSKIPS+1))          ;;
 	*)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;
 	esac
+
+	stop_rp
+	stop_router
+	cp -rp "sandbox/apache2" "$SANDBOX/apache2"
+	rm -rf "sandbox/apache2/content/"*
+	cp -rp "sandbox/rsyncd" "$SANDBOX/rsyncd"
+	rm -rf "sandbox/rsyncd/content/"*
 }
 
 if [ -z "$1" ]; then

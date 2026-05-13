@@ -9,7 +9,6 @@ test "$RP" = "fort2" || return 0
 
 # Stage 1: Normal, simple run
 
-echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -49,8 +48,7 @@ rm "$SANDBOX/rrdp/"*
 
 # Stage 2: Some ROAs change
 
-echo "  Step 2"
-sleep 1
+new_step
 run_barry "step2.rd"
 run_rp
 

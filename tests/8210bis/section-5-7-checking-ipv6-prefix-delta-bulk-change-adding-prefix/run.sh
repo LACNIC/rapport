@@ -23,6 +23,7 @@ check_cache_response 0 \
 
 
 # Processing serial 2
+new_step
 create_delta rd2
 revalidate_rp
 
@@ -44,6 +45,7 @@ check_cache_response 1 \
 
 
 # Processing serial 3
+new_step
 create_delta rd3
 revalidate_rp
 
@@ -76,6 +78,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000"
 
 # Processing serial 4
+new_step
 create_delta rd4
 revalidate_rp
 
@@ -124,6 +127,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000" 
 
 # Processing serial 5
+new_step
 create_delta rd5
 revalidate_rp
 

@@ -13,6 +13,7 @@ check_aspas "1:[13001,13002,13003,13004,13005]"
 send_router_pdu "reset-query"
 check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 1 providers [ 13001 13002 13003 13004 13005 ]"
 
+new_step
 create_delta rd2
 revalidate_rp
 

@@ -20,6 +20,7 @@ check_cache_response 0 \
 
 	
 # Processing serial 2
+new_step
 create_delta rd2
 revalidate_rp
 
@@ -38,6 +39,7 @@ check_cache_response 1 \
 
 	
 # Processing serial 3
+new_step
 create_delta rd3
 revalidate_rp
 
@@ -64,6 +66,7 @@ check_cache_response 0 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.5.0 as 15001" 
 
 # Processing serial 4
+new_step
 create_delta rd4
 revalidate_rp
 
@@ -103,6 +106,7 @@ check_cache_response 0 \
 
 
 # Processing serial 5
+new_step
 create_delta rd5
 revalidate_rp
 

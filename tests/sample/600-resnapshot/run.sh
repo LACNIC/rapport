@@ -10,7 +10,6 @@
 
 # Stage 1: Normal simple startup run
 
-echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -32,9 +31,7 @@ check_rsync_requests
 
 # Stage 2: Some ROAs change
 
-echo "  Step 2"
-# Force the HTTP IMS to change
-sleep 1
+new_step
 # No delta; we change the session instead
 run_barry "step2.rd"
 run_rp

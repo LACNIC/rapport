@@ -15,6 +15,7 @@ send_router_pdu "reset-query"
 check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 1 providers [ 11001 11002 11003 11004 11005 ]"
 
 # Processing serial 2
+new_step
 create_delta rd2
 revalidate_rp
 
@@ -27,6 +28,7 @@ check_cache_response 1 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers [ 22001 22002 22003 22004 22005 ]"
 
 # Processing serial 3
+new_step
 create_delta rd3
 revalidate_rp
 
@@ -42,6 +44,7 @@ check_cache_response 1 \
 
 
 # Processing serial 4
+new_step
 create_delta rd4
 revalidate_rp
 
@@ -59,6 +62,7 @@ check_cache_response 1 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 4 providers [ 44001 44002 44003 44004 44005 ]"
 
 # Processing serial 5
+new_step
 create_delta rd5
 revalidate_rp
 

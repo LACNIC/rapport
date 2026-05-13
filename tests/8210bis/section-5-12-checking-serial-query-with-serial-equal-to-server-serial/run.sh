@@ -23,6 +23,7 @@ check_pdus \
 	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 
 # Processing serial 2
+new_step
 create_delta rd2
 revalidate_rp
 

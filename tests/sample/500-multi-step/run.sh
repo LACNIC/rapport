@@ -9,7 +9,6 @@
 
 # Stage 1: Normal simple startup run
 
-echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -28,7 +27,7 @@ check_rsync_requests
 
 # Stage 2: Some ROAs change
 
-echo "  Step 2"
+new_step
 # create_delta() is the incremental counterpart of the snapshot-y run_barry().
 # It computes the delta between the existing RRDP stage and the given new RD,
 # and places it in the apache server.
@@ -54,11 +53,12 @@ check_rsync_requests
 
 # Stage 3: Both RRDP and rsync die, RP needs to fallback
 
-echo "  Step 3"
-# Instead of running Barry, get rid of both server contents.
-# As they will be absent, the RP will be unable to download them.
-mv "sandbox/apache2/content/$TEST" "$SANDBOX/tmp-apache2"
-mv "sandbox/rsyncd/content/$TEST" "$SANDBOX/tmp-rsync"
+cp -p  "$(rp_tal_path)" "$SANDBOX/../tmp.tal"
+
+new_step
+cp -p  "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
+rm -rf "sandbox/apache2/content/$TEST"/*
+rm -rf "sandbox/rsyncd/content/$TEST"/*
 run_rp
 
 # The RP attempts to download relevant files, but all attempts fail.
@@ -83,9 +83,10 @@ check_vrps \
 
 # Stage 4: RRDP and rsync come back online, RP recovers via delta
 
-echo "  Step 4"
-mv "$SANDBOX/tmp-apache2" "sandbox/apache2/content/$TEST"
-mv "$SANDBOX/tmp-rsync" "sandbox/rsyncd/content/$TEST"
+new_step
+mv     "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
+cp -rp "$SANDBOX/../step$((STEP-2))/apache2/content/$TEST"/* "sandbox/apache2/content/$TEST"
+cp -rp "$SANDBOX/../step$((STEP-2))/rsyncd/content/$TEST"/*  "sandbox/rsyncd/content/$TEST"
 create_delta "step4.rd"
 run_rp
 

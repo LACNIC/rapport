@@ -9,7 +9,6 @@ test "$RP" = "fort2" || return 0
 
 # Stage 1: Normal, simple run
 
-echo "  Step 1"
 run_barry "step1.rd"
 run_rp
 
@@ -63,7 +62,7 @@ rm "$SANDBOX/rrdp/"*
 
 # Stage 2: Some ROAs change
 
-echo "  Step 2"
+new_step
 create_delta "step2.rd"
 run_rp
 
@@ -105,9 +104,12 @@ rm "$SANDBOX/rrdp/"*
 
 # Stage 3: Both RRDP and rsync die, RP needs to fallback
 
-echo "  Step 3"
-mv "sandbox/apache2/content/$TEST" "$SANDBOX/tmp-apache2"
-mv "sandbox/rsyncd/content/$TEST" "$SANDBOX/tmp-rsync"
+cp -p  "$(rp_tal_path)" "$SANDBOX/../tmp.tal"
+
+new_step
+cp -p  "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
+rm -rf "sandbox/apache2/content/$TEST"/*
+rm -rf "sandbox/rsyncd/content/$TEST"/*
 run_rp
 
 check_vrps \
@@ -119,9 +121,9 @@ check_vrps \
 check_http_requests \
 	"/$TEST/ta.cer 404" \
 	"/$TEST/notification.xml 404"
-#check_rsync_requests \
-#	"rpki/$TEST/ta.cer" \
-#	"rpki/"
+check_rsync_requests \
+	"rpki/$TEST/ta.cer" \
+	"rpki/"
 
 # Nothing changes
 check_fort_cache 0 2
@@ -150,9 +152,10 @@ rm "$SANDBOX/rrdp/"*
 
 # Stage 4: RRDP and rsync come back, RP recovers via delta
 
-echo "  Step 4"
-mv "$SANDBOX/tmp-apache2" "sandbox/apache2/content/$TEST"
-mv "$SANDBOX/tmp-rsync" "sandbox/rsyncd/content/$TEST"
+new_step
+mv     "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
+cp -rp "$SANDBOX/../step$((STEP-2))/apache2/content/$TEST"/* "sandbox/apache2/content/$TEST"
+cp -rp "$SANDBOX/../step$((STEP-2))/rsyncd/content/$TEST"/*  "sandbox/rsyncd/content/$TEST"
 create_delta "step4.rd"
 run_rp
 

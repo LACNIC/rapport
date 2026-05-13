@@ -20,6 +20,7 @@ check_cache_response 0 \
 
 	
 
+new_step
 create_delta rd2
 revalidate_rp
 

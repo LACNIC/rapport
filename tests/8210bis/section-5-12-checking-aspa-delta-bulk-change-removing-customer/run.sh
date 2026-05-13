@@ -26,6 +26,7 @@ check_cache_response 0 \
 
 
 # Processing serial 2
+new_step
 create_delta rd2
 revalidate_rp
 
@@ -41,6 +42,7 @@ check_cache_response 1 \
 	"aspa-pdu       version 2 flags 0 zero 0 length 12 customer 5" \
 
 # Processing serial 3
+new_step
 create_delta rd3
 revalidate_rp
 
@@ -55,6 +57,7 @@ check_cache_response 1 \
 	"aspa-pdu       version 2 flags 0 zero 0 length 12 customer 5"
 
 # Processing serial 4
+new_step
 create_delta rd4
 revalidate_rp
 
@@ -69,6 +72,7 @@ check_cache_response 1 \
 	"aspa-pdu       version 2 flags 0 zero 0 length 12 customer 5"
 
 # Processing serial 5
+new_step
 create_delta rd5
 revalidate_rp
 

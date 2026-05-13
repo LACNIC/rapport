@@ -39,16 +39,16 @@ run_barry() {
 		shift
 	fi
 
-	$BARRY	--rsync-uri "rsync://localhost:8873/rpki/$TEST" \
+	$BARRY	--rsync-uri  "rsync://localhost:8873/rpki/$TEST" \
 		--rsync-path "sandbox/rsyncd/content/$TEST" \
-		--rrdp-uri "https://localhost:8443/$TEST" \
-		--rrdp-path "sandbox/apache2/content/$TEST" \
+		--rrdp-uri   "https://localhost:8443/$TEST" \
+		--rrdp-path  "sandbox/apache2/content/$TEST" \
 		--keys "custom/keys" \
 		-vv --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
 		"$@" \
 		"$SRCDIR/$RD" \
-		> "$SANDBOX/barry.txt" 2>&1 \
+		>> "$SANDBOX/barry.txt" 2>&1 \
 		|| fail "Barry returned $?; see $SANDBOX/barry.txt"
 }
 
@@ -177,7 +177,7 @@ check_aspas() {
 start_router() {
 	test -z "$BARRY_RTR_PID" || fail "The router is already running."
 
-	$BARRY-rtr --input "$SANDBOX/barry-rtr.sk" interactive 127.0.0.1 8323 \
+	$BARRY-rtr --input "$BARRY_RTR_SK" interactive 127.0.0.1 8323 \
 		> "$SANDBOX/barry-rtr.stdout" &
 	export BARRY_RTR_PID="$!"
 }
@@ -185,12 +185,12 @@ start_router() {
 send_router_pdu() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
 
-	echo "$@" | $BARRY-ncu "$SANDBOX/barry-rtr.sk"
+	echo "$@" | $BARRY-ncu "$BARRY_RTR_SK"
 }
 
 # Wait at most 3 seconds for $1 PDUs to arrive
 wait_pdus() {
-	test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
+	test "$(wc -l < "$SANDBOX/barry-rtr.stdout")" -ge "$1" && return 0
 
 	for i in 1 2 3; do
 		sleep 1
@@ -221,7 +221,7 @@ check_cache_response() {
 	shift
 
 	NEXPECTED="$#"
-	wait_pdus $((NOTIF+NEXPECTED+2))
+	wait_pdus "$((NOTIF+NEXPECTED+2))"
 	unset NOTIF
 	unset NEXPECTED
 
@@ -372,7 +372,7 @@ check_logfile() {
 # else).
 # $@: Sequence of HTTP requests in "PATH HTTP_RESULT_CODE" format.
 check_http_requests() {
-	APACHE_DIR="$SANDBOX/apache2"
+	APACHE_DIR="$SANDBOX/apache2-checks"
 	EXPECTED="$APACHE_DIR/expected.log"
 	ACTUAL="$APACHE_DIR/actual.log"
 	DIFF="$APACHE_DIR/diff.txt"
@@ -395,7 +395,7 @@ check_http_requests() {
 # else).
 # $@: Sequence of rsync requests in "PATH" format.
 check_rsync_requests() {
-	RSYNC_DIR="$SANDBOX/rsync"
+	RSYNC_DIR="$SANDBOX/rsync-checks"
 	EXPECTED="$RSYNC_DIR/expected.log"
 	ACTUAL="$RSYNC_DIR/actual.log"
 	DIFF="$RSYNC_DIR/diff.txt"
@@ -416,8 +416,6 @@ check_rsync_requests() {
 
 # $@: Same as run_barry
 create_delta() {
-	sleep 1 # Wait out HTTP IMS. TODO May be unnecessary
-
 	APACHEDIR="sandbox/apache2/content/$TEST"
 	TMPDIR="sandbox/tmp/$TEST"
 
@@ -432,13 +430,13 @@ create_delta() {
 
 	mkdir "$APACHEDIR"
 	$BARRY-delta \
-		--old.notification	"$TMPDIR/old/notification.xml" \
-		--old.snapshot		"$TMPDIR/old/snapshot.xml" \
-		--new.notification	"$TMPDIR/new/notification.xml" \
-		--new.snapshot		"$TMPDIR/new/snapshot.xml" \
-		--output.notification	"$APACHEDIR/notification.xml" \
-		--output.delta.path	"$APACHEDIR/delta-$1.xml" \
-		--output.delta.uri	"https://localhost:8443/$TEST/delta-$1.xml" \
+		--old.notification    "$TMPDIR/old/notification.xml" \
+		--old.snapshot        "$TMPDIR/old/snapshot.xml" \
+		--new.notification    "$TMPDIR/new/notification.xml" \
+		--new.snapshot        "$TMPDIR/new/snapshot.xml" \
+		--output.notification "$APACHEDIR/notification.xml" \
+		--output.delta.path   "$APACHEDIR/delta-$1.xml" \
+		--output.delta.uri    "https://localhost:8443/$TEST/delta-$1.xml" \
 		> "$SANDBOX/barry-delta.txt" 2>&1 \
 		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
 
@@ -447,4 +445,41 @@ create_delta() {
 		&& mv "$TMPDIR/new/ta.cer" "$APACHEDIR" \
 		|| mv "$TMPDIR/old/ta.cer" "$APACHEDIR"
 	rm -r "$TMPDIR"
+}
+
+new_step() {
+	# The latest sandbox has to be named "latest" because it needs a
+	# constant name.
+	# This is because the path of the RP log, RP cache and RTR socket file
+	# need to be preserved between steps, in case the RP is in ongoing mode.
+
+	BKP_SANDBOX="sandbox/$SRCDIR/step$STEP"
+	mkdir "$BKP_SANDBOX"
+
+	cp -rp "sandbox/apache2" "$BKP_SANDBOX/apache2"
+	cp -rp "sandbox/rsyncd" "$BKP_SANDBOX/rsyncd"
+	cp -rp "$SANDBOX/workdir" "$BKP_SANDBOX/workdir"
+	if [ -f "$SANDBOX/$RP.log" ]; then
+		cp -rp "$SANDBOX/$RP.log" "$BKP_SANDBOX/$RP.log"
+		truncate -s 0 "$SANDBOX/$RP.log"
+	fi
+	if [ -f "$SANDBOX/barry-rtr.stdout" ]; then
+		cp -rp "$SANDBOX/barry-rtr.stdout" "$BKP_SANDBOX/barry-rtr.stdout"
+		truncate -s 0 "$SANDBOX/barry-rtr.stdout"
+	fi
+
+	for i in "$SANDBOX"/*; do
+		BN="$(basename "$i")"
+		# TODO stdout and stderr also need to be preserved,
+		# but this presently only bugs Routinator.
+		test "$BN" != "$RP.log" \
+			-a "$BN" != "workdir" \
+			-a "$BN" != "barry-rtr.stdout" \
+			&& mv "$i" "$BKP_SANDBOX/$BN"
+	done
+
+	sleep 1 # Wait out HTTP IMS and rsync IMS
+
+	STEP="$((STEP+1))"
+	echo "  Step $STEP"
 }

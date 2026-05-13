@@ -16,6 +16,7 @@ send_router_pdu "reset-query"
 check_cache_response 0 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13001"
 
+new_step
 create_delta rd2
 revalidate_rp
 

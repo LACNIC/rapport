@@ -18,6 +18,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:4000:: as 65001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:: as 65001"
 
+new_step
 create_delta rd2
 revalidate_rp
 
