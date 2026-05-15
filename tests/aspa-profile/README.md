@@ -466,5 +466,4 @@ multiple valid ASPA objects for the same `customerASID`)
 ---
 
 
-*End of ASPA profile test suite — 29 test cases*
-*Reference: draft-ietf-sidrops-aspa-profile*
+*End of draft-ietf-sidrops-aspa-profile test suite — 29 test cases*
