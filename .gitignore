@@ -14,10 +14,10 @@ TODO.md
 .DS_Store
 
 # dynamically generated files
-tests/aspa-profile/section-6-checking-limit-in-provider-list-exceeding-limit-4001/rd
-tests/aspa-profile/section-6-checking-limit-in-provider-list-within-limit-3999/rd
-tests/aspa-profile/section-6-checking-limit-in-provider-list-within-limit-4000/rd
-tests/aspa-profile/testing-others-aspects-checking-big-aspa/rd
+tests/aspa-profile/21-provider-count-above-threshold/rd
+tests/aspa-profile/22-provider-count-below-threshold/rd
+tests/aspa-profile/23-provider-count-at-threshold/rd
+tests/aspa-profile/24-big-aspa/rd
 
 # Cisco image file
 *.qcow2
