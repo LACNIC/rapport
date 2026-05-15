@@ -1,0 +1,26 @@
+ta.cer
+	ca.cer
+		invalid.asa
+		valid.asa
+
+[node: ta.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-10 ]
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-5 ]
+
+
+[node: invalid.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01 ]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x01,
+	providers = [ 13001, 70001, 80001 ],
+}
+obj.content.signerInfos.0.signature = 0xAD02323322
+
+[node: valid.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x02 ]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 0x02,
+	providers = [ 13001, 70001, 80001 ],
+}

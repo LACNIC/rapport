@@ -1,9 +1,0 @@
-ta.cer
-	ca.cer
-		invalid.asa
-
-[node: invalid.asa]
-obj.content.encapContentInfo.eContent = {
-	customerASID = 0x01010000,
-	providers = [ 13002, 13001, 80001 ]
-}

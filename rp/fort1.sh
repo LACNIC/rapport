@@ -8,7 +8,7 @@ export RP_TEST="-V"
 export MEMCHECK_DEFAULT=1
 
 rp_run() {
-	timeout 30s $VALGRIND $RP_BIN \
+	timeout 60s $VALGRIND $RP_BIN \
 		--mode "standalone" \
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \

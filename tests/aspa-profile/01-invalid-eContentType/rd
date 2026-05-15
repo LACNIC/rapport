@@ -1,0 +1,6 @@
+ta.cer
+	ca.cer
+		invalid.asa
+
+[node: invalid.asa]
+obj.content.encapContentInfo.eContentType = 1.2.840.113549.1.9.16.1.48
