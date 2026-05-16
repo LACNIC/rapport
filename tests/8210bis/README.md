@@ -349,7 +349,7 @@ router already has an ASPA PDU with the same Customer Autonomous System Number
 from that cache replaces the previous one; the cache MUST deliver the complete
 data of an ASPA record in a single ASPA PDU; Provider AS Numbers MUST be in
 increasing numeric order), section 5.3 (the cache MUST merge multiple changes to
-present the simplest possible view)
+present the simplest possible view).
 
 ---
 
@@ -365,7 +365,7 @@ Length equal to 12.
 **Related sections:** section 5.12 (if the announce/withdraw flag is set to 0,
 the entire ASPA record from that cache for that Customer AS MUST be removed from
 the router; in this case the Customer AS MUST be provided, there MUST be no
-Provider list, and the PDU Length MUST be 12)
+Provider list, and the PDU Length MUST be 12).
 
 ---
 
@@ -382,7 +382,7 @@ removal, replacing the previously announced record at the router.
 router already has an ASPA PDU with the same Customer AS replaces the previous
 one; the cache MUST deliver the complete data of an ASPA record in a single ASPA
 PDU), section 5.3 (the cache MUST merge changes to present the simplest possible
-view)
+view).
 
 ---
 
@@ -403,7 +403,7 @@ delivered a prior withdrawal for the same tuple in the same delta.
 cache server MUST set the remaining bits of the Prefix to zero; the cache MUST
 ensure that it has told the router to have one and only one IPv4 VRP for a unique
 {Prefix, Len, Max-Len, AS} at any one point in time), section 8.2 (Typical
-Exchange)
+Exchange).
 
 ---
 
@@ -422,7 +422,7 @@ for VRP identity.
 Prefix PDU with the exact same Prefix, Length, Max-Len, and AS; changing the AS
 effectively means withdrawing the old entry and announcing a new one), section 5.3
 (the cache MUST merge changes to present the simplest possible view), section 11.2.1
-(caches MUST send all withdraw PDUs before any announce PDUs)
+(caches MUST send all withdraw PDUs before any announce PDUs).
 
 ---
 
@@ -440,7 +440,7 @@ Max-Len, AS} tuple into at most one announcement.
 Flags field is 1 for an announcement), section 5.3 (the cache MUST return the
 minimum set of changes; if a prefix underwent multiple changes, the cache MUST
 merge those changes; the data stream will include at most one withdrawal followed
-by at most one announcement)
+by at most one announcement).
 
 ---
 
@@ -457,7 +457,7 @@ record, effectively deleting the router's stored VRP entry.
 for a withdrawal; a withdraw effectively deletes one previously announced Prefix
 PDU with the exact same Prefix, Length, Max-Len, and AS), section 5.3 (the cache
 MUST merge changes; if all changes cancel out, the data stream will not mention
-the prefix/AS at all)
+the prefix/AS at all).
 
 ---
 
@@ -477,7 +477,7 @@ time.
 
 **Related sections:** section 5.7 (IPv6 Prefix PDU; the behaviour for IPv4 Prefix
 PDU applies, including zeroing unused prefix bits and the one-and-only-one VRP
-constraint), section 8.2 (Typical Exchange)
+constraint), section 8.2 (Typical Exchange).
 
 ---
 
@@ -495,7 +495,7 @@ accordance with the ordering requirements for IP Prefix PDUs.
 IPv4 Prefix PDU; a withdrawal deletes one previously announced Prefix PDU with the
 exact same Prefix, Length, Max-Len, and AS; changing the AS requires a withdrawal
 and a new announcement), section 11.2.1 (IP Prefix PDUs: caches MUST send all
-withdraw PDUs before any announce PDUs)
+withdraw PDUs before any announce PDUs).
 
 ---
 
@@ -512,7 +512,7 @@ into at most one announcement.
 **Related sections:** section 5.7 (IPv6 Prefix PDU; the behaviour specified for
 the IPv4 Prefix PDU is also applicable to the IPv6 Prefix PDU; PDU Length=32),
 section 5.3 (the cache MUST return the minimum set of changes and MUST merge
-multiple changes for the same prefix/AS)
+multiple changes for the same prefix/AS).
 
 ---
 
@@ -528,8 +528,103 @@ the router's stored IPv6 VRP entry.
 **Related sections:** section 5.7 (the behaviour specified for the IPv4 Prefix PDU
 is also applicable to the IPv6 Prefix PDU; a withdrawal deletes one previously
 announced Prefix PDU with the exact same fields), section 5.3 (if all changes for
-a prefix/AS cancel out, the data stream will not mention it at all)
+a prefix/AS cancel out, the data stream will not mention it at all).
 
 ---
 
-*End of draft-ietf-sidrops-8210bis-25 test suite — 29 test cases across 6 categories*
+## Category 7 – Delta Coalescing and Net-Zero Change Semantics
+
+---
+
+### 30 - `aspa-net-zero-delta-across-multiple-serials`
+
+**Description:**
+This test checks that the cache correctly coalesces intermediate ASPA changes
+across multiple serial increments and returns a net-zero delta — an empty payload
+set — when a Serial Query covers a range in which an ASPA record was withdrawn and
+then re-announced with its original content, such that the net effect on the
+router's state is null.
+
+The specific sequence under test is:
+
+- **Serial 1:** ASPA A is active and has been previously announced to the router.
+  The router holds ASPA A in its local RPKI table.
+- **Serial 2:** ASPA A is withdrawn from the RPKI dataset. The cache records a
+  withdrawal event for Customer AS A at this serial.
+- **Serial 3:** ASPA A is re-announced with the same Customer AS and provider list
+  as at serial 1. The cache records an announcement event for Customer AS A at
+  this serial.
+- **Query:** A Serial Query is sent to the cache with Session ID matching the
+  active session and Serial Number = 1.
+
+The cache must evaluate the net change for Customer AS A across the range
+[serial 1 → serial 3]: a withdrawal followed by a re-announcement of the same
+record produces a net change of zero. The cache MUST merge these intermediate
+events and MUST NOT deliver any ASPA PDU for Customer AS A in the response. The
+correct response is a Cache Response PDU followed immediately by an End of Data
+PDU with no intervening payload PDUs.
+
+The router, having received an empty delta, retains ASPA A in its local table
+unchanged. The final state of the router's RPKI table — ASPA A present, unchanged
+— must be identical to the state it held before sending the Serial Query.
+
+**Related sections:** section 5.3 (the cache MUST return the minimum set of
+changes needed to bring the router to the current state; if a record underwent
+multiple changes between the queried serial and the current serial and the net
+result is no change, the data stream MUST NOT mention that record; the data stream
+will include, for any given {Customer AS}, at most one withdrawal followed by at
+most one announcement), section 5.12 (ASPA PDU semantics: a withdrawal removes
+the record; a subsequent announcement with the same Customer AS reinstates it;
+the cache MUST reflect only the net outcome when responding to a Serial Query
+spanning multiple serials).
+
+---
+
+### 31 - `roa-net-zero-delta-across-multiple-serials`
+
+**Description:**
+This test checks that the cache correctly coalesces intermediate IPv4/IPv6 Prefix VRP
+changes across multiple serial increments and returns a net-zero delta — an empty
+payload set — when a Serial Query covers a range in which a ROA was withdrawn and
+then re-announced with an identical {Prefix, Prefix Length, Max Length, AS} tuple,
+such that the net effect on the router's state is null.
+
+The specific sequence under test is:
+
+- **Serial 1:** ROA R — defined by a specific {Prefix, Prefix Length, Max Length,
+  AS} tuple — is active and has been previously announced to the router. The
+  router holds ROA R as a VRP in its local RPKI prefix table.
+- **Serial 2:** ROA R is withdrawn from the RPKI dataset. The cache records a
+  withdrawal event for the {Prefix, Prefix Length, Max Length, AS} tuple at this
+  serial.
+- **Serial 3:** ROA R is re-announced with the same {Prefix, Prefix Length, Max
+  Length, AS} tuple as at serial 1. The cache records an announcement event for
+  that tuple at this serial.
+- **Query:** A Serial Query is sent to the cache with Session ID matching the
+  active session and Serial Number = 1.
+
+The cache must evaluate the net change for the {Prefix, Prefix Length, Max Length,
+AS} tuple across the range [serial 1 → serial 3]: a withdrawal followed by a
+re-announcement of the same record produces a net change of zero. The cache MUST
+merge these intermediate events and MUST NOT deliver any IPv4 Prefix PDU for that
+tuple in the response. The correct response is a Cache Response PDU followed
+immediately by an End of Data PDU with no intervening payload PDUs.
+
+The router, having received an empty delta, retains ROA R in its local prefix
+table unchanged. The final state of the router's RPKI table — ROA R present,
+unchanged — must be identical to the state it held before sending the Serial Query.
+
+**Related sections:** section 5.3 (the cache MUST return the minimum set of
+changes needed to bring the router to the current state; if a record underwent
+multiple changes between the queried serial and the current serial and the net
+result is no change, the data stream MUST NOT mention that record; the data stream
+will include, for any given {Prefix, Len, Max-Len, AS}, at most one withdrawal
+followed by at most one announcement), section 5.6 (IPv4 Prefix PDU semantics:
+a withdrawal with Flags=0 deletes one previously announced Prefix PDU with the
+exact same Prefix, Length, Max-Len, and AS; a subsequent announcement with the
+same tuple reinstates it; the cache MUST reflect only the net outcome when
+responding to a Serial Query spanning multiple serials).
+
+---
+
+*End of draft-ietf-sidrops-8210bis-25 test suite — 30 test cases across 7 categories*
