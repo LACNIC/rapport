@@ -627,4 +627,4 @@ responding to a Serial Query spanning multiple serials).
 
 ---
 
-*End of draft-ietf-sidrops-8210bis-25 test suite — 30 test cases across 7 categories*
+*End of draft-ietf-sidrops-8210bis-25 test suite — 31 test cases across 7 categories*
