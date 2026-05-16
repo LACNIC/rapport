@@ -270,8 +270,12 @@ check_cache_response() {
 		echo "$i" >> "$EXPECTED"
 	done
 
-	sort "$ACTUAL.tmp" > "$ACTUAL"
-	rm "$ACTUAL.tmp"
+	if [ -f "$ACTUAL.tmp" ]; then
+		sort "$ACTUAL.tmp" > "$ACTUAL"
+		rm "$ACTUAL.tmp"
+	else
+		:> "$ACTUAL"
+	fi
 
 	ck_inc
 	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
