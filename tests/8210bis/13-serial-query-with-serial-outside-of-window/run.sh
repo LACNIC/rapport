@@ -38,8 +38,8 @@ send_router_pdu "serial-query serial 1"
 check_pdus \
 	"serial-notify  version 2 session [0-9]+ length 12 serial 3" \
 	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 3 providers \[ 33001 \]" \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 2 providers \[ 22001 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 3 providers \[ 33001 \]" \
 	"end-of-data    version 2 session [0-9]+ length 24 serial 3 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 
 # Processing serial 4

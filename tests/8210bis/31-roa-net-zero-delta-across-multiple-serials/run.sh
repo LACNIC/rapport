@@ -32,8 +32,8 @@ send_router_pdu "serial-query serial 1"
 check_pdus \
 	"serial-notify  version 2 session [0-9]+ length 12 serial 2" \
 	"cache-response version 2 session [0-9]+ length 8" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 16 maxlen 16 zero2 0 prefix 201:: as 1234" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 16 maxlen 16 zero2 0 prefix 2.1.0.0 as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 16 maxlen 16 zero2 0 prefix 201:: as 1234" \
 	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 
 # Processing serial 3
