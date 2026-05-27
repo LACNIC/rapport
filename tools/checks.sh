@@ -188,11 +188,11 @@ send_router_pdu() {
 	echo "$@" | $BARRY-ncu "$BARRY_RTR_SK"
 }
 
-# Wait at most 3 seconds for $1 PDUs to arrive
+# Wait at most 5 seconds for $1 PDUs to arrive
 wait_pdus() {
 	test "$(wc -l < "$SANDBOX/barry-rtr.stdout")" -ge "$1" && return 0
 
-	for i in 1 2 3; do
+	for i in $(seq 5); do
 		sleep 1
 		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
 	done
@@ -485,5 +485,5 @@ new_step() {
 	sleep 1 # Wait out HTTP IMS and rsync IMS
 
 	STEP="$((STEP+1))"
-	echo "  Step $STEP"
+	#echo "  Step $STEP"
 }

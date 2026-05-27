@@ -627,4 +627,134 @@ responding to a Serial Query spanning multiple serials).
 
 ---
 
-*End of draft-ietf-sidrops-8210bis-25 test suite — 31 test cases across 7 categories*
+## Category 8 – Sort, Diff, and High-Cardinality Delta Integrity
+
+---
+
+### 32 - `high-cardinality-mixed-bulk-delta`
+
+**Description:**
+This test checks that the cache correctly produces a large-scale incremental update
+covering simultaneous changes across all three payload PDU types — IPv4 Prefix,
+IPv6 Prefix, and ASPA — within a single serial increment, and that the resulting
+delta stream contains exactly the expected set of withdrawal and announcement PDUs
+with no omissions, duplicates, or ordering violations.
+
+The test is specifically designed to exercise the internal sort-and-diff algorithm
+that a cache must apply when computing the delta between two consecutive validated
+snapshots. It does so by constructing the two snapshots so that the sorted lists of
+records interleave large numbers of additions and removals — every other entry in
+the sorted order changes between snapshots — forcing the diff to traverse all
+comparison branches with high frequency.
+
+A key aspect of the test is verifying that the cache correctly applies the
+**distinct update semantics** that the protocol defines for ASPA records versus
+prefix VRPs. For VRPs, the identity key is the full `{Prefix, Len, Max-Len, AS}`
+tuple: any field change requires an explicit withdrawal of the old tuple followed by
+an announcement of the new one. For ASPA records, the identity key is the
+Customer AS alone: when the provider list changes, the cache MUST deliver a single
+announcement PDU with the updated provider list — no prior withdrawal of the old
+record is sent — and the router replaces the existing record for that Customer AS
+in place.
+
+The specific configuration under test is:
+
+- **Serial 1:** The cache has a validated dataset containing:
+  - **55 ASPA records.** Customer ASIDs are multiples of `0x010000` starting at
+    `0x0088010000`. Records at positions 1–15 are *stable* (unchanged across serials).
+    Records at positions 16–25 are *modified* (same Customer AS, different provider
+    list at serial 2). Records at even positions 26, 28, 30, …, 84 are
+    *serial-1-only* (entirely absent from serial 2); their Customer ASIDs occupy
+    every other slot in the `0x00881A0000–0x0088540000` range, interleaving with the
+    serial-2-only ASIDs below.
+  - **55 IPv4 VRP records.** Each record has `Prefix = 10.pos.0.0/16`,
+    `AS = 65536 + pos`. Positions 1–15 are stable. Positions 16–25 have
+    `Max-Len = 24` at serial 1 (changed to `Max-Len = 16` at serial 2, constituting
+    a tuple change that requires withdrawal + announcement). Positions at even
+    values 26, 28, …, 84 are serial-1-only.
+  - **10 IPv6 VRP records** (`2001:db8:0:1::/64` through `2001:db8:0:a::/64`,
+    `AS = 65701–65710`), all serial-1-only.
+
+- **Serial 2:** The RPKI dataset changes as follows:
+  - The 15 stable ASPA and VRP records are **unchanged** (net-zero; not mentioned
+    in the delta).
+  - The 10 modified ASPAs — whose Customer AS is unchanged but whose provider list
+    differs — each produce a **single announcement PDU** (`Flags=1`) carrying the
+    updated provider list. No withdrawal is sent. The router replaces the previously
+    held record for each Customer AS. Total: **10 ASPA announcement PDUs**.
+  - The 30 serial-1-only ASPAs (even positions) are **withdrawn**: 30 ASPA
+    withdrawal PDUs (`Flags=0`, `Length=12`, no Provider list).
+  - 30 new ASPAs at odd positions 27, 29, …, 85 — Customer ASIDs
+    `0x00881B0000–0x0088550000` — are **announced**: 30 ASPA announcement PDUs
+    (`Flags=1`, `Length=16`, one Provider AS each).
+  - The 10 modified IPv4 VRPs each produce a **withdrawal** of the old
+    `{10.pos.0.0/16, Max-Len=24, AS}` tuple and an **announcement** of the new
+    `{10.pos.0.0/16, Max-Len=16, AS}` tuple, for **20 IPv4 Prefix PDUs**.
+  - The 30 serial-1-only IPv4 VRPs are **withdrawn**: 30 IPv4 Prefix withdrawal
+    PDUs (`Flags=0`).
+  - 30 new IPv4 VRPs at odd positions 27, 29, …, 85 — `10.pos.0.0/16`,
+    `AS = 65536 + pos`, `Max-Len=16` — are **announced**: 30 IPv4 Prefix
+    announcement PDUs (`Flags=1`).
+  - The 10 serial-1-only IPv6 VRPs are **withdrawn**: 10 IPv6 Prefix withdrawal
+    PDUs (`Flags=0`).
+  - 10 new IPv6 VRPs (`2001:db8:0:b::/64` through `2001:db8:0:14::/64`,
+    `AS = 65711–65720`) are **announced**: 10 IPv6 Prefix announcement PDUs
+    (`Flags=1`).
+
+- **Query:** A Serial Query is sent with the Session ID and Serial Number
+  corresponding to serial 1.
+
+**Interleaving design.** The serial-1-only and serial-2-only ASPA Customer ASIDs
+occupy alternating slots in the sorted order (`0x00881A0000`, `0x00881B0000`,
+`0x00881C0000`, `0x00881D0000`, …). After the diff algorithm processes the 10 modified
+ASPAs (positions 16–25, each producing one announcement with no prior withdrawal),
+it must alternate between emitting a withdrawal and an announcement for every
+subsequent pair of slots across the 60 interleaved entries. The same alternating
+pattern applies to the IPv4 VRP list sorted by `(proto, AS, Prefix, Len, Max-Len)`.
+This construction maximises the number of state transitions in the diff's comparison
+loop and ensures that both the "left-only" and "right-only" branches of the merge
+are exercised in strict alternation, with no consecutive run of the same operation
+exceeding one entry.
+
+**Expected delta stream (173 PDUs total):**
+
+| PDU type | Operation | Count | Subtotal |
+|---|---|---|---|
+| ASPA | Announcement (modified, updated providers — no prior withdrawal) | 10 | |
+| ASPA | Withdrawal (serial-1-only, interleaved) | 30 | |
+| ASPA | Announcement (serial-2-only, interleaved) | 30 | **70** |
+| IPv4 Prefix | Withdrawal (Max-Len changed — old tuple) | 10 | |
+| IPv4 Prefix | Announcement (Max-Len changed — new tuple) | 10 | |
+| IPv4 Prefix | Withdrawal (serial-1-only, interleaved) | 30 | |
+| IPv4 Prefix | Announcement (serial-2-only, interleaved) | 30 | **80** |
+| IPv6 Prefix | Withdrawal (serial-1-only) | 10 | |
+| IPv6 Prefix | Announcement (serial-2-only) | 10 | **20** |
+| **Total payload PDUs** | | | **170** |
+
+The cache response envelope (Cache Response + End of Data) contributes 2 additional
+PDUs, for a total stream of 172 PDUs following the Serial Notify, or 173 PDUs
+counting the Serial Notify itself.
+
+The cache MUST deliver the complete delta without omission or duplication. The
+router's resulting RPKI table MUST match the serial-2 dataset exactly: 55 ASPAs
+(15 stable + 10 with replaced provider lists + 30 new), 55 IPv4 VRPs (15 stable
++ 10 with updated Max-Len + 30 new), and 10 IPv6 VRPs (serial-2-only).
+
+**Related sections:** section 5.3 (the cache MUST return the minimum set of changes
+needed to bring the router to the current state; multiple changes for the same
+record MUST be merged), section 5.6 (IPv4 Prefix PDU; `Flags=1` announces,
+`Flags=0` withdraws; the identity key is the full `{Prefix, Len, Max-Len, AS}`
+tuple; changing any field requires a withdrawal of the old tuple and an announcement
+of the new one), section 5.7 (the behaviour specified for IPv4 Prefix PDU is also
+applicable to IPv6 Prefix PDU), section 5.12 (ASPA PDU; the identity key is the
+Customer AS alone; receipt of an ASPA PDU announcement when the router already holds
+an ASPA for the same Customer AS replaces the previous record — no prior withdrawal
+is required or expected; `Flags=0` withdraws the entire record, `Length=12`, no
+Provider list), section 11.2.1 (IP Prefix PDUs: caches MUST send all withdraw PDUs
+before any announce PDUs within a Serial Query response; this ordering requirement
+applies to IPv4 and IPv6 Prefix PDUs and does not extend to ASPA PDUs, whose
+replacement semantics make an explicit withdrawal unnecessary).
+
+---
+
+*End of draft-ietf-sidrops-8210bis-25 test suite — 32 test cases across 8 categories*
