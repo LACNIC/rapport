@@ -157,7 +157,7 @@ n=11; while [ "$n" -le 20 ]; do
 	set -- "$@" "ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix $(printf '2001:db8:0:%x::' "$n") as $((65700+n))"
 	n=$((n+1)); done
 
-# ASPA δ — changed: W(length=12,without providers) + A(length=20,providers_v2)
+# ASPA δ — changed: A(length=20,providers_v2)
 k=0; while [ "$k" -le 9 ]; do
 	_cust=$((0x88000000+(16+k)*65536))
 	set -- "$@" \

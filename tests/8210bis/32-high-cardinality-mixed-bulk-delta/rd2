@@ -17,7 +17,7 @@ ta.cer
 		aspa-stable-13.asa
 		aspa-stable-14.asa
 		aspa-stable-15.asa
-		# -- Changed ASPAs (pos 16-25): providers v2 en iter2 --
+		# -- Changed ASPAs (pos 16-25): providers v2 en rd2 --
 		aspa-chg-01.asa
 		aspa-chg-02.asa
 		aspa-chg-03.asa
@@ -28,7 +28,7 @@ ta.cer
 		aspa-chg-08.asa
 		aspa-chg-09.asa
 		aspa-chg-10.asa
-		# -- Iter2-only ASPAs (posiciones impares 27-85) --
+		# -- rd2-only ASPAs (posiciones impares 27-85) --
 		aspa-new-27.asa
 		aspa-new-29.asa
 		aspa-new-31.asa
@@ -76,7 +76,7 @@ ta.cer
 		roa-v4-stable-13.roa
 		roa-v4-stable-14.roa
 		roa-v4-stable-15.roa
-		# -- Changed-maxlen ROAs IPv4 (pos 16-25): maxlen=16 en iter2 --
+		# -- Changed-maxlen ROAs IPv4 (pos 16-25): maxlen=16 en rd2 --
 		roa-v4-chgml-01.roa
 		roa-v4-chgml-02.roa
 		roa-v4-chgml-03.roa
@@ -87,7 +87,7 @@ ta.cer
 		roa-v4-chgml-08.roa
 		roa-v4-chgml-09.roa
 		roa-v4-chgml-10.roa
-		# -- Iter2-only ROAs IPv4 (posiciones impares 27-85) --
+		# -- rd2-only ROAs IPv4 (posiciones impares 27-85) --
 		roa-v4-new-27.roa
 		roa-v4-new-29.roa
 		roa-v4-new-31.roa
@@ -119,7 +119,7 @@ ta.cer
 		roa-v4-new-83.roa
 		roa-v4-new-85.roa
 	roa-v6-ca.cer
-		# -- Iter2-only ROAs IPv6 (n=11..20) --
+		# -- rd2-only ROAs IPv6 (n=11..20) --
 		roa-v6-new-11.roa
 		roa-v6-new-12.roa
 		roa-v6-new-13.roa
@@ -265,7 +265,7 @@ obj.content.encapContentInfo.eContent.customerASID = 0x0088190000
 obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088190000 ]
 obj.content.encapContentInfo.eContent.providers = [ 64909, 64910 ]
 
-# ── Iter2-only ASPAs (posiciones impares 27-85) ─────────────────────────────
+# ── rd2-only ASPAs (posiciones impares 27-85) ─────────────────────────────
 
 [node: aspa-new-27.asa]
 obj.content.encapContentInfo.eContent.customerASID = 0x00881b0000
@@ -500,7 +500,7 @@ obj.content.encapContentInfo.eContent.asId = 65551
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.15.0.0/16 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.15.0.0/16 ]
 
-# ── Changed-maxlen ROAs IPv4 (maxlen=16 en iter2) ───────────────────────────
+# ── Changed-maxlen ROAs IPv4 (maxlen=16 en rd2) ───────────────────────────
 
 [node: roa-v4-chgml-01.roa]
 obj.content.encapContentInfo.eContent.asId = 65552
@@ -552,7 +552,7 @@ obj.content.encapContentInfo.eContent.asId = 65561
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.25.0.0/16-16 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.25.0.0/16 ]
 
-# ── Iter2-only ROAs IPv4 (posiciones impares 27-85) ─────────────────────────
+# ── rd2-only ROAs IPv4 (posiciones impares 27-85) ─────────────────────────
 
 [node: roa-v4-new-27.roa]
 obj.content.encapContentInfo.eContent.asId = 65563
@@ -710,7 +710,7 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.85.0.0/
 obj.tbsCertificate.extensions.ip.extnValue = [ 2001:db8::/32 ]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 65701-65720 ]
 
-# ── Iter2-only ROAs IPv6 ─────────────────────────────────────────────────────
+# ── rd2-only ROAs IPv6 ─────────────────────────────────────────────────────
 
 [node: roa-v6-new-11.roa]
 obj.content.encapContentInfo.eContent.asId = 65711

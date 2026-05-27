@@ -16,7 +16,7 @@ ta.cer
 		aspa-stable-13.asa
 		aspa-stable-14.asa
 		aspa-stable-15.asa
-		# -- Changed ASPAs (pos 16-25): providers v1 en iter1 --
+		# -- Changed ASPAs (pos 16-25): providers v1 en rd1 --
 		aspa-chg-01.asa
 		aspa-chg-02.asa
 		aspa-chg-03.asa
@@ -27,7 +27,7 @@ ta.cer
 		aspa-chg-08.asa
 		aspa-chg-09.asa
 		aspa-chg-10.asa
-		# -- Iter1-only ASPAs (posiciones pares 26-84) --
+		# -- rd1-only ASPAs (posiciones pares 26-84) --
 		aspa-gone-26.asa
 		aspa-gone-28.asa
 		aspa-gone-30.asa
@@ -75,7 +75,7 @@ ta.cer
 		roa-v4-stable-13.roa
 		roa-v4-stable-14.roa
 		roa-v4-stable-15.roa
-		# -- Changed-maxlen ROAs IPv4 (pos 16-25): maxlen=24 en iter1 --
+		# -- Changed-maxlen ROAs IPv4 (pos 16-25): maxlen=24 en rd1 --
 		roa-v4-chgml-01.roa
 		roa-v4-chgml-02.roa
 		roa-v4-chgml-03.roa
@@ -86,7 +86,7 @@ ta.cer
 		roa-v4-chgml-08.roa
 		roa-v4-chgml-09.roa
 		roa-v4-chgml-10.roa
-		# -- Iter1-only ROAs IPv4 (posiciones pares 26-84) --
+		# -- rd1-only ROAs IPv4 (posiciones pares 26-84) --
 		roa-v4-gone-26.roa
 		roa-v4-gone-28.roa
 		roa-v4-gone-30.roa
@@ -118,7 +118,7 @@ ta.cer
 		roa-v4-gone-82.roa
 		roa-v4-gone-84.roa
 	roa-v6-ca.cer
-		# -- Iter1-only ROAs IPv6 (n=01..10) --
+		# -- rd1-only ROAs IPv6 (n=01..10) --
 		roa-v6-gone-01.roa
 		roa-v6-gone-02.roa
 		roa-v6-gone-03.roa
@@ -212,9 +212,9 @@ obj.content.encapContentInfo.eContent.customerASID = 0x00880F0000
 obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880F0000 ]
 obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
 
-# ── Changed ASPAs — providers V1 (iter1) ─────────────────────────────────────
-# En iter2 reaparecen con los mismos customerASIDs pero providers distintos.
-# Eso genera: 10 withdrawals del viejo + 10 announcements del nuevo.
+# ── Changed ASPAs — providers V1 (rd1) ─────────────────────────────────────
+# In rd2, they reappear with the same customerASIDs but different providers.
+# This results in: 10 announcements from the new provider.
 
 [node: aspa-chg-01.asa]
 obj.content.encapContentInfo.eContent.customerASID = 0x0088100000
@@ -266,9 +266,9 @@ obj.content.encapContentInfo.eContent.customerASID = 0x0088190000
 obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088190000 ]
 obj.content.encapContentInfo.eContent.providers = [ 64818, 64819 ]
 
-# ── Iter1-only ASPAs (posiciones pares 26-84) ─────────────────────────────────
-# Desaparecen en iter2. Intercalados con los iter2-only en el orden sorted,
-# por lo que el diff alterna W/A a cada paso.
+# ── rd1-only ASPAs (even positions 26-84) ─────────────────────────────────
+# They disappear in rd2. Interleaved with the rd2-only in sorted order,
+# so the diff alternates W/A at each step.
 
 [node: aspa-gone-26.asa]
 obj.content.encapContentInfo.eContent.customerASID = 0x00881A0000
@@ -421,7 +421,7 @@ obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00
 obj.content.encapContentInfo.eContent.providers = [ 65200 ]
 
 # ── CA de ROAs IPv4 ───────────────────────────────────────────────────────────
-# Recursos: 10.0.0.0/8 para IPs; AS 65537-65621 para los asIDs.
+# Resoruces: 10.0.0.0/8 for IPs; AS 65537-65621 for asIDs.
 # asId = 65536 + pos  →  pos 1..85
 
 [node: roa-v4-ca.cer]
@@ -506,7 +506,7 @@ obj.content.encapContentInfo.eContent.asId = 65551
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.15.0.0/16 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.15.0.0/16 ]
 
-# ── Changed-maxlen ROAs IPv4 (maxlen=24 en iter1, maxlen=16 en iter2) ─────────
+# ── Changed-maxlen ROAs IPv4 (maxlen=24 en rd1, maxlen=16 en iter2) ─────────
 # pos 16-25: asID=65552-65561, prefix=10.16-25.0.0/16
 
 [node: roa-v4-chgml-01.roa]
@@ -559,7 +559,7 @@ obj.content.encapContentInfo.eContent.asId = 65561
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.25.0.0/16-24 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.25.0.0/16 ]
 
-# ── Iter1-only ROAs IPv4 (posiciones pares 26-84) ─────────────────────────────
+# ── rd1-only ROAs IPv4 (posiciones pares 26-84) ─────────────────────────────
 # asID = 65536 + pos,  prefix = 10.pos.0.0/16-16
 
 [node: roa-v4-gone-26.roa]
@@ -713,14 +713,14 @@ obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.84.0.0/16 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.84.0.0/16 ]
 
 # ── CA de ROAs IPv6 ───────────────────────────────────────────────────────────
-# 2001:db8:0:n::/64  (n=1..10 iter1, n=11..20 iter2)
+# 2001:db8:0:n::/64  (n=1..10 rd1, n=11..20 iter2)
 # asID = 65700 + n
 
 [node: roa-v6-ca.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 2001:db8::/32 ]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 65701-65720 ]
 
-# ── Iter1-only ROAs IPv6 ─────────────────────────────────────────────────────
+# ── rd1-only ROAs IPv6 ─────────────────────────────────────────────────────
 
 [node: roa-v6-gone-01.roa]
 obj.content.encapContentInfo.eContent.asId = 65701
