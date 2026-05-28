@@ -1,0 +1,12 @@
+ta.cer
+	a.roa
+	b.asa
+	c.mft
+
+[node: a.roa]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.$STEP.0/24, 101:$STEP::/120 ]
+
+[node: c.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = $STEP
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = $STEP
