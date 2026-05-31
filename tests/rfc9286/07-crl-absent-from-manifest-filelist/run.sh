@@ -4,7 +4,7 @@
 . rp/$RP.sh
 
 run_barry rd1
-run_rp "--http.enabled=false"
+run_rp
 
 check_vrps \
     "2.1.0.0/24-24 => AS20001" \
@@ -14,7 +14,7 @@ check_vrps \
 
 new_step
 create_delta "rd2"
-run_rp "--http.enabled=false"
+run_rp
 
 check_logfile fort1 -F "Manifest lacks a CRL."
 check_logfile fort1 -F "Bad manifest."

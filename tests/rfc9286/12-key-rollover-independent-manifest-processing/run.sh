@@ -4,7 +4,7 @@
 . rp/$RP.sh
 
 run_barry rd1
-run_rp "--http.enabled=false"
+run_rp
 
 check_vrps \
     "2.1.0.0/24-24 => AS20001" \

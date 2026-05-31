@@ -18,7 +18,6 @@ run_rp
 
 #check_logfile fort1 -F "Error..."
 
-
 check_vrps \
     "2.1.0.0/24-24 => AS20001" \
     "2.1.1.0/24-24 => AS20001" \
