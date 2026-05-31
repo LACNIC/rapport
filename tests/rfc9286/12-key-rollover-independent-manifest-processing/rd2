@@ -13,3 +13,9 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16
 rpp.uri  = rsync://localhost:8873/rpki/$TEST/shared
 rpp.path = shared
 obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 2
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 2
