@@ -11,7 +11,7 @@ cp "sandbox/rsyncd/content/$TEST/ca/valid-1-1.roa" \
 run_rp "--http.enabled=false"
 
 check_vrps \
-	"2.1.0.0/24-24 => AS20001" \
-	"2.1.1.0/24-24 => AS20001" \
+   "2.1.0.0/24-24 => AS20001" \
+   "2.1.1.0/24-24 => AS20001" \
    "3.1.0.0/24-24 => AS30001" \
    "3.1.1.0/24-24 => AS30001"
