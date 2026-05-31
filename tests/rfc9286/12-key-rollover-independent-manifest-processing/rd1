@@ -1,0 +1,29 @@
+ta.cer
+	ta.mft
+	ca-old.cer
+		ca-old.mft
+		valid-old.roa
+	ca-new.cer
+		ca-new.mft
+		valid-new.roa
+	
+
+[node: valid-old.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]
+
+[node: valid-new.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
+
+[node: ca-old.cer]
+rpp.uri  = rsync://localhost:8873/rpki/$TEST/shared
+rpp.path = shared
+obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+
+[node: ca-new.cer]
+rpp.uri  = rsync://localhost:8873/rpki/$TEST/shared
+rpp.path = shared
+obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]

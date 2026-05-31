@@ -1,0 +1,17 @@
+ta.cer
+	ta.mft
+	ca.cer
+		valid-1-1.roa
+	ca2.cer
+		valid-2-1.roa
+	
+
+[node: valid-1-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]
+
+[node: valid-2-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
