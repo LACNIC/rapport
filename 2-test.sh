@@ -84,13 +84,13 @@ run_test() {
 }
 
 if [ -z "$1" ]; then
-	for CATEGORY in tests/*; do
-		for T in "$CATEGORY"/*; do
+	for CATEGORY in $(find tests -mindepth 1 -maxdepth 1 -type d | sort -V); do
+		for T in $(find "$CATEGORY" -mindepth 1 -maxdepth 1 -type d | sort -V); do
 			run_test "$T"
 		done
 	done
 elif [ -z "$2" ]; then
-	for T in "tests/$1"/*; do
+	for T in $(find "tests/$1" -mindepth 1 -maxdepth 1 -type d | sort -V); do
 		run_test "$T"
 	done
 else
