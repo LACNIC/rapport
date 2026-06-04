@@ -13,11 +13,5 @@ TODO.md
 # ...
 .DS_Store
 
-# dynamically generated files
-tests/aspa-profile/21-provider-count-above-threshold/rd
-tests/aspa-profile/22-provider-count-below-threshold/rd
-tests/aspa-profile/23-provider-count-at-threshold/rd
-tests/aspa-profile/24-big-aspa/rd
-
 # Cisco image file
 *.qcow2
