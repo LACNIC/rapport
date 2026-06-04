@@ -1,0 +1,16 @@
+ta.cer
+	ca.cer
+		aspa.asa
+
+[node: ta.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0-4294967295 ]
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-4294967294 ]
+
+[node: aspa.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [4294967294]
+obj.content.encapContentInfo.eContent = {
+	customerASID = 4294967294,
+	providers = [65001]
+}

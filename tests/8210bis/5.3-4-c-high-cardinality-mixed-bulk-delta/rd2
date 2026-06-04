@@ -1,0 +1,769 @@
+ta.cer
+	ta.mft
+	aspa-ca.cer
+		# -- Stable ASPAs (pos 01-15) --
+		aspa-stable-01.asa
+		aspa-stable-02.asa
+		aspa-stable-03.asa
+		aspa-stable-04.asa
+		aspa-stable-05.asa
+		aspa-stable-06.asa
+		aspa-stable-07.asa
+		aspa-stable-08.asa
+		aspa-stable-09.asa
+		aspa-stable-10.asa
+		aspa-stable-11.asa
+		aspa-stable-12.asa
+		aspa-stable-13.asa
+		aspa-stable-14.asa
+		aspa-stable-15.asa
+		# -- Changed ASPAs (pos 16-25): providers v2 en rd2 --
+		aspa-chg-01.asa
+		aspa-chg-02.asa
+		aspa-chg-03.asa
+		aspa-chg-04.asa
+		aspa-chg-05.asa
+		aspa-chg-06.asa
+		aspa-chg-07.asa
+		aspa-chg-08.asa
+		aspa-chg-09.asa
+		aspa-chg-10.asa
+		# -- rd2-only ASPAs (posiciones impares 27-85) --
+		aspa-new-27.asa
+		aspa-new-29.asa
+		aspa-new-31.asa
+		aspa-new-33.asa
+		aspa-new-35.asa
+		aspa-new-37.asa
+		aspa-new-39.asa
+		aspa-new-41.asa
+		aspa-new-43.asa
+		aspa-new-45.asa
+		aspa-new-47.asa
+		aspa-new-49.asa
+		aspa-new-51.asa
+		aspa-new-53.asa
+		aspa-new-55.asa
+		aspa-new-57.asa
+		aspa-new-59.asa
+		aspa-new-61.asa
+		aspa-new-63.asa
+		aspa-new-65.asa
+		aspa-new-67.asa
+		aspa-new-69.asa
+		aspa-new-71.asa
+		aspa-new-73.asa
+		aspa-new-75.asa
+		aspa-new-77.asa
+		aspa-new-79.asa
+		aspa-new-81.asa
+		aspa-new-83.asa
+		aspa-new-85.asa
+	roa-v4-ca.cer
+		# -- Stable ROAs IPv4 (pos 01-15) --
+		roa-v4-stable-01.roa
+		roa-v4-stable-02.roa
+		roa-v4-stable-03.roa
+		roa-v4-stable-04.roa
+		roa-v4-stable-05.roa
+		roa-v4-stable-06.roa
+		roa-v4-stable-07.roa
+		roa-v4-stable-08.roa
+		roa-v4-stable-09.roa
+		roa-v4-stable-10.roa
+		roa-v4-stable-11.roa
+		roa-v4-stable-12.roa
+		roa-v4-stable-13.roa
+		roa-v4-stable-14.roa
+		roa-v4-stable-15.roa
+		# -- Changed-maxlen ROAs IPv4 (pos 16-25): maxlen=16 en rd2 --
+		roa-v4-chgml-01.roa
+		roa-v4-chgml-02.roa
+		roa-v4-chgml-03.roa
+		roa-v4-chgml-04.roa
+		roa-v4-chgml-05.roa
+		roa-v4-chgml-06.roa
+		roa-v4-chgml-07.roa
+		roa-v4-chgml-08.roa
+		roa-v4-chgml-09.roa
+		roa-v4-chgml-10.roa
+		# -- rd2-only ROAs IPv4 (posiciones impares 27-85) --
+		roa-v4-new-27.roa
+		roa-v4-new-29.roa
+		roa-v4-new-31.roa
+		roa-v4-new-33.roa
+		roa-v4-new-35.roa
+		roa-v4-new-37.roa
+		roa-v4-new-39.roa
+		roa-v4-new-41.roa
+		roa-v4-new-43.roa
+		roa-v4-new-45.roa
+		roa-v4-new-47.roa
+		roa-v4-new-49.roa
+		roa-v4-new-51.roa
+		roa-v4-new-53.roa
+		roa-v4-new-55.roa
+		roa-v4-new-57.roa
+		roa-v4-new-59.roa
+		roa-v4-new-61.roa
+		roa-v4-new-63.roa
+		roa-v4-new-65.roa
+		roa-v4-new-67.roa
+		roa-v4-new-69.roa
+		roa-v4-new-71.roa
+		roa-v4-new-73.roa
+		roa-v4-new-75.roa
+		roa-v4-new-77.roa
+		roa-v4-new-79.roa
+		roa-v4-new-81.roa
+		roa-v4-new-83.roa
+		roa-v4-new-85.roa
+	roa-v6-ca.cer
+		# -- rd2-only ROAs IPv6 (n=11..20) --
+		roa-v6-new-11.roa
+		roa-v6-new-12.roa
+		roa-v6-new-13.roa
+		roa-v6-new-14.roa
+		roa-v6-new-15.roa
+		roa-v6-new-16.roa
+		roa-v6-new-17.roa
+		roa-v6-new-18.roa
+		roa-v6-new-19.roa
+		roa-v6-new-20.roa
+
+# ── CA de ASPAs ───────────────────────────────────────────────────────────────
+
+[node: aspa-ca.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088010000-0x0088560000 ]
+
+# ── Stable ASPAs ─────────────────────────────────────────────────────────────
+
+[node: aspa-stable-01.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088010000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088010000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-02.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088020000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088020000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-03.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088030000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088030000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-04.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088040000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088040000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-05.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088050000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088050000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-06.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088060000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088060000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-07.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088070000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088070000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-08.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088080000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088080000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-09.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088090000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088090000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-10.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880A0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880A0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-11.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880B0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880B0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-12.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880C0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880C0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-13.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880D0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880D0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-14.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880E0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880E0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+[node: aspa-stable-15.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00880F0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00880F0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65000, 65001 ]
+
+# ── Changed ASPAs (providers v2) ────────────────────────────────────────────
+
+[node: aspa-chg-01.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088100000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088100000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64900, 64901 ]
+
+[node: aspa-chg-02.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088110000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088110000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64901, 64902 ]
+
+[node: aspa-chg-03.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088120000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088120000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64902, 64903 ]
+
+[node: aspa-chg-04.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088130000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088130000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64903, 64904 ]
+
+[node: aspa-chg-05.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088140000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088140000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64904, 64905 ]
+
+[node: aspa-chg-06.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088150000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088150000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64905, 64906 ]
+
+[node: aspa-chg-07.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088160000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088160000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64906, 64907 ]
+
+[node: aspa-chg-08.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088170000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088170000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64907, 64908 ]
+
+[node: aspa-chg-09.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088180000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088180000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64908, 64909 ]
+
+[node: aspa-chg-10.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088190000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088190000 ]
+obj.content.encapContentInfo.eContent.providers = [ 64909, 64910 ]
+
+# ── rd2-only ASPAs (posiciones impares 27-85) ─────────────────────────────
+
+[node: aspa-new-27.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00881b0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00881b0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-29.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00881d0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00881d0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-31.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00881f0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00881f0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-33.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088210000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088210000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-35.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088230000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088230000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-37.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088250000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088250000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-39.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088270000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088270000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-41.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088290000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088290000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-43.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00882b0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00882b0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-45.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00882d0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00882d0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-47.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00882f0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00882f0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-49.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088310000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088310000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-51.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088330000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088330000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-53.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088350000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088350000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-55.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088370000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088370000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-57.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088390000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088390000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-59.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00883b0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00883b0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-61.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00883d0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00883d0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-63.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00883f0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00883f0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-65.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088410000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088410000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-67.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088430000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088430000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-69.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088450000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088450000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-71.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088470000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088470000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-73.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088490000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088490000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-75.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00884b0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00884b0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-77.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00884d0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00884d0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-79.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x00884f0000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00884f0000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-81.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088510000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088510000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-83.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088530000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088530000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+[node: aspa-new-85.asa]
+obj.content.encapContentInfo.eContent.customerASID = 0x0088550000
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088550000 ]
+obj.content.encapContentInfo.eContent.providers = [ 65300 ]
+
+# ── CA de ROAs IPv4 ──────────────────────────────────────────────────────────
+
+[node: roa-v4-ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.0.0.0/8 ]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 65537-65621 ]
+
+# ── Stable ROAs IPv4 ─────────────────────────────────────────────────────────
+
+[node: roa-v4-stable-01.roa]
+obj.content.encapContentInfo.eContent.asId = 65537
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.1.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: roa-v4-stable-02.roa]
+obj.content.encapContentInfo.eContent.asId = 65538
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.2.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.2.0.0/16 ]
+
+[node: roa-v4-stable-03.roa]
+obj.content.encapContentInfo.eContent.asId = 65539
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.3.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.3.0.0/16 ]
+
+[node: roa-v4-stable-04.roa]
+obj.content.encapContentInfo.eContent.asId = 65540
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.4.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.4.0.0/16 ]
+
+[node: roa-v4-stable-05.roa]
+obj.content.encapContentInfo.eContent.asId = 65541
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.5.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.5.0.0/16 ]
+
+[node: roa-v4-stable-06.roa]
+obj.content.encapContentInfo.eContent.asId = 65542
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.6.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.6.0.0/16 ]
+
+[node: roa-v4-stable-07.roa]
+obj.content.encapContentInfo.eContent.asId = 65543
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.7.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.7.0.0/16 ]
+
+[node: roa-v4-stable-08.roa]
+obj.content.encapContentInfo.eContent.asId = 65544
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.8.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.8.0.0/16 ]
+
+[node: roa-v4-stable-09.roa]
+obj.content.encapContentInfo.eContent.asId = 65545
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.9.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.9.0.0/16 ]
+
+[node: roa-v4-stable-10.roa]
+obj.content.encapContentInfo.eContent.asId = 65546
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.10.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.10.0.0/16 ]
+
+[node: roa-v4-stable-11.roa]
+obj.content.encapContentInfo.eContent.asId = 65547
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.11.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.11.0.0/16 ]
+
+[node: roa-v4-stable-12.roa]
+obj.content.encapContentInfo.eContent.asId = 65548
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.12.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.12.0.0/16 ]
+
+[node: roa-v4-stable-13.roa]
+obj.content.encapContentInfo.eContent.asId = 65549
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.13.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.13.0.0/16 ]
+
+[node: roa-v4-stable-14.roa]
+obj.content.encapContentInfo.eContent.asId = 65550
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.14.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.14.0.0/16 ]
+
+[node: roa-v4-stable-15.roa]
+obj.content.encapContentInfo.eContent.asId = 65551
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.15.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.15.0.0/16 ]
+
+# ── Changed-maxlen ROAs IPv4 (maxlen=16 en rd2) ───────────────────────────
+
+[node: roa-v4-chgml-01.roa]
+obj.content.encapContentInfo.eContent.asId = 65552
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.16.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.16.0.0/16 ]
+
+[node: roa-v4-chgml-02.roa]
+obj.content.encapContentInfo.eContent.asId = 65553
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.17.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.17.0.0/16 ]
+
+[node: roa-v4-chgml-03.roa]
+obj.content.encapContentInfo.eContent.asId = 65554
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.18.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.18.0.0/16 ]
+
+[node: roa-v4-chgml-04.roa]
+obj.content.encapContentInfo.eContent.asId = 65555
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.19.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.19.0.0/16 ]
+
+[node: roa-v4-chgml-05.roa]
+obj.content.encapContentInfo.eContent.asId = 65556
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.20.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.20.0.0/16 ]
+
+[node: roa-v4-chgml-06.roa]
+obj.content.encapContentInfo.eContent.asId = 65557
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.21.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.21.0.0/16 ]
+
+[node: roa-v4-chgml-07.roa]
+obj.content.encapContentInfo.eContent.asId = 65558
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.22.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.22.0.0/16 ]
+
+[node: roa-v4-chgml-08.roa]
+obj.content.encapContentInfo.eContent.asId = 65559
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.23.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.23.0.0/16 ]
+
+[node: roa-v4-chgml-09.roa]
+obj.content.encapContentInfo.eContent.asId = 65560
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.24.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.24.0.0/16 ]
+
+[node: roa-v4-chgml-10.roa]
+obj.content.encapContentInfo.eContent.asId = 65561
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.25.0.0/16-16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.25.0.0/16 ]
+
+# ── rd2-only ROAs IPv4 (posiciones impares 27-85) ─────────────────────────
+
+[node: roa-v4-new-27.roa]
+obj.content.encapContentInfo.eContent.asId = 65563
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.27.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.27.0.0/16 ]
+
+[node: roa-v4-new-29.roa]
+obj.content.encapContentInfo.eContent.asId = 65565
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.29.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.29.0.0/16 ]
+
+[node: roa-v4-new-31.roa]
+obj.content.encapContentInfo.eContent.asId = 65567
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.31.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.31.0.0/16 ]
+
+[node: roa-v4-new-33.roa]
+obj.content.encapContentInfo.eContent.asId = 65569
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.33.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.33.0.0/16 ]
+
+[node: roa-v4-new-35.roa]
+obj.content.encapContentInfo.eContent.asId = 65571
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.35.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.35.0.0/16 ]
+
+[node: roa-v4-new-37.roa]
+obj.content.encapContentInfo.eContent.asId = 65573
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.37.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.37.0.0/16 ]
+
+[node: roa-v4-new-39.roa]
+obj.content.encapContentInfo.eContent.asId = 65575
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.39.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.39.0.0/16 ]
+
+[node: roa-v4-new-41.roa]
+obj.content.encapContentInfo.eContent.asId = 65577
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.41.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.41.0.0/16 ]
+
+[node: roa-v4-new-43.roa]
+obj.content.encapContentInfo.eContent.asId = 65579
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.43.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.43.0.0/16 ]
+
+[node: roa-v4-new-45.roa]
+obj.content.encapContentInfo.eContent.asId = 65581
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.45.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.45.0.0/16 ]
+
+[node: roa-v4-new-47.roa]
+obj.content.encapContentInfo.eContent.asId = 65583
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.47.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.47.0.0/16 ]
+
+[node: roa-v4-new-49.roa]
+obj.content.encapContentInfo.eContent.asId = 65585
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.49.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.49.0.0/16 ]
+
+[node: roa-v4-new-51.roa]
+obj.content.encapContentInfo.eContent.asId = 65587
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.51.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.51.0.0/16 ]
+
+[node: roa-v4-new-53.roa]
+obj.content.encapContentInfo.eContent.asId = 65589
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.53.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.53.0.0/16 ]
+
+[node: roa-v4-new-55.roa]
+obj.content.encapContentInfo.eContent.asId = 65591
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.55.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.55.0.0/16 ]
+
+[node: roa-v4-new-57.roa]
+obj.content.encapContentInfo.eContent.asId = 65593
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.57.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.57.0.0/16 ]
+
+[node: roa-v4-new-59.roa]
+obj.content.encapContentInfo.eContent.asId = 65595
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.59.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.59.0.0/16 ]
+
+[node: roa-v4-new-61.roa]
+obj.content.encapContentInfo.eContent.asId = 65597
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.61.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.61.0.0/16 ]
+
+[node: roa-v4-new-63.roa]
+obj.content.encapContentInfo.eContent.asId = 65599
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.63.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.63.0.0/16 ]
+
+[node: roa-v4-new-65.roa]
+obj.content.encapContentInfo.eContent.asId = 65601
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.65.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.65.0.0/16 ]
+
+[node: roa-v4-new-67.roa]
+obj.content.encapContentInfo.eContent.asId = 65603
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.67.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.67.0.0/16 ]
+
+[node: roa-v4-new-69.roa]
+obj.content.encapContentInfo.eContent.asId = 65605
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.69.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.69.0.0/16 ]
+
+[node: roa-v4-new-71.roa]
+obj.content.encapContentInfo.eContent.asId = 65607
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.71.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.71.0.0/16 ]
+
+[node: roa-v4-new-73.roa]
+obj.content.encapContentInfo.eContent.asId = 65609
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.73.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.73.0.0/16 ]
+
+[node: roa-v4-new-75.roa]
+obj.content.encapContentInfo.eContent.asId = 65611
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.75.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.75.0.0/16 ]
+
+[node: roa-v4-new-77.roa]
+obj.content.encapContentInfo.eContent.asId = 65613
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.77.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.77.0.0/16 ]
+
+[node: roa-v4-new-79.roa]
+obj.content.encapContentInfo.eContent.asId = 65615
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.79.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.79.0.0/16 ]
+
+[node: roa-v4-new-81.roa]
+obj.content.encapContentInfo.eContent.asId = 65617
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.81.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.81.0.0/16 ]
+
+[node: roa-v4-new-83.roa]
+obj.content.encapContentInfo.eContent.asId = 65619
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.83.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.83.0.0/16 ]
+
+[node: roa-v4-new-85.roa]
+obj.content.encapContentInfo.eContent.asId = 65621
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.85.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.85.0.0/16 ]
+
+# ── CA de ROAs IPv6 ───────────────────────────────────────────────────────────
+
+[node: roa-v6-ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 2001:db8::/32 ]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 65701-65720 ]
+
+# ── rd2-only ROAs IPv6 ─────────────────────────────────────────────────────
+
+[node: roa-v6-new-11.roa]
+obj.content.encapContentInfo.eContent.asId = 65711
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:b::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:b::/64 ]
+
+[node: roa-v6-new-12.roa]
+obj.content.encapContentInfo.eContent.asId = 65712
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:c::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:c::/64 ]
+
+[node: roa-v6-new-13.roa]
+obj.content.encapContentInfo.eContent.asId = 65713
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:d::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:d::/64 ]
+
+[node: roa-v6-new-14.roa]
+obj.content.encapContentInfo.eContent.asId = 65714
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:e::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:e::/64 ]
+
+[node: roa-v6-new-15.roa]
+obj.content.encapContentInfo.eContent.asId = 65715
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:f::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:f::/64 ]
+
+[node: roa-v6-new-16.roa]
+obj.content.encapContentInfo.eContent.asId = 65716
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:10::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:10::/64 ]
+
+[node: roa-v6-new-17.roa]
+obj.content.encapContentInfo.eContent.asId = 65717
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:11::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:11::/64 ]
+
+[node: roa-v6-new-18.roa]
+obj.content.encapContentInfo.eContent.asId = 65718
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:12::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:12::/64 ]
+
+[node: roa-v6-new-19.roa]
+obj.content.encapContentInfo.eContent.asId = 65719
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:13::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:13::/64 ]
+
+[node: roa-v6-new-20.roa]
+obj.content.encapContentInfo.eContent.asId = 65720
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:14::/64 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:14::/64 ]
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 2
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 2

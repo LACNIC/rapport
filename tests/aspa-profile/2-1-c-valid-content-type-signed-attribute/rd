@@ -1,0 +1,12 @@
+ta.cer
+	correct.asa
+	correct-signerInfo.asa
+
+[node: correct.asa]
+obj.content.encapContentInfo.eContent.providers = [ 123, 70000, 4294967295 ]
+
+[node: correct-signerInfo.asa]
+obj.content = {
+	encapContentInfo.eContent.providers = [ 123, 70000, 4294967295 ],
+	signerInfos.0.signedAttrs.content-type = 1.2.840.113549.1.9.16.1.49,
+}

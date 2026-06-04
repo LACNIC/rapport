@@ -10,6 +10,11 @@
 > specific semantics of ASPA and prefix payload PDUs including their delta
 > (announce/withdraw) mechanics.
 
+> **Test identifiers:** Each test is identified by the **paragraph anchor** of the
+> main paragraph it relates to in draft-26 (e.g. `#section-4-5` → `4-5`).
+> When more than one test relates to the same paragraph, a sub-index (`-a`, `-b`,
+> `-c`, …) is appended (`4-5-a`, `4-5-b`, …).
+
 ---
 
 ## Key Concepts
@@ -34,7 +39,7 @@
 
 ---
 
-### section-4-5 - `serial-number-wraparound-at-2pow32-boundary`
+### 4-5 - `serial-number-wraparound-at-2pow32-boundary`
 
 **Description:**
 This test checks that the cache treats the Serial Number as a 32-bit strictly
@@ -64,7 +69,7 @@ withdraw PDUs are sent before any announce PDUs), [RFC1982] (for 32-bit serials,
 
 ---
 
-### section-5.1-2.10 - `serial-query-with-incorrect-session-id`
+### 5.1-2.10 - `serial-query-with-incorrect-session-id`
 
 **Description:**
 This test checks that the cache detects a Session ID mismatch when a Serial Query
@@ -83,7 +88,7 @@ the session with an Error Report PDU with code 0)
 
 ---
 
-### section-5.1-2.12 - `session-depends-on-version`
+### 5.1-2.12 - `session-depends-on-version`
 
 **Description:**
 This test checks that the cache binds the Session ID to the negotiated protocol
@@ -111,7 +116,7 @@ version, see section 5.1 for the interaction between Protocol Version and Sessio
 
 ---
 
-### section-5.3-3 - `serial-query-with-serial-equal-to-server-serial`
+### 5.3-3 - `serial-query-with-serial-equal-to-server-serial`
 
 **Description:**
 This test checks that the cache correctly responds to a Serial Query whose Serial
@@ -129,7 +134,7 @@ case the End of Data PDU is still sent)
 
 ---
 
-### section-5.3-4-a - `aspa-net-zero-delta-across-multiple-serials`
+### 5.3-4-a - `aspa-net-zero-delta-across-multiple-serials`
 
 **Description:**
 This test checks that the cache coalesces intermediate ASPA changes across multiple
@@ -153,7 +158,7 @@ spanning multiple serials).
 
 ---
 
-### section-5.3-4-b - `roa-net-zero-delta-across-multiple-serials`
+### 5.3-4-b - `roa-net-zero-delta-across-multiple-serials`
 
 **Description:**
 This test checks that the cache coalesces intermediate IPv4/IPv6 Prefix VRP changes
@@ -178,7 +183,7 @@ responding to a Serial Query spanning multiple serials).
 
 ---
 
-### section-5.3-4-c - `high-cardinality-mixed-bulk-delta`
+### 5.3-4-c - `high-cardinality-mixed-bulk-delta`
 
 **Description:**
 This test checks that the cache correctly produces a large-scale incremental update
@@ -216,7 +221,7 @@ replacement semantics make an explicit withdrawal unnecessary).
 
 ---
 
-### section-5.6-3-a - `ipv4-prefix-delta-simple-change-adding-prefix`
+### 5.6-3-a - `ipv4-prefix-delta-simple-change-adding-prefix`
 
 **Description:**
 This test checks that during a simple incremental update covering a single serial
@@ -233,7 +238,7 @@ Exchange).
 
 ---
 
-### section-5.6-3-b - `ipv4-prefix-delta-simple-change-updating-as`
+### 5.6-3-b - `ipv4-prefix-delta-simple-change-updating-as`
 
 **Description:**
 This test checks that during a simple incremental update, the cache correctly
@@ -252,7 +257,7 @@ effectively means withdrawing the old entry and announcing a new one), section 5
 
 ---
 
-### section-5.6-3-c - `ipv4-prefix-delta-bulk-change-adding-prefix`
+### 5.6-3-c - `ipv4-prefix-delta-bulk-change-adding-prefix`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -270,7 +275,7 @@ by at most one announcement).
 
 ---
 
-### section-5.6-3-d - `ipv4-prefix-delta-bulk-change-removing-prefix`
+### 5.6-3-d - `ipv4-prefix-delta-bulk-change-removing-prefix`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -287,7 +292,7 @@ the prefix/AS at all).
 
 ---
 
-### section-5.6-5 - `equivalent-roas-coalesced-to-single-vrp`
+### 5.6-5 - `equivalent-roas-coalesced-to-single-vrp`
 
 **Description:**
 This test checks that the cache delivers one and only one IPvX VRP for a unique
@@ -319,7 +324,7 @@ prefix/AS at all), section 12 (Error Code 7, Duplicate Announcement Received).
 
 ---
 
-### section-5.7-3-a - `ipv6-prefix-delta-simple-change-adding-prefix`
+### 5.7-3-a - `ipv6-prefix-delta-simple-change-adding-prefix`
 
 **Description:**
 This test checks that during a simple incremental update covering a single serial
@@ -335,7 +340,7 @@ constraint), section 8.2 (Typical Exchange).
 
 ---
 
-### section-5.7-3-b - `ipv6-prefix-delta-simple-change-updating-as`
+### 5.7-3-b - `ipv6-prefix-delta-simple-change-updating-as`
 
 **Description:**
 This test checks that during a simple incremental update, the cache correctly
@@ -353,7 +358,7 @@ withdraw PDUs before any announce PDUs).
 
 ---
 
-### section-5.7-3-c - `ipv6-prefix-delta-bulk-change-adding-prefix`
+### 5.7-3-c - `ipv6-prefix-delta-bulk-change-adding-prefix`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -370,7 +375,7 @@ multiple changes for the same prefix/AS).
 
 ---
 
-### section-5.7-3-d - `ipv6-prefix-delta-bulk-change-removing-prefix`
+### 5.7-3-d - `ipv6-prefix-delta-bulk-change-removing-prefix`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -386,7 +391,7 @@ a prefix/AS cancel out, the data stream will not mention it at all).
 
 ---
 
-### section-5.9-2 - `serial-query-with-serial-outside-of-window`
+### 5.9-2 - `serial-query-with-serial-outside-of-window`
 
 **Description:**
 This test checks that the cache responds to a Serial Query whose Serial Number
@@ -405,7 +410,7 @@ incremental update from the specified Serial Number)
 
 ---
 
-### section-5.12-6 - `multiple-aspa-records-unioned-to-single-pdu`
+### 5.12-6 - `multiple-aspa-records-unioned-to-single-pdu`
 
 **Description:**
 This test checks that when the cache's validated data holds multiple distinct valid
@@ -441,7 +446,7 @@ from a synthesised multi-provider list).
 
 ---
 
-### section-5.12-7-a - `aspa-delta-simple-change-adding-provider`
+### 5.12-7-a - `aspa-delta-simple-change-adding-provider`
 
 **Description:**
 This test checks that during a simple incremental update, the cache correctly
@@ -457,7 +462,7 @@ PDU; each Provider AS Number MUST be unique and in increasing numeric order)
 
 ---
 
-### section-5.12-7-b - `aspa-delta-simple-change-removing-provider`
+### 5.12-7-b - `aspa-delta-simple-change-removing-provider`
 
 **Description:**
 This test checks that during a simple incremental update, the cache correctly
@@ -473,7 +478,7 @@ PDU)
 
 ---
 
-### section-5.12-7-c - `aspa-delta-bulk-change-adding-provider`
+### 5.12-7-c - `aspa-delta-bulk-change-adding-provider`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -491,7 +496,7 @@ present the simplest possible view).
 
 ---
 
-### section-5.12-7-d - `aspa-delta-bulk-change-removing-provider`
+### 5.12-7-d - `aspa-delta-bulk-change-removing-provider`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -508,7 +513,7 @@ view).
 
 ---
 
-### section-5.12-8-a - `aspa-delta-simple-change-adding-customer`
+### 5.12-8-a - `aspa-delta-simple-change-adding-customer`
 
 **Description:**
 This test checks that during a simple incremental update (Serial Query response
@@ -523,7 +528,7 @@ the cache sends all data newer than the serial in the Serial Query)
 
 ---
 
-### section-5.12-8-b - `aspa-delta-bulk-change-adding-customer`
+### 5.12-8-b - `aspa-delta-bulk-change-adding-customer`
 
 **Description:**
 This test checks that during a bulk incremental update (Serial Query response
@@ -541,7 +546,7 @@ multiple changes between serial numbers MUST be merged)
 
 ---
 
-### section-5.12-9-a - `aspa-delta-simple-change-removing-customer`
+### 5.12-9-a - `aspa-delta-simple-change-removing-customer`
 
 **Description:**
 This test checks that during a simple incremental update, the cache correctly
@@ -555,7 +560,7 @@ list and the PDU Length MUST be 12)
 
 ---
 
-### section-5.12-9-b - `aspa-delta-bulk-change-removing-customer`
+### 5.12-9-b - `aspa-delta-bulk-change-removing-customer`
 
 **Description:**
 This test checks that during a bulk incremental update, the cache correctly
@@ -571,7 +576,7 @@ Provider list, and the PDU Length MUST be 12).
 
 ---
 
-### section-7-1 - `supported-version-2`
+### 7-1 - `supported-version-2`
 
 **Description:**
 This test checks that the cache correctly establishes a session at protocol
@@ -587,7 +592,7 @@ session is considered open)
 
 ---
 
-### section-7-3-a - `supported-version-0`
+### 7-3-a - `supported-version-0`
 
 **Description:**
 This test checks that the cache correctly establishes a session at protocol
@@ -604,7 +609,7 @@ in their version fields)
 
 ---
 
-### section-7-3-b - `supported-version-1`
+### 7-3-b - `supported-version-1`
 
 **Description:**
 This test checks that the cache correctly establishes a session at protocol
@@ -620,7 +625,7 @@ higher version will not be available)
 
 ---
 
-### section-7-4 - `unsupported-version`
+### 7-4 - `unsupported-version`
 
 **Description:**
 This test checks that the cache correctly rejects a version negotiation attempt
@@ -637,7 +642,7 @@ equal to the version C in the Error Report)
 
 ---
 
-### section-7-12 - `unexpected-version`
+### 7-12 - `unexpected-version`
 
 **Description:**
 This test checks that once a protocol version has been successfully negotiated
@@ -654,7 +659,7 @@ Error Code 8, "Unexpected Protocol Version")
 
 ---
 
-### section-8.4-2 - `reset-query-with-no-data-available`
+### 8.4-2 - `reset-query-with-no-data-available`
 
 **Description:**
 This test checks that the cache responds to a Reset Query with an Error Report PDU
@@ -671,7 +676,7 @@ issues a Reset Query while the cache is still rebuilding its database)
 
 ---
 
-### section-9-1-a - `fragmented-reset-query`
+### 9-1-a - `fragmented-reset-query`
 
 **Description:**
 This test checks that the cache correctly handles a Reset Query PDU that arrives
@@ -688,7 +693,7 @@ each PDU, implying routers must handle PDUs that span segments).
 
 ---
 
-### section-9-1-b - `fragmented-serial-query`
+### 9-1-b - `fragmented-serial-query`
 
 **Description:**
 This test checks that the cache correctly handles a Serial Query PDU that arrives
@@ -705,7 +710,7 @@ session)
 
 ---
 
-### section-12-2.12 - `unsupported-pdu-type`
+### 12-2.12 - `unsupported-pdu-type`
 
 **Description:**
 This test checks that the cache correctly handles receiving a PDU whose PDU Type
