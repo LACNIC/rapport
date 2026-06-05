@@ -676,6 +676,14 @@ issues a Reset Query while the cache is still rebuilding its database)
 
 ---
 
+### 8.4-2 - `reset-query-with-no-data-available-transition`
+
+**Description:**
+This is not a test in itself. It only contains a script that includes a transition 
+between tests to restart the rsync daemon so that the rest of the scripts can continue running.
+
+---
+
 ### 9-1-a - `fragmented-reset-query`
 
 **Description:**
@@ -710,6 +718,28 @@ session)
 
 ---
 
+### 12-2.2 - `corrupt-data-pdu`
+
+**Description:**
+This test validates the cache server's handling of a client-reported Error Code 0
+("Corrupt Data"). The simulated router sends an Error Report PDU with code 0 directly
+to the cache; the scenario is *injected*, not *provoked* — the harness does not
+reconstruct the genuine condition that would lead a router to detect corruption (the
+canonical one being a Session ID in a cache-originated PDU, e.g. a Cache Response, End
+of Data, or Serial Notify, that does not match the Session ID established for the
+session, where the detecting party MUST terminate with code 0), nor does it assert
+that a router actually encountered it. What is under test is that the cache server
+correctly identifies the error the router is reporting, records it in its log as a
+client-reported error (with Error Code 0) so that an operator can act on it, and
+closes the connection on receipt — without replying with an Error Report PDU of its
+own (section 5.11). This complements test 5.1-2.10, which exercises the same code in
+the opposite direction (the cache detecting a bad Session ID in a Serial Query sent by
+the router).
+
+**Related sections:** section 12 (Error Code 0, Corrupt Data — fatal).
+
+---
+
 ### 12-2.12 - `unsupported-pdu-type`
 
 **Description:**
@@ -727,4 +757,84 @@ unrecognized PDU types).
 
 ---
 
-*End of draft-ietf-sidrops-8210bis-25 test suite — 35 test cases*
+### 12-2.14 - `withdrawal-of-unknown-record-pdu`
+
+**Description:**
+This test validates the cache server's handling of a client-reported Error Code 6
+("Withdrawal of Unknown Record"). The simulated router sends an Error Report PDU with
+code 6 directly to the cache; the scenario is *injected*, not *provoked* — the harness
+does not reconstruct the genuine condition (a withdrawal PDU, Flags lowest-order bit =
+0, for a record absent from the router's database: an unknown `{Prefix, Len, Max-Len,
+AS}` tuple for an IPvX PDU, an unknown `{SKI, AS, Subject Public Key}` for a Router Key
+PDU, or an unknown Customer AS for an ASPA PDU), and it does not assert that a router
+actually received such an unmatched withdrawal. What is under test is that the cache
+server correctly identifies the code 6 error the router is reporting, records it in its
+log as a client-reported error so that an operator can act on it, and closes the
+connection on receipt.
+
+**Related sections:** section 12 (Error Code 6, Withdrawal of Unknown Record — fatal),
+section 5.11 (Error Report PDU).
+
+---
+
+### 12-2.16 - `duplicate-announcement-received-pdu`
+
+**Description:**
+This test validates the cache server's handling of a client-reported Error Code 7
+("Duplicate Announcement Received"). The simulated router sends an Error Report PDU
+with code 7 directly to the cache; the scenario is *injected*, not *provoked* — the
+harness does not reconstruct the genuine condition (an announcement PDU, Flags
+lowest-order bit = 1, for a record already active in the router: a duplicate IPvX VRP
+`{Prefix, Len, Max-Len, AS}`, a duplicate Router Key `{SKI, AS, Subject Public Key}`,
+or a duplicate announcement/withdrawal within a single Serial Query response), and it
+does not assert that a router actually held a duplicate. What is under test is that
+the cache server correctly identifies the code 7 error the router is reporting, records
+it in its log as a client-reported error so that an operator can act on it, and closes
+the connection on receipt.
+
+**Related sections:** section 12 (Error Code 7, Duplicate Announcement Received
+— fatal), section 5.11 (Error Report PDU).
+
+---
+
+### 12-2.20 - `aspa-provider-list-error-pdu`
+
+**Description:**
+This test validates the cache server's handling of a client-reported Error Code 9
+("ASPA Provider List Error"). The simulated router sends an Error Report PDU with code
+9 directly to the cache; the scenario is *injected*, not *provoked* — the harness does
+not reconstruct the genuine condition (a malformed ASPA announcement: an announcement,
+Flags lowest-order bit = 1, carrying zero Provider Autonomous System Numbers, or a
+multi-provider announcement that includes AS 0 — note that a *single*-provider
+announcement carrying AS 0 is valid, expressing a customer with no providers, and would
+not trigger the error), and it does not assert that a router actually received such a
+PDU. What is under test is that the cache server correctly identifies the code 9 error
+the router is reporting, records it in its log as a client-reported error so that an
+operator can act on it, and closes the connection on receipt.
+
+**Related sections:** section 12 (Error Code 9, ASPA Provider List Error — fatal), section 5.11 (Error
+Report PDU).
+
+---
+
+### 12-2.24 - `ordering-error-pdu`
+
+**Description:**
+This test validates the cache server's handling of a client-reported Error Code 11
+("Ordering Error"). The simulated router sends an Error Report PDU with code 11
+directly to the cache; the scenario is *injected*, not *provoked* — the harness does
+not reconstruct the genuine condition (payload PDUs delivered out of the total ordering
+mandated by section 11.2, e.g. an announcement appearing after a withdrawal, a PDU of a
+lower integer PDU type appearing after one of a higher type, or two same-type PDUs out
+of their defined sort order), and it does not assert that a router actually observed an
+ordering violation — a check that is itself optional for routers. What is under test is
+that the cache server correctly identifies the code 11 error the router is reporting,
+records it in its log as a client-reported error so that an operator can act on it, and
+closes the connection on receipt.
+
+**Related sections:** section 12 (Error Code 11, Ordering Error — fatal),
+section 5.11 (Error Report PDU).
+
+---
+
+*End of draft-ietf-sidrops-8210bis-25 test suite — 41 test cases*
