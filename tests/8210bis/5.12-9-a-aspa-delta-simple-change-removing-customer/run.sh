@@ -13,8 +13,8 @@ check_aspas "1:[11001,11002,11003]" \
 
 send_router_pdu "reset-query"
 check_cache_response 0 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 1 providers [ 11001 11002 11003 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 2 providers [ 22001 22002 22003 ]"
+	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 1 providers \[ 11001 11002 11003 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 2 providers \[ 22001 22002 22003 \]"
 
 new_step
 create_delta rd2

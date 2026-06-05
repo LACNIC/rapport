@@ -18,12 +18,12 @@ check_vrps \
 
 send_router_pdu "reset-query"
 check_cache_response 0 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.2.0.0 as 10001" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.3.0.0 as 10001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.2.0.0 as 10001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:3:: as 10001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:2:: as 10001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:3:: as 10001"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001"
 
 new_step
 create_delta rd2
@@ -38,10 +38,10 @@ check_vrps \
 
 send_router_pdu "reset-query"
 check_cache_response 1 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.3.0.0 as 10001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:2:: as 10001" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001"
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 0 \
@@ -63,12 +63,12 @@ check_vrps \
 
 send_router_pdu "reset-query"
 check_cache_response 1 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.2.0.0 as 10001" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.3.0.0 as 10001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:2:: as 10001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.2.0.0 as 10001" \
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 10.1.0.0 as 10001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:3:: as 10001" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:2:: as 10001" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 64 maxlen 64 zero2 0 prefix 2001:db8:0:1:: as 10001"
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 0 

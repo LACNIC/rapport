@@ -18,8 +18,8 @@ check_aspas \
 
 send_router_pdu "reset-query"
 check_cache_response 0 \
-    "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 20 providers [ 20001 20002 ]" \
-    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers [ 10001 10002 10003 ]"
+    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers \[ 10001 10002 10003 \]" \
+    "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 20 providers \[ 20001 20002 \]"
 
 new_step
 create_delta rd2
@@ -32,12 +32,12 @@ check_aspas \
 
 send_router_pdu "reset-query"
 check_cache_response 1 \
-    "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 20 providers [ 20001 20002 ]" \
-    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers [ 10001 10002 10004 ]"
+    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers \[ 10001 10002 10004 \]" \
+    "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 20 providers \[ 20001 20002 \]"
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 0 \
-    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers [ 10001 10002 10004 ]"
+    "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 10 providers \[ 10001 10002 10004 \]"
 
 stop_router
 stop_rp

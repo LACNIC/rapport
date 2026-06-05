@@ -205,81 +205,21 @@ wait_pdus() {
 check_cache_response() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
 
-	PDU_DIR="$SANDBOX/pdu"
-	EXPECTED="$PDU_DIR/expected.txt"
-	ACTUAL="$PDU_DIR/actual.txt"
-	DIFF="$PDU_DIR/diff.txt"
-	mkdir -p "$PDU_DIR"
-	rm -f "$PDU_DIR"/*
-
 	NOTIF="$1"
-	if [ "$NOTIF" -eq 0 ]; then
-		STATE="2"
-	else
-		STATE="1"
-	fi
 	shift
-
-	NEXPECTED="$#"
-	wait_pdus "$((NOTIF+NEXPECTED+2))"
-	unset NOTIF
-	unset NEXPECTED
-
-	while read LINE; do
-		case "$STATE" in
-		"1")
-			REGEX="serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+"
-			echo "$LINE" | grep -qE "$REGEX" ||
-				fail "Expected Serial Notify PDU, got '$LINE'."
-			STATE="2"
-			;;
-		"2")
-			REGEX="cache-response version 2 session [0-9]+ length 8"
-			echo "$LINE" | grep -qE "$REGEX" - ||
-				fail "Expected Cache Response PDU, got '$LINE'."
-			STATE="3"
-			;;
-		"3")
-			case "$LINE" in
-			ipv4-prefix*|ipv6-prefix*|aspa-pdu*)
-				echo "$LINE" >> "$ACTUAL.tmp"
-				;;
-			end-of-data*)
-				echo "$LINE" |
-					grep -qE "end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+" - ||
-					fail "End of Data PDU does not match the End of Data regex."
-				STATE="4"
-				;;
-			*)
-				fail "Unexpected PDU: $LINE"
-			esac
-			;;
-		"4")
-			fail "PDU found after End Of Data: $LINE"
-			;;
-		*)
-			fail "Invalid state: $STATE"
-			;;
-		esac
-	done < "$SANDBOX/barry-rtr.stdout"
-
-	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
-
-	:> "$EXPECTED"
-	for i in "$@"; do
-		echo "$i" >> "$EXPECTED"
-	done
-
-	if [ -f "$ACTUAL.tmp" ]; then
-		sort "$ACTUAL.tmp" > "$ACTUAL"
-		rm "$ACTUAL.tmp"
+	
+	if [ "$NOTIF" -eq 1 ]; then
+		check_pdus \
+			"serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+" \
+			"cache-response version 2 session [0-9]+ length 8" \
+			"$@" \
+			"end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 	else
-		:> "$ACTUAL"
+		check_pdus \
+			"cache-response version 2 session [0-9]+ length 8" \
+			"$@" \
+			"end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 	fi
-
-	ck_inc
-	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
-		fail "Unexpected RTR PDUs; see $PDU_DIR"
 }
 
 # $@: PDU regexs

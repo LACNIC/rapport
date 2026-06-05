@@ -27,20 +27,20 @@ check_aspas
 
 send_router_pdu "reset-query"
 check_cache_response 0 \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:1000:: as 1000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:2000:: as 1000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:6000:: as 3000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:7000:: as 3000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:9000:: as 4000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:a000:: as 4000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:c000:: as 5000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:d000:: as 5000" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" 
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:c000:: as 5000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:a000:: as 4000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:9000:: as 4000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:7000:: as 3000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:6000:: as 3000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:2000:: as 1000" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:1000:: as 1000"
 
 
 # Processing serial 2

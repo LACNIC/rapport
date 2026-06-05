@@ -12,7 +12,7 @@ check_vrps
 check_aspas "1:[11001,11002,11003,11004,11005]"
 
 send_router_pdu "reset-query"
-check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 1 providers [ 11001 11002 11003 11004 11005 ]"
+check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 1 providers \[ 11001 11002 11003 11004 11005 \]"
 
 # Processing serial 2
 new_step
@@ -25,7 +25,7 @@ check_aspas "1:[11001,11002,11003,11004,11005]" \
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 1 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers [ 22001 22002 22003 22004 22005 ]"
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers \[ 22001 22002 22003 22004 22005 \]"
 
 # Processing serial 3
 new_step
@@ -39,8 +39,8 @@ check_aspas "1:[11001,11002,11003,11004,11005]" \
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 1 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers [ 22001 22002 22003 22004 22005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers [ 33001 33002 33003 33004 33005 ]"
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers \[ 22001 22002 22003 22004 22005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers \[ 33001 33002 33003 33004 33005 \]"
 
 
 # Processing serial 4
@@ -57,9 +57,9 @@ check_aspas "1:[11001,11002,11003,11004,11005]" \
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 1 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers [ 22001 22002 22003 22004 22005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers [ 33001 33002 33003 33004 33005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 4 providers [ 44001 44002 44003 44004 44005 ]"
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers \[ 22001 22002 22003 22004 22005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers \[ 33001 33002 33003 33004 33005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 4 providers \[ 44001 44002 44003 44004 44005 \]"
 
 # Processing serial 5
 new_step
@@ -75,10 +75,10 @@ check_aspas "1:[11001,11002,11003,11004,11005]" \
 
 send_router_pdu "serial-query serial 1"
 check_cache_response 1 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers [ 22001 22002 22003 22004 22005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers [ 33001 33002 33003 33004 33005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 4 providers [ 44001 44002 44003 44004 44005 ]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 5 providers [ 55001 55002 55003 55004 55005 ]"
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 2 providers \[ 22001 22002 22003 22004 22005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 3 providers \[ 33001 33002 33003 33004 33005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 4 providers \[ 44001 44002 44003 44004 44005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 5 providers \[ 55001 55002 55003 55004 55005 \]"
 
 stop_router
 stop_rp

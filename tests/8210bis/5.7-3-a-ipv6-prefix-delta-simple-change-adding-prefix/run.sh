@@ -33,8 +33,8 @@ check_aspas
 send_router_pdu "serial-query serial 1"
 
 check_cache_response 1 \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:8000:: as 66001" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:c000:: as 66001"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:c000:: as 66001" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:8000:: as 66001"
 
 stop_router
 stop_rp
