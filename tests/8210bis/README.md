@@ -718,6 +718,24 @@ session)
 
 ---
 
+### 11.2 - `pdu-ordering`
+
+**Description:**
+This test verifies the cache fetches Cache Response PDU streams in the total
+ordering defined in section 11.2. Every byte in each PDU type's abstract
+representation is assigned a PDU permutation with a small value, and another one
+with a large value. Thus, the test ensures each byte is properly sorted not only
+in relationship with the others, but also in relationship with itself.
+The input RDs are randomly shuffled before being fed to Barry, which means the RP
+is forced to sort a different input every time the test is run.
+
+**Related sections:** The entirety of section 11.2 (Ordering), except Router Keys.
+(Because Fort doesn't support them yet.)
+Including 11.2.1 and 11.2.3 in the same test ensures not only that the fields are
+sorted properly, but also the PDU types as well.
+
+---
+
 ### 12-2.2 - `corrupt-data-pdu`
 
 **Description:**
