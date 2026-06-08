@@ -18,7 +18,7 @@ echo "]" >> "$FILE_RD"
 run_barry
 run_rp
 
-check_logfile fort1 -F "Too many providers: $PROVIDERS > 4000"
+check_logfile fort1 -F "customerASID 16842752 has too many providers: $PROVIDERS > 4000"
 
 check_vrps
 check_aspas
