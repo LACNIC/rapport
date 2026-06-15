@@ -8,9 +8,6 @@ run_barry rd
 MAXDEPTH_ARG="--maximum-certificate-depth 6"
 run_rp $MAXDEPTH_ARG
 
-
-# Fort must report the depth violation at ca5.
-# Message source: src/object/certificate.c, certificate_traverse().
 check_report fort2 -F "Certificate chain maximum depth exceeded."
 
 check_vrps \
