@@ -57,7 +57,7 @@ run_rp
 
 # Validator detects that the URI in the EE cert's SIA.signedObject does not match
 # the URI from which it retrieved probe-roa.roa.
-check_logfile fort2 -F "Certificate's signedObject ("
+check_logfile fort2 -E "Certificate's signedObject \('[^']+'\) does not match the URI of its own signed object \([^)]+\)\."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

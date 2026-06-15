@@ -42,6 +42,7 @@ obj.tbsCertificate.extensions.ip.extnValue = [ 3.2.1.0/24 ]
 [node: cycle-ca.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 3.2.1.0/24 ]
 obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value = rsync://localhost:8873/rpki/$TEST/ca1
+obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.value = rsync://localhost:8873/rpki/$TEST/ca1/ca1.mft
 
 [node: roa-cycle.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.2.1.0/24 ]

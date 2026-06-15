@@ -15,6 +15,8 @@ ta.cer
 
 [node: ca.cer]
 obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value = rsync://localhost:8873/rpki/$TEST/wrong-ca
+obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.value = rsync://localhost:8873/rpki/$TEST/wrong-ca/ca.mft
+
 
 [node: valid-1-1.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
