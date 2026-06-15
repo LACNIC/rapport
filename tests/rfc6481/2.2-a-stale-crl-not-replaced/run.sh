@@ -28,7 +28,7 @@ create_delta rd2
 
 run_rp
 
-check_logfile fort1 -F "CRL is stale/expired."
+check_logfile fort2 -F "CRL is stale/expired."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

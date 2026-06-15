@@ -31,14 +31,6 @@ create_delta rd2
 
 run_rp
 
-# valid-1-2.roa (5.1.0.0/24, 5.1.1.0/24) must be accepted: the prefix 5.1.0.0/24
-# is only coverable by the reissued ca.cer (which now includes 5.0.0.0/8).
-# Its presence confirms the validator accepted the reissued cert as authoritative.
-#
-# valid-1-1.roa, valid-sub-1.roa: must still be accepted — subordinate objects
-# whose issuer chain depends on ca's public key remain valid after reissuance.
-#
-# valid-2-1.roa: unaffected; ca2 is an independent CA.
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \
 	"2.1.1.0/24-24 => AS20001" \

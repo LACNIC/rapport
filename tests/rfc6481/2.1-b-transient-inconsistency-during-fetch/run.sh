@@ -39,7 +39,7 @@ check_vrps \
 	"3.1.2.0/24-24 => AS30001" \
 	"3.1.3.0/24-24 => AS30001"
 
-check_logfile fort1 -F "valid-1-2.roa' is absent from the cache."
+check_logfile fort2 -F "valid-1-2.roa' is absent from the cache."
 
 
 # ---------------------------------------------------------------------------

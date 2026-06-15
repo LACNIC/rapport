@@ -28,8 +28,8 @@ create_delta rd2
 
 run_rp
 
-check_logfile fort1 -F "Manifest is stale."
-check_logfile fort1 -F "Bad manifest."
+check_logfile fort2 -F "Manifest is stale."
+check_logfile fort2 -F "Bad manifest."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

@@ -32,7 +32,7 @@ run_rp
 
 # Validator attempts to retrieve the manifest of ca from wrong-ca/ 
 # (the URI declared in the CA cert's SIA) and finds nothing there.
-check_logfile fort1 -F "Manifest missing."
+check_logfile fort2 -F "Manifest missing."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \
@@ -57,7 +57,7 @@ run_rp
 
 # Validator detects that the URI in the EE cert's SIA.signedObject does not match
 # the URI from which it retrieved probe-roa.roa.
-check_logfile fort1 -F "Certificate's signedObject ("
+check_logfile fort2 -F "Certificate's signedObject ("
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

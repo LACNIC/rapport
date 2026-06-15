@@ -32,7 +32,7 @@ rm "sandbox/rsyncd/content/$TEST/ca3/ca3.mft"
 run_rp "--http.enabled=false"
 
 # The validator must warn about the missing manifest in ca3's publication point.
-check_logfile fort1 -F "Manifest missing."
+check_logfile fort2 -F "Manifest missing."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

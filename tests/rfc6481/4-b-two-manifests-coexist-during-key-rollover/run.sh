@@ -37,9 +37,8 @@ check_vrps \
 
 # ---------------------------------------------------------------------------
 # Step 3 — Transition complete: ca-old removed; ca-new is the sole CA.
-# ca-old's products are gone from the shared publication point.
-# The validator must retire ca-old's VRPs cleanly (no failed-fetch fallback,
-# since ca-old is no longer reachable from the trust anchor).
+# ca-old's objects are gone from the shared publication point.
+# The validator must retire ca-old's VRPs cleanly.
 # ---------------------------------------------------------------------------
 
 new_step
