@@ -1,0 +1,27 @@
+ta.cer
+	ta.mft
+	ca-new.cer
+		ca-new.mft
+		valid-new-1.roa
+		valid-new-2.roa
+
+[node: ca-new.cer]
+rpp.uri  = rsync://localhost:8873/rpki/$TEST/shared
+rpp.path = shared
+obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]
+
+[node: valid-new-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
+
+[node: valid-new-2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.2.0/24, 3.1.3.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
+
+[node: ta.mft]
+obj.content.encapContentInfo.eContent.manifestNumber = 3
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 3

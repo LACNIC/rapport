@@ -1,0 +1,19 @@
+ta.cer
+	ta.mft
+	ca-old.cer
+		ca-old.mft
+		valid-old-1.roa
+		valid-old-2.roa
+
+[node: ca-old.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+
+[node: valid-old-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]
+
+[node: valid-old-2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.2.0/24, 2.1.3.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]

@@ -1,0 +1,50 @@
+#!/bin/sh
+
+. tools/checks.sh
+. rp/$RP.sh
+
+
+# ---------------------------------------------------------------------------
+# Step 1: Establish a known-good cache with the original ca.cer (serial 1).
+# ---------------------------------------------------------------------------
+
+run_barry rd1
+
+run_rp
+
+check_vrps \
+	"2.1.0.0/24-24 => AS20001" \
+	"2.1.1.0/24-24 => AS20001" \
+	"2.2.0.0/24-24 => AS20002" \
+	"2.2.1.0/24-24 => AS20002" \
+	"3.1.0.0/24-24 => AS30001" \
+	"3.1.1.0/24-24 => AS30001"
+
+
+# ---------------------------------------------------------------------------
+# Step 2: ca.cer is reissued (serial 2, resources 2.0.0.0/8 + 5.0.0.0/8).
+# The reissued cert overwrites the original at the same publication point.
+# ---------------------------------------------------------------------------
+
+new_step
+create_delta rd2
+
+run_rp
+
+# valid-1-2.roa (5.1.0.0/24, 5.1.1.0/24) must be accepted: the prefix 5.1.0.0/24
+# is only coverable by the reissued ca.cer (which now includes 5.0.0.0/8).
+# Its presence confirms the validator accepted the reissued cert as authoritative.
+#
+# valid-1-1.roa, valid-sub-1.roa: must still be accepted — subordinate objects
+# whose issuer chain depends on ca's public key remain valid after reissuance.
+#
+# valid-2-1.roa: unaffected; ca2 is an independent CA.
+check_vrps \
+	"2.1.0.0/24-24 => AS20001" \
+	"2.1.1.0/24-24 => AS20001" \
+	"2.2.0.0/24-24 => AS20002" \
+	"2.2.1.0/24-24 => AS20002" \
+	"3.1.0.0/24-24 => AS30001" \
+	"3.1.1.0/24-24 => AS30001" \
+	"5.1.0.0/24-24 => AS20001" \
+	"5.1.1.0/24-24 => AS20001"

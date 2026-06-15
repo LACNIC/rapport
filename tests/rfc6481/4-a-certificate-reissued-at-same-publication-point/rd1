@@ -1,0 +1,35 @@
+ta.cer
+	ta.mft
+	ca.cer
+		ca.mft
+		valid-1-1.roa
+		sub-ca.cer
+			sub-ca.mft
+			valid-sub-1.roa
+	ca2.cer
+		ca2.mft
+		valid-2-1.roa
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+
+[node: valid-1-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]
+
+[node: sub-ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 2.2.0.0/16 ]
+
+[node: valid-sub-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.2.0.0/24, 2.2.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20002
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.2.0.0/16 ]
+
+[node: ca2.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]
+
+[node: valid-2-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
