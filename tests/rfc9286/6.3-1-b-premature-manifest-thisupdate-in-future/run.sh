@@ -17,8 +17,8 @@ new_step
 create_delta "rd2"
 run_rp
 
-check_logfile fort1 -F "Manifest is not valid yet."
-check_logfile fort1 -F "Bad manifest."
+check_logfile fort2 -F "Manifest is not valid yet."
+check_logfile fort2 -F "Bad manifest."
 
 
 check_vrps \

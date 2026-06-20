@@ -20,7 +20,7 @@ rm "sandbox/rsyncd/content/$TEST/ca/valid-1-2.roa"
 
 run_rp "--http.enabled=false"
 
-check_logfile fort1 -F "valid-1-2.roa' is absent from the cache."
+check_logfile fort2 -F "valid-1-2.roa' is absent from the cache."
 
 check_vrps \
     "2.1.0.0/24-24 => AS20001" \
