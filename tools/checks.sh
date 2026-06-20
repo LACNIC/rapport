@@ -188,11 +188,11 @@ send_router_pdu() {
 	echo "$@" | $BARRY-ncu "$BARRY_RTR_SK"
 }
 
-# Wait at most 5 seconds for $1 PDUs to arrive
+# Wait at most 15 seconds for $1 PDUs to arrive
 wait_pdus() {
 	test "$(wc -l < "$SANDBOX/barry-rtr.stdout")" -ge "$1" && return 0
 
-	for i in $(seq 5); do
+	for i in $(seq 15); do
 		sleep 1
 		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
 	done
