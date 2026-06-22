@@ -34,7 +34,7 @@ rp_start() {
 		SERVER_IP="127.0.0.1"
 		# We do NOT shift: "$1" stays as "$@" for binary
 	fi
-	
+
 	$VALGRIND $RP_BIN \
 		--mode "server" \
 		--server.address "$SERVER_IP" \
@@ -42,7 +42,6 @@ rp_start() {
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
 		--output.roa "$SANDBOX/vrps.csv" \
-		--output.aspa "$SANDBOX/aspa.json" \
 		--log.level=debug \
 		--log.color \
 		--validation-log.enabled \

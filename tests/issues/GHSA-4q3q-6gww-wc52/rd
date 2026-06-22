@@ -1,0 +1,5 @@
+ta.cer
+	# A.roa will have default assigned VRPs:
+	# 1.0.0.0/8 => AS1234, 100::/8 => AS1234
+	A.roa
+
