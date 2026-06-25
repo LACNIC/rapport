@@ -2,13 +2,13 @@ ta.cer
 	A.cer
 		A1.roa
 		A2.roa
+		A.mft
+		A.crl
 	B.cer
 		B1.roa
 		B2.roa
 	ta.mft
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 1
+	ta.crl
 
 
 

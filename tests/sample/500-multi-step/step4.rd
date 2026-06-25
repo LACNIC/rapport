@@ -1,10 +1,10 @@
-ta.cer
-	A.cer
-		A.roa
+ta.cer 🛡️
+	A.cer 🛡️
+		A.roa 🛡️
+		A.mft 🛡️
+		A.crl 🛡️
 	ta.mft
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 3
+	ta.crl
 
 [notification: https://localhost:8443/$TEST/notification.xml]
 serial = 3

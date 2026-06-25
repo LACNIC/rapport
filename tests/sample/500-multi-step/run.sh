@@ -87,7 +87,7 @@ new_step
 mv     "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
 cp -rp "$SANDBOX/../step$((STEP-2))/apache2/content/$TEST"/* "sandbox/apache2/content/$TEST"
 cp -rp "$SANDBOX/../step$((STEP-2))/rsyncd/content/$TEST"/*  "sandbox/rsyncd/content/$TEST"
-create_delta "step4.rd"
+STEP_PREV="$((STEP-2))" create_delta "step4.rd"
 run_rp
 
 check_vrps "101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234"

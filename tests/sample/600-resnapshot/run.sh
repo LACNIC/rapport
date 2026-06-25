@@ -44,7 +44,7 @@ check_vrps \
 	"202::aaaa:0/112-112 => AS1234" \
 	"2.1.111.0/24-24 => AS1234"
 check_http_requests \
-	"/$TEST/ta.cer 200" \
+	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests

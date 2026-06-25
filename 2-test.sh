@@ -56,6 +56,7 @@ run_test() {
 	export TESTID="${SRCDIR#tests/}"        # C/N
 	export CATEGORY="${TESTID%/*}"          # C
 	export TEST="${TESTID#*/}"              # N
+	export STEP_PREV="0"
 	export STEP="1"                         # 1
 
 	# Don't mind this one.

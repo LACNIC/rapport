@@ -43,6 +43,8 @@ run_barry() {
 		--rsync-path "sandbox/rsyncd/content/$TEST" \
 		--rrdp-uri   "https://localhost:8443/$TEST" \
 		--rrdp-path  "sandbox/apache2/content/$TEST" \
+		--serial "$STEP" \
+		--previous-path "sandbox/$SRCDIR/step$STEP_PREV/rsyncd/content/$TEST" \
 		--keys "custom/keys" \
 		-vv --print-objects "csv" \
 		--tal-path "$(rp_tal_path)" \
@@ -424,6 +426,7 @@ new_step() {
 
 	sleep 1 # Wait out HTTP IMS and rsync IMS
 
+	STEP_PREV="$STEP"
 	STEP="$((STEP+1))"
 	#echo "  Step $STEP"
 }

@@ -1,14 +1,14 @@
-ta.cer
-	A.cer
-		A1.roa
-		A2.roa
+ta.cer 🛡️
+	A.cer 🛡️
+		A1.roa 🛡️
+		A2.roa 🛡️
+		A.mft 🛡️
+		A.crl 🛡️
 	C.cer			# 2/8
 		C1.roa		# 2.1/16
 		C2.roa		# 2.2/16
 	ta.mft
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
+	ta.crl 🛡️
 
 [node: C1.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.111.0/24 ]
