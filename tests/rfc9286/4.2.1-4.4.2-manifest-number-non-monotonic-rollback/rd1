@@ -2,9 +2,18 @@ ta.cer
 	ta.mft
 	ca.cer
 		valid-1-1.roa
+
+
 	ca2.cer
 		valid-2-1.roa
-	
+		ca2.mft
+		ca2.crl
+	ta.crl
+
+
+
+
+
 [node: valid-1-1.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
 obj.content.encapContentInfo.eContent.asId = 20001
