@@ -3,11 +3,13 @@ ta.cer
 		A.roa
 	B.cer
 		B.roa
+	C.cer
+		C.roa
 	ta.mft
 
 [node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 1
+obj.content.encapContentInfo.eContent.manifestNumber = 3
 
 [notification: https://localhost:8443/$TEST/notification.xml]
 session = cafe
-serial = 1
+serial = 3

@@ -1,8 +1,6 @@
 ta.cer
 	A.cer
 		A.roa
-	B.cer
-		B.roa
 	ta.mft
 
 [node: ta.mft]
