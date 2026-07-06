@@ -4,7 +4,10 @@ ta.cer
                 aspa1B.asa
                 aspa1C.asa
                 aspa1D.asa
-
+                ca1.mft
+		ca1.crl
+	ta.mft
+	ta.crl
 
 [node: ta.cer]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-100 ]
@@ -40,4 +43,3 @@ obj.content.encapContentInfo.eContent = {
         customerASID = 10,
         providers = [10007,10008,10009,10010]
 }
-

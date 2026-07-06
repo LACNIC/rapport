@@ -1,38 +1,30 @@
-ta.cer
-	ta.mft
+ta.cer 🛡️
 	ca.cer
-		valid-1-1.roa
+		valid-1-1.roa 
 		valid-1-2.roa
 		probe-1-3.roa
 		ca.mft
-	decoy.cer
-
-[node: ta.cer]
-obj.tbsCertificate.extensions.ip.extnValue = [ 10.0.0.0/8 ]
+		ca.crl
+	decoy.cer 🛡️
+		decoy.mft 🛡️
+		decoy.crl 🛡️
+	ta.mft
+	ta.crl 🛡️
 
 [node: ca.cer]
 obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value = rsync://localhost:8873/rpki/$TEST/decoy
 
 [node: valid-1-1.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.0.0.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 64496
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.0.0.0/24 ]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24, 1.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
 
 [node: valid-1-2.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.0.1.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 64496
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.0.1.0/24 ]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.2.0/24, 1.1.3.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
 
 [node: probe-1-3.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.0.99.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 64599
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.0.99.0/24 ]
-
-[node: ca.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[notification: https://localhost:8443/$TEST/notification.xml]
-serial = 2
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.4.0/24, 1.1.5.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]

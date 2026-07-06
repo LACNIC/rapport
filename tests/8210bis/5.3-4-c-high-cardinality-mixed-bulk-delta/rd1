@@ -58,6 +58,8 @@ ta.cer
 		aspa-gone-80.asa
 		aspa-gone-82.asa
 		aspa-gone-84.asa
+		aspa-ca.mft
+		aspa-ca.crl
 	roa-v4-ca.cer
 		# -- Stable ROAs IPv4 (pos 01-15) --
 		roa-v4-stable-01.roa
@@ -117,6 +119,8 @@ ta.cer
 		roa-v4-gone-80.roa
 		roa-v4-gone-82.roa
 		roa-v4-gone-84.roa
+		roa-v4-ca.mft
+		roa-v4-ca.crl
 	roa-v6-ca.cer
 		# -- rd1-only ROAs IPv6 (n=01..10) --
 		roa-v6-gone-01.roa
@@ -129,8 +133,10 @@ ta.cer
 		roa-v6-gone-08.roa
 		roa-v6-gone-09.roa
 		roa-v6-gone-10.roa
-
-
+		roa-v6-ca.mft
+		roa-v6-ca.crl
+	ta.mft
+	ta.crl
 
 [node: aspa-ca.cer]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x0088010000-0x0088560000 ]
@@ -421,7 +427,7 @@ obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00
 obj.content.encapContentInfo.eContent.providers = [ 65200 ]
 
 # ── CA de ROAs IPv4 ───────────────────────────────────────────────────────────
-# Resoruces: 10.0.0.0/8 for IPs; AS 65537-65621 for asIDs.
+# Resources: 10.0.0.0/8 for IPs; AS 65537-65621 for asIDs.
 # asId = 65536 + pos  →  pos 1..85
 
 [node: roa-v4-ca.cer]

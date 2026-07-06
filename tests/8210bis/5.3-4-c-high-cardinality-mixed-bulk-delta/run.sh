@@ -126,7 +126,6 @@ aspas_rd2 | sort > "$FILE"
 set --; while IFS= read -r l; do set -- "$@" "$l"; done < "$FILE"
 check_aspas "$@"
 
-
 send_router_pdu "serial-query serial 1"
 
 set -- \

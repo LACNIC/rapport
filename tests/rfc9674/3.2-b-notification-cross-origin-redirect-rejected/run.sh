@@ -25,11 +25,11 @@ check_vrps \
 	"201::/16-16 => AS1234" \
 	"2.1.0.0/16-16 => AS1234"
 
-#check_http_requests \
-#	"/$TEST/ta.cer 200" \
-#	"/$TEST/notification.xml 302"
+check_http_requests \
+	"/$TEST/ta.cer 200" \
+	"/$TEST/notification.xml 302"
 
-#check_rsync_requests \
-#	"rpki/"
+check_rsync_requests \
+	"rpki/"
 
-#check_logfile fort2 -F "message..."
+check_logfile fort2 -E "https?://[^ ]+ is redirecting to https?://[^ ]+; disallowing because of different origin\."

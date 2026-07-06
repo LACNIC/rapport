@@ -30,4 +30,4 @@ run_barry
 run_rp
 
 check_vrps
-check_aspas $ASPA 
+check_aspas $ASPA

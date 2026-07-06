@@ -6,10 +6,8 @@
 mkdir -p sandbox
 sudo mount -o size=512M -t tmpfs none sandbox
 
-
 # Required for routers-connectivity/frr testing (optional)
 #sudo /usr/lib/frr/frrinit.sh start
-
 
 # Required for routers-connectivity/cisco testing (optional)
 #sudo ip link add br-lab type bridge

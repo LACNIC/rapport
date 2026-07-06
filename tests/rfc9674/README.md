@@ -3,6 +3,8 @@
 
 > **Scope:** RFC 9674 (Standards Track, December 2024) updates RFC 8182 by imposing a Same-Origin Policy (SOP) on RRDP. The tests in this suite cover the Relying Party requirements added by section 3.2: that every `uri` attribute in the Update Notification File (the `<snapshot>` reference and any `<delta>` references) MUST share the same origin — scheme, host, and port — as the Update Notification File itself. A same-origin violation means the file (or the RRDP session) MUST be rejected and RRDP cannot be used; per RFC 8182 section 3.4.5, the Relying Party then falls back to an alternate access mechanism advertised in the SIA (rsync).
 
+> **Test identifiers:** Each test is identified by the **paragraph anchor** of the main paragraph it relates to in `RFC 9674` (e.g. `#section-3.2` → `3.2`). When more than one test relates to the same paragraph, a sub-index (`-a`, `-b`, `-c`, …) is appended (`3.2-a`, `3.2-b`, …).
+
 ---
 
 ## Key Concepts

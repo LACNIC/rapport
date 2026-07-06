@@ -8,20 +8,22 @@ run_barry rd1
 run_rp
 
 check_vrps \
+    "1.1.0.0/24-24 => AS10001" \
+    "1.1.1.0/24-24 => AS10001" \
+    "2.1.0.0/24-24 => AS20001" \
+    "2.1.1.0/24-24 => AS20001"
+
+new_step
+create_delta "rd2"
+run_rp
+
+check_logfile fort2 -F "New manifest thisUpdate is not newer than the fallback manifest thisUpdate."
+check_logfile fort2 -F "Bad manifest."
+
+check_vrps \
+    "1.1.0.0/24-24 => AS10001" \
+    "1.1.1.0/24-24 => AS10001" \
     "2.1.0.0/24-24 => AS20001" \
     "2.1.1.0/24-24 => AS20001" \
     "3.1.0.0/24-24 => AS30001" \
     "3.1.1.0/24-24 => AS30001"
-
-new_step
-create_delta "rd2"
-
-run_rp
-
-check_vrps \
-    "2.1.0.0/24-24 => AS20001" \
-    "2.1.1.0/24-24 => AS20001" \
-    "3.1.0.0/24-24 => AS30001" \
-    "3.1.1.0/24-24 => AS30001" \
-    "4.1.0.0/24-24 => AS40001" \
-    "4.1.1.0/24-24 => AS40001"

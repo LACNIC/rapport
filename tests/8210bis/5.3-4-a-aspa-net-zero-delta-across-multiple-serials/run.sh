@@ -9,12 +9,12 @@ start_rp
 start_router
 
 check_vrps
-check_aspas "1:[11001,11002,11003,11004,11005]"
+check_aspas "16842752:[11001,11002,11003,11004,11005]"
 
 send_router_pdu "reset-query"
 check_pdus \
 	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 1 providers \[ 11001 11002 11003 11004 11005 \]" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 16842752 providers \[ 11001 11002 11003 11004 11005 \]" \
 	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 
 
@@ -30,7 +30,7 @@ send_router_pdu "serial-query serial 1"
 check_pdus \
 	"serial-notify  version 2 session [0-9]+ length 12 serial 2" \
 	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 0 zero 0 length 12 customer 1" \
+	"aspa-pdu       version 2 flags 0 zero 0 length 12 customer 16842752" \
 	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 
 # Processing serial 3
@@ -39,7 +39,7 @@ create_delta rd3
 revalidate_rp
 
 check_vrps
-check_aspas "1:[11001,11002,11003,11004,11005]" \
+check_aspas "16842752:[11001,11002,11003,11004,11005]" \
 
 send_router_pdu "serial-query serial 1"
 check_pdus \

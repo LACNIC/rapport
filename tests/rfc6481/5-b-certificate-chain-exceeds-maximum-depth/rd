@@ -1,23 +1,30 @@
 ta.cer
-	ta.mft
 	ca-shallow.cer
-		ca-shallow.mft
 		roa-shallow.roa
+		ca-shallow.mft
+		ca-shallow.crl
 	ca1.cer
-		ca1.mft
 		roa1.roa
 		ca2.cer
-			ca2.mft
 			roa2.roa
 			ca3.cer
-				ca3.mft
 				roa3.roa
 				ca4.cer
-					ca4.mft
 					roa4.roa
 					ca5.cer
-						ca5.mft
 						roa5.roa
+						ca5.mft
+						ca5.crl
+					ca4.mft
+					ca4.crl
+				ca3.mft
+				ca3.crl
+			ca2.mft
+			ca2.crl
+		ca1.mft
+		ca1.crl
+	ta.mft
+	ta.crl
 
 [node: ca-shallow.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]

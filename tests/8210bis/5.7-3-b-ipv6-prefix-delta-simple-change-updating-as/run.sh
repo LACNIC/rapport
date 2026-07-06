@@ -8,8 +8,7 @@ start_rp
 start_router
 
 check_vrps \
-		"100::/17-17 => AS65001"
-
+	"100::/17-17 => AS65001"
 check_aspas
 
 send_router_pdu "reset-query"
@@ -21,8 +20,7 @@ create_delta rd2
 revalidate_rp
 
 check_vrps \
-		"100::/17-17 => AS65002"
-		
+	"100::/17-17 => AS65002"	
 check_aspas
 
 send_router_pdu "serial-query serial 1"

@@ -1,26 +1,24 @@
-ta.cer
-	ta.mft
-	ca-valid.cer
-		ca-valid.mft
-		roa-valid.roa
+ta.cer 🛡️
+	ca-valid.cer 🛡️
+		roa-valid.roa 🛡️
+		ca-valid.mft 🛡️
+		ca-valid.crl 🛡️
 	ca1.cer
-		ca1.mft
 		roa-ca1.roa
 		ca2.cer
-			ca2.mft
 			ca3.cer
-				ca3.mft
 				cycle-ca.cer
-					cycle-ca.mft
 					roa-cycle.roa
-
-[node: ca-valid.cer]
-obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
-
-[node: roa-valid.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 20001
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+					cycle-ca.mft
+					cycle-ca.crl
+				ca3.mft
+				ca3.crl
+			ca2.mft
+			ca2.crl
+		ca1.mft
+		ca1.crl
+	ta.mft
+	ta.crl 🛡️
 
 [node: ca1.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]
@@ -36,9 +34,6 @@ obj.tbsCertificate.extensions.ip.extnValue = [ 3.2.0.0/16 ]
 [node: ca3.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 3.2.1.0/24 ]
 
-# cycle-ca.cer has its SIA.caRepository overwritten to point to the
-# ca1 directory. The validator will look for cycle-ca.mft in ca1/ and will not
-# find it: only ca1.mft exists there, not cycle-ca.mft.
 [node: cycle-ca.cer]
 obj.tbsCertificate.extensions.ip.extnValue = [ 3.2.1.0/24 ]
 obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value = rsync://localhost:8873/rpki/$TEST/ca1
@@ -48,9 +43,3 @@ obj.tbsCertificate.extensions.sia.extnValue.1.accessLocation.value = rsync://loc
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.2.1.0/24 ]
 obj.content.encapContentInfo.eContent.asId = 30001
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.2.1.0/24 ]
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[notification: https://localhost:8443/$TEST/notification.xml]
-serial = 2

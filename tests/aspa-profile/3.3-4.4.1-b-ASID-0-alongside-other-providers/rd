@@ -1,6 +1,10 @@
 ta.cer
 	ca.cer
 		invalid.asa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
 
 [node: invalid.asa]
 obj.content.encapContentInfo.eContent = {

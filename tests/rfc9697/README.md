@@ -5,6 +5,8 @@
 >
 > The mechanism (RFC 9697 section 3): a Relying Party records the `serial` and `hash` of each Delta File it has actually applied. On every subsequent Update Notification File fetch with the same `session_id`, it checks whether the `hash` now advertised for any previously-applied `serial` still matches what it recorded. A mismatch means that serial's Delta File was mutated after the fact — a violation of the immutability principle described in RFC 9697 section 2. Recovery (section 4) is to issue a warning and fall back to downloading and processing the current Snapshot File (RFC 8182 section 3.4.3), discarding the delta chain for that round even though it may, taken in isolation, have looked perfectly applicable.
 
+> **Test identifiers:** Each test is identified by the **paragraph anchor** of the main paragraph it relates to in `RFC 9697` (e.g. `#section-3` → `3`). When more than one test relates to the same paragraph, a sub-index (`-a`, `-b`, `-c`, …) is appended (`3-a`, `3-b`, …).
+
 ---
 
 ## Key Concepts

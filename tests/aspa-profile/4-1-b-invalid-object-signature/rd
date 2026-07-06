@@ -2,6 +2,10 @@ ta.cer
 	ca.cer
 		invalid.asa
 		valid.asa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
 
 [node: ta.cer]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-10 ]

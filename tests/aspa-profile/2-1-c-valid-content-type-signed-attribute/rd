@@ -1,6 +1,8 @@
 ta.cer
 	correct.asa
 	correct-signerInfo.asa
+	ta.mft
+	ta.crl
 
 [node: correct.asa]
 obj.content.encapContentInfo.eContent.providers = [ 123, 70000, 4294967295 ]

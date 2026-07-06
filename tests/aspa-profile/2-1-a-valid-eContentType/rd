@@ -1,6 +1,10 @@
 ta.cer
 	ca.cer
 		valid.asa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
 
 [node: valid.asa]
 obj.content.encapContentInfo = {

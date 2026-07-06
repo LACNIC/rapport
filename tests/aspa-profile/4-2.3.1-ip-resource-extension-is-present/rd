@@ -1,6 +1,10 @@
 ta.cer
         ca.cer
                 invalid.asa
+                ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
 
 [node: invalid.asa]
 obj.content.certificates.0.tbsCertificate.extensions = [ ski, aki, ku, cdp, aia, sia, cp, ip, as ]

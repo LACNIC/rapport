@@ -41,7 +41,7 @@ check_vrps \
 	"2.1.0.0/16-16 => AS1234"
 
 check_http_requests \
-	"/$TEST/ta.cer 200" \
+	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests

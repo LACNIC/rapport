@@ -8,9 +8,8 @@ start_rp
 start_router
 
 check_vrps \
-		"100::/18-18 => AS65001" \
-		"100:4000::/18-18 => AS65001"
-
+	"100::/18-18 => AS65001" \
+	"100:4000::/18-18 => AS65001"
 check_aspas
 
 send_router_pdu "reset-query"
@@ -23,11 +22,10 @@ create_delta rd2
 revalidate_rp
 
 check_vrps \
-		"100::/18-18 => AS65001" \
-		"100:4000::/18-18 => AS65001" \
-		"100:8000::/18-18 => AS66001" \
-		"100:c000::/18-18 => AS66001"
-
+	"100::/18-18 => AS65001" \
+	"100:4000::/18-18 => AS65001" \
+	"100:8000::/18-18 => AS66001" \
+	"100:c000::/18-18 => AS66001"
 check_aspas
 
 send_router_pdu "serial-query serial 1"

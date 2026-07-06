@@ -1,10 +1,14 @@
-ta.cer
+ta.cer 
         ca.cer
                 roa.roa
                 roa2.roa
                 roa3.roa
                 roa4.roa
                 roa5.roa
+                ca.mft
+                ca.crl
+        ta.mft
+        ta.crl
 
 [node: roa.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:1000::/20, 100:2000::/20 ]

@@ -1,0 +1,40 @@
+ta.cer 🛡️
+	ca.cer
+		valid-1-1.roa
+		valid-1-2.roa
+		valid-1-3.roa
+		ca.mft
+		ca.crl
+	ca2.cer 🛡️
+		valid-2-1.roa 🛡️
+		ca2.mft 🛡️
+		ca2.crl 🛡️
+	ca3.cer
+		valid-3-1.roa
+		ca3.mft
+		ca3.crl
+	ta.mft
+	ta.crl 🛡️
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.sia.extnValue.0.accessLocation.value = rsync://localhost:8873/rpki/$TEST/wrong-ca
+
+[node: valid-1-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24, 1.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
+
+[node: valid-1-2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.2.0/24, 1.1.3.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
+
+[node: valid-1-3.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.4.0/24, 1.1.5.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
+
+[node: valid-3-1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 30001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]

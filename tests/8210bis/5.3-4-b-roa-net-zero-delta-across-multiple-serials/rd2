@@ -1,9 +1,6 @@
-ta.cer
-    ta.mft
-    ca.cer
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[notification: https://localhost:8443/$TEST/notification.xml]
-serial = 2
+ta.cer 🛡️
+	ca.cer 🛡️
+		ca.mft
+		ca.crl 🛡️
+	ta.mft 🛡️
+	ta.crl 🛡️

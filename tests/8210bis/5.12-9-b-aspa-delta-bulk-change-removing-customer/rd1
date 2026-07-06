@@ -1,0 +1,46 @@
+ta.cer
+        ca.cer
+                aspa.asa
+                aspa2.asa
+                aspa3.asa
+                aspa4.asa
+                aspa5.asa
+                ca.mft
+                ca.crl
+        ta.mft
+        ta.crl
+
+[node: aspa.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01010000 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01010000,
+        providers = [11001,11002,11003,11004,11005]
+}
+
+[node: aspa2.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01020000 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01020000,
+        providers = [22001,22002,22003,22004,22005]
+}
+
+[node: aspa3.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01030000 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01030000,
+        providers = [33001,33002,33003,33004,33005]
+}
+
+[node: aspa4.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01040000 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01040000,
+        providers = [44001,44002,44003,44004,44005]
+}
+
+[node: aspa5.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 0x01050000 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 0x01050000,
+        providers = [55001,55002,55003,55004,55005]
+}

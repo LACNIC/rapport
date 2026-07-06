@@ -1,4 +1,7 @@
 ta.cer
-        ta.mft
         ca.cer
                 roa.roa
+                ca.mft
+                ca.crl
+        ta.mft
+        ta.crl

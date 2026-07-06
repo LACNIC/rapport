@@ -1,5 +1,4 @@
-ta.cer
-	ta.mft
+ta.cer 🛡️
 	aspa-ca.cer
 		# -- Stable ASPAs (pos 01-15) --
 		aspa-stable-01.asa
@@ -59,6 +58,8 @@ ta.cer
 		aspa-new-81.asa
 		aspa-new-83.asa
 		aspa-new-85.asa
+		aspa-ca.mft
+		aspa-ca.crl
 	roa-v4-ca.cer
 		# -- Stable ROAs IPv4 (pos 01-15) --
 		roa-v4-stable-01.roa
@@ -118,6 +119,8 @@ ta.cer
 		roa-v4-new-81.roa
 		roa-v4-new-83.roa
 		roa-v4-new-85.roa
+		roa-v4-ca.mft
+		roa-v4-ca.crl
 	roa-v6-ca.cer
 		# -- rd2-only ROAs IPv6 (n=11..20) --
 		roa-v6-new-11.roa
@@ -130,6 +133,10 @@ ta.cer
 		roa-v6-new-18.roa
 		roa-v6-new-19.roa
 		roa-v6-new-20.roa
+		roa-v6-ca.mft
+		roa-v6-ca.crl
+	ta.mft 
+	ta.crl 🛡️
 
 # ── CA de ASPAs ───────────────────────────────────────────────────────────────
 
@@ -761,9 +768,3 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0
 obj.content.encapContentInfo.eContent.asId = 65720
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8:0:14::/64 ]
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2001:db8:0:14::/64 ]
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[notification: https://localhost:8443/$TEST/notification.xml]
-serial = 2

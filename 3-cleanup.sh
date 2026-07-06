@@ -7,7 +7,6 @@ echo "[INFO] Starting environment cleanup..."
 sudo umount sandbox
 #sudo /usr/lib/frr/frrinit.sh stop
 
-
 # 1. Revert SUID bit on QEMU bridge helper (Security best practice)
 # This prevents the binary from running with root privileges after tests
 #HELPER_PATH="/usr/lib/qemu/qemu-bridge-helper"

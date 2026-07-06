@@ -1,53 +1,30 @@
-ta.cer
-	ta.mft
+ta.cer 🛡️
 	ca.cer
-		ca.mft
-		valid-1-1.roa
+		valid-1-1.roa 🛡️
 		valid-1-2.roa
-		sub-ca.cer
-			sub-ca.mft
-			valid-sub-1.roa
-	ca2.cer
-		ca2.mft
-		valid-2-1.roa
+		sub-ca.cer 🛡️
+			valid-sub-1.roa 🛡️
+			sub-ca.mft 🛡️
+			sub-ca.crl 🛡️
+		ca.mft
+		ca.crl 🛡️
+	ca2.cer 🛡️
+		valid-2-1.roa 🛡️
+		ca2.mft 🛡️
+		ca2.crl 🛡️
+	ta.mft
+	ta.crl 🛡️
 
-[node: ca.cer]
 # serialNumber=2 distinguishes the reissued certificate from the original.
 # Expanded resources: adds 5.0.0.0/8 to the original range 2.0.0.0/8.
+[node: ca.cer]
 obj.tbsCertificate.serialNumber = 2
 obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8, 5.0.0.0/8 ]
 
-[node: valid-1-1.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 20001
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16 ]
-
-[node: valid-1-2.roa]
 # This ROA uses 5.1.0.0/24: a prefix within the new 5.0.0.0/8 range
 # which is only available thanks to the reissue of ca.cer.
 # Its presence in the VRP output confirms that the reissue was accepted.
+[node: valid-1-2.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 5.1.0.0/24, 5.1.1.0/24 ]
 obj.content.encapContentInfo.eContent.asId = 20001
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 5.0.0.0/8 ]
-
-[node: sub-ca.cer]
-obj.tbsCertificate.extensions.ip.extnValue = [ 2.2.0.0/16 ]
-
-[node: valid-sub-1.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.2.0.0/24, 2.2.1.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 20002
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.2.0.0/16 ]
-
-[node: ca2.cer]
-obj.tbsCertificate.extensions.ip.extnValue = [ 3.0.0.0/8 ]
-
-[node: valid-2-1.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 3.1.0.0/24, 3.1.1.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 30001
-obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
-
-[node: ta.mft]
-obj.content.encapContentInfo.eContent.manifestNumber = 2
-
-[notification: https://localhost:8443/$TEST/notification.xml]
-serial = 2

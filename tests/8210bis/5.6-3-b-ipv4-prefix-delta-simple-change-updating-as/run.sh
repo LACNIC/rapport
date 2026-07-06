@@ -8,7 +8,7 @@ start_rp
 start_router
 
 check_vrps \
-		"1.1.0.0/16-16 => AS13001"
+	"1.1.0.0/16-16 => AS13001"
 
 check_aspas
 

@@ -28,7 +28,6 @@ check_http_requests \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests \
-	"rpki/$TEST/ta.cer" \
 	"rpki/"
 
 check_logfile fort2 -E "File '[^']*' does not match its expected hash\."

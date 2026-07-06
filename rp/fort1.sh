@@ -42,6 +42,7 @@ rp_start() {
 		--tal "$SANDBOX/$TEST.tal" \
 		--local-repository "$SANDBOX/workdir" \
 		--output.roa "$SANDBOX/vrps.csv" \
+		--output.aspa "$SANDBOX/aspa.json" \
 		--log.level=debug \
 		--log.color \
 		--validation-log.enabled \

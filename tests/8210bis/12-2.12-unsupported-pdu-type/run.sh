@@ -8,7 +8,7 @@ start_rp
 start_router
 
 check_vrps
-check_aspas "1:[13001,13002,13003,13004,13005]"
+check_aspas "16842752:[13001,13002,13003,13004,13005]"
 
 # Sending reset-query
 send_router_pdu "raw 020c0000 00000008"

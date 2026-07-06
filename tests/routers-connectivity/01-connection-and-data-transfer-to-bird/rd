@@ -1,9 +1,13 @@
 ta.cer
-    ca.cer
-        roa.roa
-	roa2.roa
-	aspa.asa
-	aspa2.asa
+        ca.cer
+                roa.roa
+	        roa2.roa
+	        aspa.asa
+	        aspa2.asa
+                ca.mft
+                ca.crl
+        ta.mft
+        ta.crl
 
 [node: ta.cer]
 obj.tbsCertificate.extensions.as.extnValue.asnum = [ 0x00-0x0A ]
