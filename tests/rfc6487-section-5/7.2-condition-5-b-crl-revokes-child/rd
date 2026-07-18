@@ -1,0 +1,27 @@
+ta.cer
+	ca.cer
+		ca-child.cer
+			valid-child.roa
+			ca-child.mft
+			ca-child.crl
+		valid-ca.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: ca-child.cer]
+obj.tbsCertificate.serialNumber = 500
+
+[node: valid-ca.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24, 1.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
+
+[node: valid-child.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.2.0.0/24, 1.2.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10002
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.2.0.0/16 ]
+
+[node: ca.crl]
+obj.tbsCertList.revokedCertificates = [ 500 ]
