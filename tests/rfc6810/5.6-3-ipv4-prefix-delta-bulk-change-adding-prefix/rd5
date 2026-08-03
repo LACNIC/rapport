@@ -1,0 +1,16 @@
+ta.cer 🛡️
+        ca.cer 🛡️
+                roa.roa 🛡️
+                roa2.roa 🛡️
+                roa3.roa 🛡️
+                roa4.roa 🛡️
+                roa5.roa
+                ca.mft
+                ca.crl 🛡️
+        ta.mft 🛡️
+        ta.crl 🛡️
+
+[node: roa5.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.8.0/24, 1.1.9.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 17001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]

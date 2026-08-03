@@ -1,0 +1,16 @@
+ta.cer 🛡️
+        ca.cer 🛡️
+                roa.roa 🛡️
+                roa2.roa 🛡️
+                roa3.roa 🛡️
+                roa4.roa 🛡️
+                roa5.roa
+                ca.mft
+                ca.crl 🛡️
+        ta.mft 🛡️
+        ta.crl 🛡️
+
+[node: roa5.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 100:c000::/20, 100:d000::/20, 100:e000::/20 ]
+obj.content.encapContentInfo.eContent.asId = 5000
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 100::/16 ]

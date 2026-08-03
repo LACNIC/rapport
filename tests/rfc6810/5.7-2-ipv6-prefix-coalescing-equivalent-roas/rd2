@@ -1,0 +1,13 @@
+ta.cer 🛡️
+        ca.cer 🛡️
+                roa1.roa 🛡️
+                roa2.roa
+                roa3.roa 🛡️
+                ca.mft
+                ca.crl 🛡️
+        ta.mft 🛡️
+        ta.crl 🛡️
+
+[node: roa2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 101::/16 ]
+obj.content.encapContentInfo.eContent.asId = 10001

@@ -1,0 +1,15 @@
+ta.cer 🛡️
+	ca.cer 🛡️
+		route.roa 🛡️
+		route2.roa 🛡️
+		route3.roa 🛡️
+		route4.roa 🛡️
+		route5.roa
+                ca.mft
+                ca.crl 🛡️
+	ta.mft 🛡️
+        ta.crl 🛡️
+
+[node: route5.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.5.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64516

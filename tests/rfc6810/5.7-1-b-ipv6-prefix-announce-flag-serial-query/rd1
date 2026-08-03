@@ -1,0 +1,16 @@
+ta.cer
+	ca.cer
+		route.roa
+                route2.roa
+                ca.mft
+                ca.crl
+	ta.mft
+        ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 101::/16 ]
+obj.content.encapContentInfo.eContent.asId = 65001
+
+[node: route2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 102::/16 ]
+obj.content.encapContentInfo.eContent.asId = 65002
