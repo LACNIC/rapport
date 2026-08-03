@@ -126,6 +126,7 @@ This test checks that the cache delivers one and only one IPv4 Prefix PDU for a 
 
 **Description:**
 This test checks that during a bulk incremental update covering multiple serial increments, the cache correctly delivers an IPv4 Prefix PDU with the Flags field set to 1 (announce) for each IPv4 VRP that was newly added to the RPKI dataset within the queried serial range, with correct Prefix, Prefix Length, Max Length, and Autonomous System Number fields, and that the cache merges multiple changes for the same {Prefix, Len, Max-Len, ASN} tuple into at most one announcement.
+
 ---
 
 ### 5.6-4 — `ipv4-prefix-delta-bulk-change-removing-prefix`
@@ -160,6 +161,7 @@ This test checks that the cache delivers one and only one IPv6 Prefix PDU for a 
 
 **Description:**
 This test checks that during a bulk incremental update covering multiple serial increments, the cache correctly delivers an IPv6 Prefix PDU with the Flags field set to 1 (announce) for each IPv6 VRP newly added within the queried serial range, with correct 128-bit Prefix, Prefix Length (0..128), Max Length (0..128), and Autonomous System Number fields, with unused prefix bits zeroed, merging multiple changes for the same {Prefix, Len, Max-Len, ASN} tuple into at most one announcement.
+
 ---
 
 ### 5.7-4 — `ipv6-prefix-delta-bulk-change-removing-prefix`
