@@ -61,4 +61,4 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "Snapshot session id [beef] doesn't match Notification session id [cafe]"
+check_logfile fort2 -F "Snapshot session_id 'cafe' does not match Notification session_id 'beef'"

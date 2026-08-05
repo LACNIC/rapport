@@ -61,6 +61,6 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "Delta serial [99] doesn't match Notification serial [2]"
+check_logfile fort2 -F "Delta serial '99' does not match Notification serial '2'"
 check_logfile fort2 -F "Falling back to snapshot."
 check_logfile fort2 -F "Snapshot exploded."

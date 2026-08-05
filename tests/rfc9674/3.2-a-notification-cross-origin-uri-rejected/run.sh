@@ -54,4 +54,4 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "are not hosted by the same origin"
+check_logfile fort2 -E "Notification '[^']+' does not have the same origin as its Delta: "

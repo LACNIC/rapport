@@ -61,4 +61,4 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "Snapshot serial [99] doesn't match Notification serial [2]"
+check_logfile fort2 -F "Snapshot serial '99' does not match Notification serial '2'"
