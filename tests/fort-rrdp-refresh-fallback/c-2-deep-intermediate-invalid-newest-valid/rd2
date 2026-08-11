@@ -1,0 +1,16 @@
+ta.cer 🛡️
+	A.cer 🛡️
+		A1.roa 🛡️
+		A2.roa
+		A.mft
+		A.crl 🛡️
+	ta.mft 🛡️
+	ta.crl 🛡️
+
+[node: A2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.2.0.0/16 ]
+obj.content.encapContentInfo.eContent.asId = 64502
+
+# Invalidate the A.mft signature: serial 2 is the RPP-fatal intermediate.
+[node: A.mft]
+obj.content.signerInfos.0.signature = 0xAD02323322

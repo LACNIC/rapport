@@ -1,0 +1,14 @@
+ta.cer 🛡️
+	A.cer 🛡️
+		A1.roa 🛡️
+		A2.roa 🛡️
+		A3.roa 🛡️
+		A4.roa
+		A.mft
+		A.crl 🛡️
+	ta.mft 🛡️
+	ta.crl 🛡️
+
+[node: A4.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.4.0.0/16 ]
+obj.content.encapContentInfo.eContent.asId = 64504
