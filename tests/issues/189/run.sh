@@ -1,27 +1,28 @@
 #!/bin/sh
 
-# Issue #189: RRDP snapshot duplicate publish URI order changes VRP output
+# Issue #189: RRDP snapshot duplicate publish URI — regression guard
 #
 # When an RRDP snapshot contains two <publish> elements for the same URI,
-# Fort processes them sequentially and the last write wins. Changing only
-# the order of those duplicate entries can change Fort's validated output:
+# Fort MUST reject the snapshot (RRDP desync detection, RFC 9697). This
+# test injects a duplicate <publish> entry into the snapshot and verifies
+# that Fort:
+#   1. Detects the duplicate and rejects the snapshot
+#   2. Falls back to rsync and recovers with the clean repository
+#   3. Produces the correct VRP set from the rsync-served objects
 #
-#   T1 (A then B): B remains on disk; matches manifest for B (by accident)
-#                  -> VRP_B accepted  <-- BUG: duplicate URI was silently accepted
-#   T2 (B then A): A remains on disk; does not match manifest for B
-#                  -> manifest hash mismatch -> no ROA VRP
+# Two sub-tests exercise both orderings of the duplicate entries to ensure
+# detection is order-independent:
+#   T1 (A then B): A's entry first, B's second
+#   T2 (B then A): B's entry first, A's appended
 #
-# Expected behavior (correct fix): snapshots with duplicate <publish> URIs
-# should be rejected before any snapshot-derived writes influence the
-# repository state used for manifest validation.
+# In both cases, Fort must reject the RRDP snapshot and fall back to rsync,
+# producing only B's VRP (AS64520) from the clean rsync tree.
 #
-# T2 asserts no ROA VRP, which coincidentally holds even with the current
-# bug (manifest mismatch rejects the publication point).
-# T1 asserts no ROA VRP and FAILS while the bug exists (Fort incorrectly
-# accepts VRP_B), serving as the regression guard for the fix.
-#
-# rsync is disabled in both stages so there is no fallback to contaminate
-# the assertions: we are testing RRDP snapshot processing in isolation.
+# History: before the fix, Fort processed duplicates silently with
+# last-write-wins semantics. T1 was the regression guard — Fort accepted
+# VRP_B by accident (B overwrote A on disk, manifest matched B's hash).
+# Now both sub-tests pass: the snapshot is rejected regardless of order.
+
 
 . tools/checks.sh
 . rp/$RP.sh
@@ -74,16 +75,14 @@ sed -i 's|</snapshot>||' "$SNAPSHOT"
 T2_HASH=$(sha256sum "$SNAPSHOT" | cut -d' ' -f1)
 sed -i "s|\(<snapshot uri=\"[^\"]*\" hash=\"\)[0-9a-f]*\(\"/>\)|\1$T2_HASH\2|" "$NOTIFICATION"
 
-# Running FORT with rsync disabled to isolate RRDP snapshot processing.
-run_rp "--rsync.enabled=false"
+run_rp
 
-# T2: no ROA VRP expected.
-# Current behavior: no VRP — A on disk doesn't match manifest for B.
-# After fix: no VRP — snapshot rejected due to duplicate URI.
-ck_inc
-if grep -qE "AS64510|AS64520" "$SANDBOX/vrps.csv" 2>/dev/null; then
-    fail "T2 (B then A): unexpected ROA VRP; snapshot with duplicate URI should be rejected"
-fi
+# Fort rejects the RRDP snapshot (duplicate URI detected) and falls back to
+# rsync. The rsync tree has B's clean objects -> VRP for B only.
+check_vrps "1.1.0.0/24-24 => AS64520"
+
+# Confirm the desync detection fired.
+check_logfile fort2 -E "RRDP desync: <publish> is attempting to create '.*', but the file is already cached\."
 
 
 # ---------------------------------------------------------------------------
@@ -93,7 +92,7 @@ fi
 # Use a new session ID so Fort does a full resync rather than reusing T2's
 # cached RRDP state (which recorded a manifest failure for this RPP).
 new_step
-run_barry "rd_b"
+run_barry "rd_b2"
 
 # Insert A's <publish> entry BEFORE B's entry so B is processed last
 # and ends up on disk (matching the manifest). This is the order that
@@ -120,16 +119,13 @@ sed -i 's/session_id="cafe"/session_id="beef"/' "$NOTIFICATION"
 T1_HASH=$(sha256sum "$SNAPSHOT" | cut -d' ' -f1)
 sed -i "s|\(<snapshot uri=\"[^\"]*\" hash=\"\)[0-9a-f]*\(\"/>\)|\1$T1_HASH\2|" "$NOTIFICATION"
 
-# Running FORT with rsync disabled to isolate RRDP snapshot processing.
-run_rp "--rsync.enabled=false"
+run_rp
 
-# T1: no ROA VRP expected (same assertion as T2).
-# Current behavior (BUG): VRP_B present — B on disk, manifest matches by accident.
-# After fix: no VRP — snapshot rejected due to duplicate URI.
-# This assertion FAILS while the bug exists, acting as the regression guard.
-ck_inc
-if grep -qE "AS64510|AS64520" "$SANDBOX/vrps.csv" 2>/dev/null; then
-    fail "T1 (A then B): ROA VRP present; snapshot with duplicate URI was silently accepted (issue #189)"
-fi
+# Same assertion: Fort rejects the snapshot, falls back to rsync, B's VRP only.
+check_vrps "1.1.0.0/24-24 => AS64520"
+
+# Confirm the desync detection fired.
+check_logfile fort2 -E "RRDP desync: <publish> is attempting to create '.*', but the file is already cached\."
+
 
 rm -f /tmp/roa_a.b64

@@ -20,3 +20,5 @@ run_barry
 run_rp
 
 check_vrps
+
+check_logfile fort2 -E "Certificate's caIssuers \(rsync://[^)]+\) does not match parent certificate's URI \(rsync://[^)]+\)\."
