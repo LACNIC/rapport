@@ -1,0 +1,20 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+[node: ca.cer]
+rpp.notification = https://localhost:8443/$TEST/notificat\tion-ca.xml
+
+[notification: https://localhost:8443/$TEST/notificat\tion-ca.xml]
+session = cafe
+serial = 1
+snapshot.uri = https://localhost:8443/$TEST/snapshot-ca.xml
+snapshot.path = snapshot-ca.xml
