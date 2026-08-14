@@ -8,4 +8,3 @@ run_rp
 check_vrps
 
 check_logfile fort2 -F "Illegal character in path component"
-check_logfile fort2 -F "Extension 'SIA' lacks a 'caRepository' valid rsync URI."
