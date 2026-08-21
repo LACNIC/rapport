@@ -31,6 +31,7 @@ rp_run() {
 		--report "$SANDBOX/report.txt" \
 		--output.roa "$SANDBOX/vrps.csv" \
 		--rsync.program "$RSYNC" \
+		--validation-threads=1 \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 \
 		|| fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
@@ -45,6 +46,7 @@ rp_start() {
 		--local-repository "$SANDBOX/workdir" \
 		--output.roa "$SANDBOX/vrps.csv" \
 		--rsync.program "$RSYNC" \
+		--validation-threads=1 \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 &
 }

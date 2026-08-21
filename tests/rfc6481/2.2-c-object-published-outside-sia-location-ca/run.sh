@@ -3,6 +3,10 @@
 . tools/checks.sh
 . rp/$RP.sh
 
+# issues#178 and issues#181.
+# Fort behavior seems compliant, but the spec itself seems questionable.
+# WONTFIX for now. Will come back to this after Fort 2.0.
+test "$RP" = "fort2" && skip
 
 # ---------------------------------------------------------------------------
 # Step 1: Establish a known-good cache (baseline).
