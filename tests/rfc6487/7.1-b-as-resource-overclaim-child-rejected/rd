@@ -1,0 +1,20 @@
+ta.cer
+	parent.cer
+		child.cer
+			route.roa
+			child.mft
+			child.crl
+		parent.mft
+		parent.crl
+	ta.mft
+	ta.crl
+
+[node: parent.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 64512 ]
+
+[node: child.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-100 ]
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 50

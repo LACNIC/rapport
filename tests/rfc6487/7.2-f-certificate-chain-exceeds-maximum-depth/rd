@@ -1,0 +1,75 @@
+ta.cer
+	ca-shallow.cer
+		roa-shallow.roa
+		ca-shallow.mft
+		ca-shallow.crl
+	ca1.cer
+		roa1.roa
+		ca2.cer
+			roa2.roa
+			ca3.cer
+				roa3.roa
+				ca4.cer
+					roa4.roa
+					ca5.cer
+						roa5.roa
+						ca5.mft
+						ca5.crl
+					ca4.mft
+					ca4.crl
+				ca3.mft
+				ca3.crl
+			ca2.mft
+			ca2.crl
+		ca1.mft
+		ca1.crl
+	ta.mft
+	ta.crl
+
+[node: ca-shallow.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+
+[node: roa-shallow.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2.1.0.0/24, 2.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 20001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.0.0.0/8 ]
+
+[node: ca1.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.0.0.0/8 ]
+
+[node: roa1.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.0.1.0/24, 10.0.2.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.0.0.0/8 ]
+
+[node: ca2.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: roa2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.1.0.0/24, 10.1.1.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: ca3.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: roa3.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.1.2.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: ca4.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: roa4.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.1.3.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: ca5.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]
+
+[node: roa5.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.1.4.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 10001
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 10.1.0.0/16 ]

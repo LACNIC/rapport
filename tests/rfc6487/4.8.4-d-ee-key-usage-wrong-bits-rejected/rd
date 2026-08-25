@@ -1,0 +1,28 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+# Override the ROA's EE cert KU bits to keyCertSign (0x04) instead of
+# the required digitalSignature (0x80). Section 4.8.4 fixes
+# digitalSignature as the only bit set for EE certificates.
+#
+# KeyUsage bit layout (RFC 5280 section A.2):
+#   bit 0 = digitalSignature  (0x80)
+#   bit 1 = nonRepudiation    (0x40)
+#   bit 2 = keyEncipherment   (0x20)
+#   bit 3 = dataEncipherment  (0x10)
+#   bit 4 = keyAgreement      (0x08)
+#   bit 5 = keyCertSign       (0x04)
+#   bit 6 = cRLSign           (0x02)
+#   ................................
+
+[node: route.roa]
+obj.content.certificates.0.tbsCertificate.extensions.ku.extnValue = 0x04

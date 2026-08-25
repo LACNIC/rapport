@@ -33,10 +33,10 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16
 # Reuse the same EE cert serial — the protocol violation under test.
 [node: ca.mft]
 obj.content.encapContentInfo.eContent.manifestNumber = 2
-obj.content.certificates.0.tbsCertificate.serialNumber = 0xEE0001
+obj.content.certificates.0.tbsCertificate.serialNumber = 0x7E0001
 
-# The CA correctly revoked 0xEE0001 per section 5.1 step 2, but that serial now
+# The CA correctly revoked 0x7E0001 per section 5.1 step 2, but that serial now
 # also belongs to the NEW manifest's EE cert. The revocation is correct;
 # the reuse of the serial is the bug.
 [node: ca.crl]
-obj.tbsCertList.revokedCertificates = [ 0xEE0001 ]
+obj.tbsCertList.revokedCertificates = [ 0x7E0001 ]

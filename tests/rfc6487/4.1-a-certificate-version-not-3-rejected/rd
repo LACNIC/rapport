@@ -1,0 +1,16 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+# Override version to 1 (X.509 v2). In the ASN.1 encoding, version
+# values are: 0=v1, 1=v2, 2=v3. Section 4.1 requires version 3 (value 2).
+[node: ca.cer]
+obj.tbsCertificate.version = 1

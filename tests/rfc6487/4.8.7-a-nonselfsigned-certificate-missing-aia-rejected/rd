@@ -1,0 +1,17 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+# Remove AIA from the CA cert's extension list.
+# Section 4.8.7 requires a single caIssuers rsync URI except
+# in self-signed certificates.
+[node: ca.cer]
+obj.tbsCertificate.extensions = [ bc, ski, aki, ku, cdp, sia, cp, ip, as ]

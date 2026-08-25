@@ -22,4 +22,4 @@ obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 2.1.0.0/16
 
 [node: ca.mft]
 obj.content.encapContentInfo.eContent.manifestNumber = 1
-obj.content.certificates.0.tbsCertificate.serialNumber = 0xEE0001
+obj.content.certificates.0.tbsCertificate.serialNumber = 0x7E0001

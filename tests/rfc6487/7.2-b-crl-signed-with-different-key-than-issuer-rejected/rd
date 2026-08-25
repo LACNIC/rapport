@@ -1,0 +1,14 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 192.0.2.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+[node: ca.crl]
+obj.signature = 0xBADC0FFEE0DDF00D

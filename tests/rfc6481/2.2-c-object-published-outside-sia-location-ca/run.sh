@@ -35,10 +35,6 @@ run_rp
 check_logfile fort2 -E "RPP rsync://[^ ]+ does not directly contain manifest rsync://[^ ]+\."
 
 check_vrps \
-	"1.1.0.0/24-24 => AS10001" \
-	"1.1.1.0/24-24 => AS10001" \
-	"1.1.2.0/24-24 => AS10001" \
-	"1.1.3.0/24-24 => AS10001" \
 	"2.1.0.0/24-24 => AS20001" \
 	"2.1.1.0/24-24 => AS20001" \
 	"3.1.0.0/24-24 => AS30001" \

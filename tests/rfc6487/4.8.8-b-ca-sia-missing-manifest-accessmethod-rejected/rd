@@ -1,0 +1,18 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+# Override the accessMethod of SIA index 1 (normally rpkiManifest,
+# OID 1.3.6.1.5.5.7.48.10) to a bogus private OID. The SIA now has
+# caRepository (index 0) but no rpkiManifest. Section 4.8.8.1 requires
+# both id-ad-caRepository AND id-ad-rpkiManifest.
+[node: ca.cer]
+obj.tbsCertificate.extensions.sia.extnValue.1.accessMethod = 1.2.3.4.5.6.7.8.9

@@ -1,0 +1,16 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+[node: route.roa]
+obj.content.certificates.0.tbsCertificate.extensions = [ ski, aki, ku, cdp, aia, sia, cp, ip, bceku ]
+obj.content.certificates.0.tbsCertificate.extensions.bceku.extnID = 2.5.29.37
+obj.content.certificates.0.tbsCertificate.extensions.bceku.critical = 0x00

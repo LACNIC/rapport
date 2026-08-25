@@ -1,0 +1,38 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512
+
+# Override KU bits to keyAgreement + keyCertSign + cRLSign (0x0E) instead of 
+# the required keyCertSign + cRLSign (0x06). Section 4.8.4 fixes exactly keyCertSign
+# and cRLSign as the only bits set for CA certificates.
+#
+# KeyUsage bit layout (RFC 5280 section A.2):
+#   bit 0 = digitalSignature  (0x80)
+#   bit 1 = nonRepudiation    (0x40)
+#   bit 2 = keyEncipherment   (0x20)
+#   bit 3 = dataEncipherment  (0x10)
+#   bit 4 = keyAgreement      (0x08)
+#   bit 5 = keyCertSign       (0x04)
+#   bit 6 = cRLSign           (0x02)
+#   ................................
+#
+#   0000 1000  (keyAgreement / 0x08)
+#   0000 0100  (keyCertSign  / 0x04)
+# + 0000 0010  (cRLSign      / 0x02)
+#  -----------
+#   0000 1110  (Binary result)
+#  
+#   FIrst 4 bits (0000) --> 0 
+#   Last  4 bits (0000) --> E 
+#   HEX: 0x0E
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.ku.extnValue = 0x0E
