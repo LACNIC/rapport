@@ -6,7 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "Certificate has unknown extension"
+check_logfile fort2 -F "Certificate has unknown critical extension"
 
 check_vrps
- 
