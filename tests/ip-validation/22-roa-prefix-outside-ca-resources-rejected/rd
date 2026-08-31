@@ -1,0 +1,15 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+# CA has 1.1.0.0/24; ROA claims 10.0.0.0/24 — entirely outside.
+[node: ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/24 ]
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 10.0.0.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64512

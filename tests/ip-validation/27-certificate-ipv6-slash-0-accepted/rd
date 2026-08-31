@@ -1,0 +1,14 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: ca.cer]
+obj.tbsCertificate.extensions.ip.extnValue = [ 0::/0 ]
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 2001:db8::/32 ]
+obj.content.encapContentInfo.eContent.asId = 64512

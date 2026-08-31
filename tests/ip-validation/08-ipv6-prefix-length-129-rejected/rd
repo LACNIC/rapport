@@ -1,0 +1,11 @@
+ta.cer
+	ca.cer
+		route.roa
+		ca.mft
+		ca.crl
+	ta.mft
+	ta.crl
+
+[node: route.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 101:db8::/129 ]
+obj.content.encapContentInfo.eContent.asId = 64512
