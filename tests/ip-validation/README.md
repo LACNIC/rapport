@@ -61,6 +61,7 @@ This test checks that the validator accepts a ROA with an IPv4 prefix of /32 (a 
 
 **Description:**
 This test checks that the validator rejects a ROA with an IPv4 prefix length of /33, which exceeds the 32-bit address space. The BIT STRING encoding would require 5 bytes with 7 unused bits.
+
 ---
 
 ## Group 2 — IPv6 Prefix Length Boundaries

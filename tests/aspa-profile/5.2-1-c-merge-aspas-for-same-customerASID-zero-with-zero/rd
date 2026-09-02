@@ -1,0 +1,29 @@
+ta.cer
+	ca1.cer
+                aspa-1.asa
+                aspa-2.asa
+                ca1.mft
+		ca1.crl
+	ta.mft
+	ta.crl
+
+[node: ta.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-100 ]
+
+[node: ca1.cer]
+obj.tbsCertificate.extensions.as.extnValue.asnum = [ 1-20 ]
+
+
+[node: aspa-1.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 10 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 10,
+        providers = [0]
+}
+
+[node: aspa-2.asa]
+obj.content.certificates.0.tbsCertificate.extensions.as.extnValue.asnum = [ 10 ]
+obj.content.encapContentInfo.eContent = {
+        customerASID = 10,
+        providers = [0]
+}

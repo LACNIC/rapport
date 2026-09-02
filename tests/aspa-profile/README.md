@@ -1,10 +1,10 @@
 # Rapport – Test Suite: draft-ietf-sidrops-aspa-profile
 ## A Profile for Autonomous System Provider Authorization
-### Reference version: draft-ietf-sidrops-aspa-profile-26
+### Reference version: draft-ietf-sidrops-aspa-profile-29
 
-> **Scope:** Tests derived from the ASPA profile draft focus on the structural, cryptographic, and semantic validation rules that a Relying Party MUST apply when processing an Autonomous System Provider Authorization (ASPA) object. An ASPA is a CMS-protected signed object that authorizes one or more Provider Autonomous Systems (PAS) on behalf of a Customer AS (CAS). The validator must enforce the content type OID, the ASN.1 field constraints, the provider list invariants, and the EE certificate extension requirements defined in this draft.
+> **Scope:** Tests derived from the ASPA profile draft focus on the structural, cryptographic, and semantic validation rules that a Relying Party MUST apply when processing an Autonomous System Provider Authorization (ASPA) object. An ASPA is a CMS-protected signed object that authorizes one or more Provider Autonomous Systems (PAS) on behalf of a Customer AS (CAS). The validator must enforce the content type OID, the ASN.1 field constraints, the provider list invariants, the EE certificate extension requirements, and the merging rules for multiple ASPAs per CAS defined in this draft.
 
-> **Test identifiers:** Each test is identified by the **paragraph anchor** of the main paragraph it relates to in `draft-26` (e.g. `#section-2-1` → `2-1`). When more than one test relates to the same paragraph, a sub-index (`-a`, `-b`, `-c`, …) is appended (`2-1-a`, `2-1-b`, …).
+> **Test identifiers:** Each test is identified by the **paragraph anchor** of the main paragraph it relates to in `draft-29` (e.g. `#section-2-1` → `2-1`). When more than one test relates to the same paragraph, a sub-index (`-a`, `-b`, `-c`, …) is appended (`2-1-a`, `2-1-b`, …).
 
 ---
 
@@ -20,10 +20,13 @@
 | Each `providers` `PAS` value MUST be unique | section 3.3 | Duplicates must cause rejection |
 | `PAS` value 0 MUST be the sole element if present | section 3.3 | AS 0 alongside other entries must be rejected |
 | Provider value range is 0..4294967295; values above are out of range | section 3, ASN.1 `PAS` type | Value ≥ 4294967296 is structurally invalid |
+| The ASPA content MUST fully conform with all requirements in section 3 | section 4 | The RP MUST verify structural and semantic constraints as a validation step |
 | `customerASID` MUST match the EE certificate's AS Identifier Delegation Extension | section 4 | Mismatch causes validation failure |
 | AS Identifier Delegation Extension MUST contain exactly one `id` element | section 4 | `inherit` or `range` elements cause rejection |
 | IP Address Delegation Extension MUST be absent | section 4 | Presence of this extension causes rejection |
-| Implementations SHOULD impose an upper bound of 4,000–10,000 providers | section 5.4 | Exceeding the threshold SHOULD invalidate all related ASPAs |
+| When multiple ASPAs exist for the same CAS, the RP forms a union of Provider AS sets (U-SPAS) | section 5.2 | The RP MUST merge providers across multiple ASPAs for the same CAS |
+| If the U-SPAS contains both AS 0 and other providers, AS 0 MUST be excluded from the union | section 5.2 | AS 0 only survives the merge if it is the sole provider across all ASPAs |
+| Implementations SHOULD impose an upper bound of 4,000–10,000 providers on the U-SPAS | section 5.5 | Exceeding the threshold SHOULD invalidate all related ASPAs for that CAS |
 
 ---
 
@@ -248,39 +251,53 @@ This test checks that the validator rejects an ASPA object whose EE certificate 
 
 ---
 
-### 5.1-1 — `multiple-aspas-for-same-customerASID`
+### 5.2-1-a — `merging-aspas-for-same-customerASID-non-zero-with-non-zero`
 
 **Description:**
-This test checks the behavior of the validator when multiple structurally and cryptographically valid ASPA objects exist in the repository for the same `customerASID`. The draft does not define any normative validator behavior for this scenario — the recommendation to maintain a single ASPA per Customer AS is directed at CA operators and hosting software, not at Relying Parties. The purpose of this test is therefore to observe and document the validator's actual behavior (e.g., accepting all, accepting only the most recently signed, or flagging the condition) without asserting a mandatory pass/fail outcome derived from the draft. The result serves as an implementation characterization data point.
+This test checks that the validator correctly merges two valid ASPA objects for the same `customerASID` when both contain non-zero providers with no overlap. For example, ASPA-1 lists providers {AS 64512, AS 64513} and ASPA-2 lists providers {AS 64514, AS 64515}. The resulting U-SPAS MUST be the union {AS 64512, AS 64513, AS 64514, AS 64515}. All four providers must appear in the validator's output for that CAS.
 
 ---
 
-### 5.4-2-a — `provider-count-below-threshold`
+### 5.2-1-b — `merging-aspas-for-same-customerASID-zero-with-non-zero`
+
+**Description:**
+This test checks that the validator correctly merges two valid ASPA objects for the same `customerASID` when one contains only AS 0 (indicating no transit providers) and the other contains non-zero providers. For example, ASPA-1 lists providers {AS 0} and ASPA-2 lists providers {AS 64512}. Section 5.2 requires that AS 0 be excluded from the U-SPAS when other providers are present. The resulting U-SPAS MUST be {AS 64512} — AS 0 does not survive the merge.
+
+---
+
+### 5.2-1-c — `merging-aspas-for-same-customerASID-zero-with-zero`
+
+**Description:**
+This test checks that the validator correctly merges two valid ASPA objects for the same `customerASID` when both contain only AS 0. For example, ASPA-1 lists providers {AS 0} and ASPA-2 lists providers {AS 0}. Since the union of {AS 0} and {AS 0} is {AS 0}, and no non-zero providers are present to trigger the exclusion rule, the resulting U-SPAS MUST be {AS 0}.
+
+---
+
+### 5.5-2-a — `provider-count-below-threshold`
 
 **Description:**
 This test checks that the validator accepts an ASPA object whose `providers` field contains 3,999 entries, which is below the suggested lower bound of 4,000 for implementation-defined upper limits, confirming that provider lists well within the practical threshold are processed without rejection due to size constraints.
 
 ---
 
-### 5.4-2-b — `provider-count-at-threshold`
+### 5.5-2-b — `provider-count-at-threshold`
 
 **Description:**
 This test checks that the validator accepts an ASPA object whose `providers` field contains exactly 4,000 entries, which is at the lower boundary of the suggested upper bound range of 4,000–10,000, confirming that the boundary value itself is treated as within the acceptable limit and does not trigger an invalid threshold condition.
 
 ---
 
-### 5.4-2-c — `provider-count-above-threshold`
+### 5.5-2-c — `provider-count-above-threshold`
 
 **Description:**
 This test checks that the validator treats an ASPA object as invalid when its `providers` field contains more entries than the implementation's configured upper bound (tested here with 4,001 entries, which exceeds a threshold set at 4,000), and that the validator does not emit a partial provider list but instead invalidates all ASPA objects associated with that `customerASID` and logs an error identifying the affected Customer AS.
 
 ---
 
-### 5.4-2-d — `big-aspa`
+### 5.5-2-d — `big-aspa`
 
 **Description:**
 This test checks that the validator handles an ASPA object with an unusually large number of provider entries without crashing, hanging, or producing corrupted output, and that it correctly applies the configured upper bound threshold to decide whether the object should be accepted or invalidated, logging an appropriate error if the threshold is exceeded.
 
 ---
 
-*End of draft-ietf-sidrops-aspa-profile test suite — 36 test cases*
+*End of draft-ietf-sidrops-aspa-profile test suite — 38 test cases*
