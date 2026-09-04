@@ -84,10 +84,17 @@ This test checks that the validator processes each manifest independently during
 
 ---
 
-### 6.2-1 - `manifest-unreachable-via-sia-uri`
+### 6.2-1-a - `manifest-unreachable-via-broken-sia-uri`
 
 **Description:**
-This test checks that the validator treats an unreachable manifest as a failed fetch at the earliest step of the processing pipeline, falls back to the previously cached manifest and its associated objects without proceeding to any subsequent validation steps, emits a warning, and suspends subordinate object processing for that CA instance until the next successful fetch.
+This test checks that the validator does not produce VRPs for a CA whose certificate is replaced with a new version whose SIA rpkiManifest URI points to a nonexistent location. The TA legitimately publishes a new ca.cer with a different SIA; the validator accepts the update but cannot fetch the manifest at the new URI. Since the updated certificate has a different SIA, the validator treats it as a new CA instance with no prior cache — section 6.6 fallback does not apply because the cached objects belong to the previous CA instance, not this one. Zero VRPs for the affected CA; sibling CAs remain unaffected.
+
+---
+
+### 6.2-1-b - `manifest-unreachable-fallback-to-cache`
+
+**Description:**
+This test checks that the validator falls back to cached objects when a manifest becomes temporarily unavailable but the CA certificate has not changed. In cycle 1, the CA is established and validated normally. In cycle 2, the manifest is removed from the repository (emulated by deleting the file) but the CA certificate remains identical (same SIA, same publication point). Since the CA instance is the same and the validator has valid cached objects from cycle 1, section 6.6 requires the RP to continue using those cached objects. The VRPs from the affected CA must survive from the cache.
 
 ---
 
@@ -119,4 +126,4 @@ This test checks that the validator computes the SHA-256 hash of every file retr
 
 ---
 
-*End of RFC 9286 test suite — 13 test cases*
+*End of RFC 9286 test suite — 14 test cases*
