@@ -5,7 +5,9 @@ ck_inc() {
 }
 
 __fail() {
-	echo "$TESTID error: $@" 1>&2
+	CLR_RED='\033[0;31m'
+	CLR_RST='\033[0m'
+	echo "$CLR_RED  $@$CLR_RST" 1>&2
 	exit 1
 }
 
@@ -23,7 +25,7 @@ warn() {
 # Use this result when the test does not apply to the RP.
 # It's neither a success nor a failure.
 skip() {
-	echo "$TESTID skipped: $@"
+	echo "  Skipped."
 	stop_rp
 	stop_router
 	exit 3
