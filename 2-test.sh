@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# $1: Category of the test(s) you want to run.
-#     Send nothing to run all categories.
-# $2: Name of the test you want to run.
-#     Send nothing to run all tests in $1.
+# $1: Categories of the test(s) you want to run, separated by whitespace.
+#     Omit to run all categories.
+# $2: Names of the tests you want to run, separated by whitespace.
+#     Omit to run all tests in $1.
 
 #set -x     # Decomment to print all commands
 
@@ -84,19 +84,24 @@ run_test() {
 	rm -rf "sandbox/rsyncd/content/"*
 }
 
+
+FIND_ARGS="-mindepth 1 -maxdepth 1 -printf %f\n -type d"
 if [ -z "$1" ]; then
-	for CATEGORY in $(find -L tests -mindepth 1 -maxdepth 1 -type d | sort -V); do
-		for T in $(find -L "$CATEGORY" -mindepth 1 -maxdepth 1 -type d | sort -V); do
-			run_test "$T"
-		done
-	done
-elif [ -z "$2" ]; then
-	for T in $(find -L "tests/$1" -mindepth 1 -maxdepth 1 -type d | sort -V); do
-		run_test "$T"
-	done
+	CATEGORIES=$(find -L tests $FIND_ARGS | sort -V)
 else
-	run_test "tests/$1/$2"
+	CATEGORIES="$1"
 fi
+for CATEGORY in $CATEGORIES; do
+	if [ -z "$2" ]; then
+		TESTS=$(find -L "tests/$CATEGORY" $FIND_ARGS | sort -V)
+	else
+		TESTS="$2"
+	fi
+	for T in $TESTS; do
+		run_test "tests/$CATEGORY/$T"
+	done
+done
+
 
 tools/rsyncd-stop.sh
 tools/apache2-stop.sh
