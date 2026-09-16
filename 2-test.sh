@@ -5,7 +5,7 @@
 # $2: Names of the tests you want to run, separated by whitespace.
 #     Omit to run all tests in $1.
 
-#set -x     # Decomment to print all commands
+#set -x
 
 # Run as `FORCE=1 ./2-test.sh` to skip this question.
 if [ -z "$1" -a -z "$FORCE" ]; then
@@ -43,6 +43,9 @@ NSUCCESSES=0
 NFAILS=0
 NSKIPS=0
 NUNKNOWNS=0
+
+# Turn off RP, barry, apache & rsync on Ctrl+C
+trap 'tools/cleanup.sh; exit 1' INT
 
 tools/apache2-start.sh
 tools/rsyncd-start.sh
