@@ -26,4 +26,4 @@ check_vrps \
     "3.1.0.0/24-24 => AS30001" \
     "3.1.1.0/24-24 => AS30001"
 
-check_report fort2 -F "New manifestNumber (1) is not higher than fallback manifestNumber (1)."
+check_logfile fort2 -F "New manifestNumber (1) is not higher than fallback manifestNumber (1)."

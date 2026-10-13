@@ -27,9 +27,10 @@ rp_run() {
 	timeout 30s $VALGRIND $RP_BIN \
 		--mode "standalone" \
 		--tal "$SANDBOX/$TEST.tal" \
-		--local-repository "$SANDBOX/workdir" \
-		--report "$SANDBOX/report.txt" \
-		--output.roa "$SANDBOX/vrps.csv" \
+		--cache "$SANDBOX/workdir" \
+		--validation-threads=1 \
+		--output.vrp "$SANDBOX/vrps.csv" \
+		--output.aspa "$SANDBOX/aspa.json" \
 		--rsync.program "$RSYNC" \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 \
@@ -42,8 +43,11 @@ rp_start() {
 		--server.address "127.0.0.1" \
 		--server.port "8323" \
 		--tal "$SANDBOX/$TEST.tal" \
-		--local-repository "$SANDBOX/workdir" \
-		--output.roa "$SANDBOX/vrps.csv" \
+		--cache "$SANDBOX/workdir" \
+		--validation-threads=1 \
+		--output.vrp "$SANDBOX/vrps.csv" \
+		--output.aspa "$SANDBOX/aspa.json" \
+		--server.max-rtr-version "2" \
 		--rsync.program "$RSYNC" \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 &
@@ -52,7 +56,7 @@ rp_start() {
 # Echoes the logstring that signals when the RP is ready to serve
 # populated RTR.
 rp_ready_string() {
-	echo "First validation cycle successfully ended"
+	echo "Main loop: Sleeping."
 }
 
 # Echoes the location where rp_run() expects to find the TAL file.
