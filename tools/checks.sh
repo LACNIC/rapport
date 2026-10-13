@@ -186,7 +186,7 @@ start_router() {
 	test -z "$BARRY_RTR_PID" || fail "The router is already running."
 
 	$BARRY-rtr --input "$BARRY_RTR_SK" interactive 127.0.0.1 8323 \
-		> "$SANDBOX/barry-rtr.stdout" &
+		>> "$SANDBOX/barry-rtr.stdout" &
 	export BARRY_RTR_PID="$!"
 }
 

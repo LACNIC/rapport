@@ -20,10 +20,10 @@ send_router_pdu "reset-query version 0"
 check_cache_response_v0 0 1 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 64512"
 
-RQ_CR_SESSION_ID=$(grep -a "^cache-response" "$SANDBOX/pdu/actual.txt" \
+RQ_CR_SESSION_ID=$(grep "^cache-response" "$SANDBOX/pdu/actual.txt" \
     | grep -oE 'session [0-9]+' | grep -oE '[0-9]+')
 
-RQ_EOD_SESSION_ID=$(grep -a "^end-of-data" "$SANDBOX/pdu/actual.txt" \
+RQ_EOD_SESSION_ID=$(grep "^end-of-data" "$SANDBOX/pdu/actual.txt" \
     | grep -oE 'session [0-9]+' | grep -oE '[0-9]+')
 
 test -n "$RQ_CR_SESSION_ID" || fail "Could not extract Session ID from Cache Response PDU"
@@ -51,10 +51,10 @@ send_router_pdu "serial-query serial 1 version 0"
 check_cache_response_v0 1 2 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 64513"
 
-SQ_CR_SESSION_ID=$(grep -a "^cache-response" "$SANDBOX/pdu/actual.txt" \
+SQ_CR_SESSION_ID=$(grep "cache-response" "$SANDBOX/pdu/actual.txt" \
     | grep -oE 'session [0-9]+' | grep -oE '[0-9]+')
 
-SQ_EOD_SESSION_ID=$(grep -a "^end-of-data" "$SANDBOX/pdu/actual.txt" \
+SQ_EOD_SESSION_ID=$(grep "end-of-data" "$SANDBOX/pdu/actual.txt" \
     | grep -oE 'session [0-9]+' | grep -oE '[0-9]+')
 
 test -n "$SQ_CR_SESSION_ID" || fail "Could not extract Session ID from Cache Response PDU"

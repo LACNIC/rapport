@@ -21,7 +21,7 @@ request_session() {
 
 	wait_pdus 4
 	# Extract session from the output
-	grep -F "cache-response" "$SANDBOX/barry-rtr.stdout" |
+	grep "^cache-response" "$SANDBOX/barry-rtr.stdout" |
 		awk '{ print $5 }' > "$PDU_DIR/$2-v$1"
 
 	stop_router
