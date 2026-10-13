@@ -17,7 +17,7 @@ check_aspas \
     "16908288:[20001,20002]"
 
 send_router_pdu "reset-query"
-check_cache_response 0 \
+check_cache_response 0 1 \
     "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 10001 10002 10003 \]" \
     "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 16908288 providers \[ 20001 20002 \]"
 
@@ -31,12 +31,12 @@ check_aspas \
     "16908288:[20001,20002]"
 
 send_router_pdu "reset-query"
-check_cache_response 1 \
+check_cache_response 1 2 \
     "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 10001 10002 10004 \]" \
     "aspa-pdu       version 2 flags 1 zero 0 length 20 customer 16908288 providers \[ 20001 20002 \]"
 
 send_router_pdu "serial-query serial 1"
-check_cache_response 0 \
+check_cache_response 0 2 \
     "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 10001 10002 10004 \]"
 
 stop_router

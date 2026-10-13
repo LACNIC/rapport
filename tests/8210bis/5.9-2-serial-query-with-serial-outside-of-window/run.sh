@@ -12,10 +12,8 @@ check_vrps
 check_aspas "16842752:[11001]"
 
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16842752 providers \[ 11001 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 1 \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16842752 providers \[ 11001 \]"
 
 # Processing serial 2
 new_step
@@ -23,11 +21,8 @@ create_delta rd2
 revalidate_rp
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"serial-notify  version 2 session [0-9]+ length 12 serial 2" \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16908288 providers \[ 22001 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 1 2 \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16908288 providers \[ 22001 \]"
 
 # Processing serial 3
 new_step
@@ -35,12 +30,9 @@ create_delta rd3
 revalidate_rp
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"serial-notify  version 2 session [0-9]+ length 12 serial 3" \
-	"cache-response version 2 session [0-9]+ length 8" \
+check_cache_response 1 3 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16908288 providers \[ 22001 \]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16973824 providers \[ 33001 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 3 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16973824 providers \[ 33001 \]"
 
 # Processing serial 4
 new_step
@@ -50,7 +42,7 @@ revalidate_rp
 send_router_pdu "serial-query serial 1"
 check_pdus \
 	"serial-notify  version 2 session [0-9]+ length 12 serial 4" \
-	"cache-reset    version 2 zero 0 length 8" \
+	"cache-reset    version 2 zero 0 length 8"
 
 stop_router
 stop_rp

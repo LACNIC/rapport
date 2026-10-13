@@ -11,9 +11,7 @@ check_vrps
 check_aspas
 
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 1
 
 stop_router
 stop_rp

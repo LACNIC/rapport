@@ -13,7 +13,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "reset-query"
-check_cache_response 0 \
+check_cache_response 0 1 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:4000:: as 65001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:: as 65001"
 
@@ -30,7 +30,7 @@ check_aspas
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 2 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:c000:: as 66001" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 18 maxlen 18 zero2 0 prefix 100:8000:: as 66001"
 

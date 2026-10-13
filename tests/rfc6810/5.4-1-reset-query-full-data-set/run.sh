@@ -75,14 +75,12 @@ sleep 2
 
 send_router_pdu "reset-query version 0"
 
-check_pdus \
-    	"cache-response version 0 session [0-9]+ length 8" \
+check_cache_response_v0 0 5 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.5.0.0 as 64516" \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.4.0.0 as 64515" \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.3.0.0 as 64514" \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 64513" \
-    	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 64512" \
-	"end-of-data    version 0 session [0-9]+ length 12 serial [0-9]+"
+	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 64512"
 
 stop_router
 stop_rp

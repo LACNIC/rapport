@@ -12,15 +12,11 @@ check_vrps
 check_aspas "16842752:[11001]"
 
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16842752 providers \[ 11001 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 1 \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16842752 providers \[ 11001 \]"
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 1
 
 # Processing serial 2
 new_step
@@ -33,16 +29,11 @@ check_aspas \
 	"16908288:[22001]"
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"serial-notify  version 2 session [0-9]+ length 12 serial 2" \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16908288 providers \[ 22001 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 1 2 \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16908288 providers \[ 22001 \]"
 
 send_router_pdu "serial-query serial 2"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 2
 
 stop_router
 stop_rp

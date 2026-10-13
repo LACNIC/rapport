@@ -19,11 +19,9 @@ sleep 1
 
 send_router_pdu "reset-query version 0"
 
-check_pdus \
-    	"cache-response version 0 session [0-9]+ length 8" \
+check_cache_response_v0 0 1 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 65002" \
-    	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 65001" \
-	"end-of-data    version 0 session [0-9]+ length 12 serial 1"
+	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 65001"
 
 # ---------------------------------------------------------------------------
 # P1 -- first update: advance serial to 2
@@ -39,12 +37,9 @@ check_vrps \
 
 send_router_pdu "serial-query serial 1 version 0"
 
-check_pdus \
-	"serial-notify  version 0 session [0-9]+ length 12 serial 2" \
-    	"cache-response version 0 session [0-9]+ length 8" \
+check_cache_response_v0 1 2 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 2.1.0.0 as 65003" \
-    	"ipv4-prefix    version 0 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 65002" \
-	"end-of-data    version 0 session [0-9]+ length 12 serial 2"
+	"ipv4-prefix    version 0 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 65002"
 
 stop_router
 stop_rp

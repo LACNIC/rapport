@@ -14,11 +14,9 @@ check_vrps \
 check_aspas
 
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
+check_cache_response 0 1 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 16 maxlen 16 zero2 0 prefix 101:: as 1234" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 16 maxlen 16 zero2 0 prefix 101:: as 1234"
 
 # Processing serial 2
 new_step
@@ -29,12 +27,9 @@ check_vrps
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"serial-notify  version 2 session [0-9]+ length 12 serial 2" \
-	"cache-response version 2 session [0-9]+ length 8" \
+check_cache_response 1 2 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 16 maxlen 16 zero2 0 prefix 101:: as 1234" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 2 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 16 maxlen 16 zero2 0 prefix 101:: as 1234"
 
 # Processing serial 3
 new_step
@@ -47,10 +42,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_pdus \
-	"serial-notify  version 2 session [0-9]+ length 12 serial 3" \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 3 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 1 3
 
 stop_router
 stop_rp

@@ -13,7 +13,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "reset-query"
-check_cache_response 0 \
+check_cache_response 0 1 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13001"
 
 new_step
@@ -22,7 +22,7 @@ revalidate_rp
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 2 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13002" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 16 maxlen 16 zero2 0 prefix 1.1.0.0 as 13001"
 

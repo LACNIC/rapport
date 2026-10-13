@@ -13,11 +13,9 @@ check_vrps \
 check_aspas
 
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
+check_cache_response 0 1 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.1.0 as 2147483648" \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 2147483648" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 2147483648"
 
 stop_router
 stop_rp

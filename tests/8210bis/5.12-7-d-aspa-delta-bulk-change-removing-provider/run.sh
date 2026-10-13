@@ -12,7 +12,7 @@ check_vrps
 check_aspas "16842752:[13001,13002,13003,13004,13005]"
 
 send_router_pdu "reset-query"
-check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 16842752 providers \[ 13001 13002 13003 13004 13005 \]"
+check_cache_response 0 1 "aspa-pdu       version 2 flags 1 zero 0 length 32 customer 16842752 providers \[ 13001 13002 13003 13004 13005 \]"
 
 # Processing serial 2
 new_step
@@ -24,7 +24,7 @@ check_aspas "16842752:[13002,13003,13004,13005]"
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 2 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 28 customer 16842752 providers \[ 13002 13003 13004 13005 \]"
 
 # Processing serial 3
@@ -37,7 +37,7 @@ check_aspas "16842752:[13003,13004,13005]"
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 3 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 13003 13004 13005 \]"
 
 
@@ -51,7 +51,7 @@ check_aspas "16842752:[13004,13005]"
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 4 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 20 customer 16842752 providers \[ 13004 13005 \]"
 
 # Processing serial 5
@@ -64,7 +64,7 @@ check_aspas "16842752:[13005]"
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 5 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 16842752 providers \[ 13005 \]"
 
 stop_router

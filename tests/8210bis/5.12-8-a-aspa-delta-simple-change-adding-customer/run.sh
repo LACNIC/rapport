@@ -11,7 +11,7 @@ check_vrps
 check_aspas "16842752:[11001,11002,11003]"
 
 send_router_pdu "reset-query"
-check_cache_response 0 "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 11001 11002 11003 \]"
+check_cache_response 0 1 "aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16842752 providers \[ 11001 11002 11003 \]"
 
 new_step
 create_delta rd2
@@ -25,7 +25,7 @@ check_aspas \
 
 send_router_pdu "serial-query serial 1"
 
-check_cache_response 1 \
+check_cache_response 1 2 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 24 customer 16908288 providers \[ 22001 22002 22003 \]"
 
 stop_router

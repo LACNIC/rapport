@@ -110,7 +110,7 @@ sleep 1
 send_router_pdu "reset-query"
 print_expected_step1 > "$SANDBOX/tmp"
 set --; while IFS= read -r l; do set -- "$@" "$l"; done < "$SANDBOX/tmp"
-check_cache_response 0 "$@"
+check_cache_response 0 1 "$@"
 
 #fail achoo
 
@@ -249,12 +249,12 @@ sleep 1
 send_router_pdu "reset-query"
 print_expected_step2 "reset" > "$SANDBOX/tmp"
 set --; while IFS= read -r l; do set -- "$@" "$l"; done < "$SANDBOX/tmp"
-check_cache_response 1 "$@"
+check_cache_response 1 2 "$@"
 
 send_router_pdu "serial-query serial 1"
 print_expected_step2 "serial" > "$SANDBOX/tmp"
 set --; while IFS= read -r l; do set -- "$@" "$l"; done < "$SANDBOX/tmp"
-check_cache_response 0 "$@"
+check_cache_response 0 2 "$@"
 
 rm "$SANDBOX/tmp"
 stop_router

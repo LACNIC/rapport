@@ -17,8 +17,7 @@ send_router_pdu "reset-query"
 # Only the first reset-query gets a response; Fort closes the connection
 # after the error-report without answering it or the second reset-query.
 
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
+check_cache_response 0 1 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 8 maxlen 8 zero2 0 prefix 3.0.0.0 as 1234" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 8 maxlen 8 zero2 0 prefix 2.0.0.0 as 1234" \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 8 maxlen 8 zero2 0 prefix 1.0.0.0 as 1234" \
@@ -27,8 +26,7 @@ check_pdus \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 8 maxlen 8 zero2 0 prefix 100:: as 1234" \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 67108864 providers \[ 0 \]" \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 83886080 providers \[ 0 \]" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 100663296 providers \[ 0 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 100663296 providers \[ 0 \]"
 
 check_logfile fort1 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Corrupt Data'. Closing socket."
 

@@ -23,11 +23,9 @@ send_router_pdu "reset-query version 1"
 # Check exact Cache Response PDU flow.
 # Validate RTR reached serial 1 (in the end-of-data) and returns the expected
 # prefix PDUs.
-check_pdus \
-	"cache-response version 1 session [0-9]+ length 8" \
+check_cache_response 0 1 \
 	"ipv4-prefix    version 1 zero1 0 length 20 flags 1 plen 8 maxlen 8 zero2 0 prefix 1.0.0.0 as 1234" \
-	"ipv6-prefix    version 1 zero1 0 length 32 flags 1 plen 8 maxlen 8 zero2 0 prefix 100:: as 1234" \
-	"end-of-data    version 1 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+	"ipv6-prefix    version 1 zero1 0 length 32 flags 1 plen 8 maxlen 8 zero2 0 prefix 100:: as 1234"
 
 
 # Ok, the environment has been prepared and seems correct.

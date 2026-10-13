@@ -25,7 +25,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "reset-query"
-check_cache_response 0 \
+check_cache_response 0 1 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:d000:: as 5000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:c000:: as 5000" \
@@ -61,7 +61,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_cache_response 1 \
+check_cache_response 1 2 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:c000:: as 5000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:d000:: as 5000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" 
@@ -83,7 +83,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_cache_response 1 \
+check_cache_response 1 3 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:9000:: as 4000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:a000:: as 4000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000" \
@@ -92,7 +92,7 @@ check_cache_response 1 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" 
 
 send_router_pdu "serial-query serial 2"
-check_cache_response 0 \
+check_cache_response 0 3 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:9000:: as 4000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:a000:: as 4000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000"
@@ -111,7 +111,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_cache_response 1 \
+check_cache_response 1 4 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:6000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:7000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000" \
@@ -123,7 +123,7 @@ check_cache_response 1 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" 
 
 send_router_pdu "serial-query serial 2"
-check_cache_response 0 \
+check_cache_response 0 4 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:6000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:7000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000" \
@@ -132,7 +132,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000"
 
 send_router_pdu "serial-query serial 3"
-check_cache_response 0 \
+check_cache_response 0 4 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:6000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:7000:: as 3000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000"
@@ -148,7 +148,7 @@ check_vrps \
 check_aspas
 
 send_router_pdu "serial-query serial 1"
-check_cache_response 1 \
+check_cache_response 1 5 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000" \
@@ -163,7 +163,7 @@ check_cache_response 1 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:e000:: as 5000" 
 
 send_router_pdu "serial-query serial 2"
-check_cache_response 0 \
+check_cache_response 0 5 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000" \
@@ -175,7 +175,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:b000:: as 4000"
 
 send_router_pdu "serial-query serial 3"
-check_cache_response 0 \
+check_cache_response 0 5 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000" \
@@ -184,7 +184,7 @@ check_cache_response 0 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:8000:: as 3000"
 
 send_router_pdu "serial-query serial 4"
-check_cache_response 0 \
+check_cache_response 0 5 \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:3000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:4000:: as 2000" \
 	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 20 maxlen 20 zero2 0 prefix 100:5000:: as 2000"

@@ -12,10 +12,8 @@ check_aspas "16842752:[13001,13002,13003,13004,13005]"
 
 # Sending reset-query
 send_router_pdu "reset-query"
-check_pdus \
-	"cache-response version 2 session [0-9]+ length 8" \
-	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 16842752 providers \[ 13001 13002 13003 13004 13005 \]" \
-	"end-of-data    version 2 session [0-9]+ length 24 serial 1 refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+check_cache_response 0 1 \
+	"aspa-pdu       version 2 flags 1 zero 0 length 32 customer 16842752 providers \[ 13001 13002 13003 13004 13005 \]"
 
 # Simulating that the router sends error code 9 [ASPA Provider List Error] to the server.
 send_router_pdu "error-report   version 2 error-code 9 length 16 encapsulated-pdu-length 0 error-text-length 0"

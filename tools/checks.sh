@@ -81,6 +81,10 @@ start_rp() {
 	wait_rp_output "$(rp_ready_string)"
 }
 
+check_rtr_up() {
+	kill -0 "$1" 2> /dev/null || fail "$RP-rtr died. (See $SANDBOX/$RP-rtr.log)"
+}
+
 # Wait until the RP outputs the "$1" string, with timeout.
 wait_rp_output() {
 	# 30s timeout
@@ -194,38 +198,60 @@ send_router_pdu() {
 
 # Wait at most 15 seconds for $1 PDUs to arrive
 wait_pdus() {
-	test "$(wc -l < "$SANDBOX/barry-rtr.stdout")" -ge "$1" && return 0
-
-	for i in $(seq 15); do
-		sleep 1
+	for i in $(seq 75); do
 		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
+		check_rtr_up "$RP_PID"
+		sleep 0.2
 	done
 
 	fail "Timeout. $RP didn't reply $1 PDUs; see $SANDBOX/barry-rtr.stdout"
 }
 
 # $1: Expect notify? (0 or 1)
-# $2-: Expected resource PDUs
+# $2: Expected serial
+# $3-: Expected resource PDUs
 check_cache_response() {
-	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
-
 	NOTIF="$1"
-	shift
-	
+	SERIAL="$2"
+	shift 2
+
 	if [ "$NOTIF" -eq 1 ]; then
 		check_pdus \
 			"serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+" \
 			"cache-response version 2 session [0-9]+ length 8" \
 			"$@" \
-			"end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+			"end-of-data    version 2 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 	else
 		check_pdus \
 			"cache-response version 2 session [0-9]+ length 8" \
 			"$@" \
-			"end-of-data    version 2 session [0-9]+ length 24 serial [0-9]+ refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+			"end-of-data    version 2 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 	fi
 }
 
+check_cache_response_v0() {
+	NOTIF="$1"
+	SERIAL="$2"
+	shift 2
+
+	if [ "$NOTIF" -eq 1 ]; then
+		check_pdus \
+			"serial-notify  version 0 session [0-9]+ length 12 serial [0-9]+" \
+			"cache-response version 0 session [0-9]+ length 8" \
+			"$@" \
+			"end-of-data    version 0 session [0-9]+ length 12 serial $SERIAL"
+	else
+		check_pdus \
+			"cache-response version 0 session [0-9]+ length 8" \
+			"$@" \
+			"end-of-data    version 0 session [0-9]+ length 12 serial $SERIAL"
+	fi
+}
+
+# Please do not use this function is you're expecting a normal
+# cache-response to end-of-data stream. Prefer check_cache_response*()
+# if that is the case.
+# 
 # $@: PDU regexs
 check_pdus() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
