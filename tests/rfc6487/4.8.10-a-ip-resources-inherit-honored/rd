@@ -16,5 +16,12 @@ obj.tbsCertificate.extensions.ip.extnValue = [ 1.1.0.0/16 ]
 obj.tbsCertificate.extensions.ip.extnValue = inherit
 
 [node: route.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.1.0.0/24 ]
-obj.content.encapContentInfo.eContent.asId = 64512
+obj.content = {
+	certificates.0.tbsCertificate.extensions.ip.extnValue = [
+		1.1.0.0/24,
+	],
+	encapContentInfo.eContent = {
+		ipAddrBlocks = [ 1.1.0.0/24 ],
+		asId = 64512,
+	},
+}
