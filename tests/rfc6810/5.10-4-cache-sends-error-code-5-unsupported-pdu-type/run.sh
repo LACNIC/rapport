@@ -9,9 +9,6 @@ start_router
 
 check_vrps "1.1.0.0/24-24 => AS64512"
 
-sleep 2
-
-
 # Sending reset-query
 send_router_pdu "raw 000c0000 00000008"
 

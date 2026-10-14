@@ -12,8 +12,6 @@ check_vrps \
 	"100:2000::/20-20 => AS1000" \
 	"100::/20-20 => AS1000"
 
-sleep 2
-
 send_router_pdu "reset-query version 0"
 check_cache_response_v0 0 1 \
 	"ipv6-prefix    version 0 zero1 0 length 32 flags 1 plen 20 maxlen 20 zero2 0 prefix 100:2000:: as 1000" \

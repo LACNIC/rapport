@@ -3,12 +3,11 @@
 . tools/checks.sh
 . tests/$CATEGORY/checks.sh
 . rp/$RP.sh
- 
+
 run_barry
 start_rp
 start_router
-sleep 1 # TODO shouldn't be necessary
- 
+
 
 # Send N_QUERIES reset-query PDUs as fast as possible, each in its own TCP
 # packet.
@@ -20,8 +19,6 @@ while [ "$N_REP" -lt "$N_QUERIES" ]; do
     send_router_pdu "reset-query" &
     N_REP=$((N_REP + 1))
 done
-
-sleep 2
 
 # Build the expected PDU sequence: N_QUERIES full response blocks.
 set --

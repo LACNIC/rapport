@@ -7,7 +7,6 @@
 run_barry
 start_rp
 start_router
-sleep 1 # TODO shouldn't be necessary
  
 # Senndig the bundled query string reset-error-reset
 send_bundled_router_pdus \

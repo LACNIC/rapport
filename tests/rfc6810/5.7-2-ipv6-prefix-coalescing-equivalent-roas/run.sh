@@ -16,8 +16,6 @@ check_vrps \
 	"102::/16-16 => AS10001" \
 	"103::/16-16 => AS10001"
 
-sleep 1
-
 send_router_pdu "reset-query version 0"
 check_cache_response_v0 0 1 \
 	"ipv6-prefix    version 0 zero1 0 length 32 flags 1 plen 16 maxlen 16 zero2 0 prefix 103:: as 10001" \

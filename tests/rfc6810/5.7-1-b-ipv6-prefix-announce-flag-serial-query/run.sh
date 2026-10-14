@@ -15,8 +15,6 @@ check_vrps \
 	"101::/16-16 => AS65001" \
 	"102::/16-16 => AS65002"
 
-sleep 1
-
 send_router_pdu "reset-query version 0"
 
 check_cache_response_v0 0 1 \

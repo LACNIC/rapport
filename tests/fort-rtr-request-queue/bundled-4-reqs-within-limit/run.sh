@@ -7,7 +7,6 @@
 run_barry
 start_rp
 start_router
-sleep 1 # TODO shouldn't be necessary
  
 # Build the bundled query string based on N_QUERIES
 

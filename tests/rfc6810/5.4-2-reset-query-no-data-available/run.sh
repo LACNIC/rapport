@@ -32,8 +32,6 @@ wait_rp_output "INF: [127.0.0.1]:8323: Success."
 
 start_router
 
-sleep 1
-
 send_router_pdu "reset-query version 0"
 check_pdus \
 	"error-report   version 0 error-code 2 length [0-9]+ encapsulated-pdu-length 0 error-text-length 0"

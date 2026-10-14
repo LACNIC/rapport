@@ -105,7 +105,6 @@ create_rd rd1
 run_barry
 start_rp
 start_router
-sleep 1
 
 send_router_pdu "reset-query"
 print_expected_step1 > "$SANDBOX/tmp"
@@ -244,7 +243,6 @@ new_step
 create_rd rd2
 create_delta
 revalidate_rp
-sleep 1
 
 send_router_pdu "reset-query"
 print_expected_step2 "reset" > "$SANDBOX/tmp"

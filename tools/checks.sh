@@ -81,26 +81,34 @@ start_rp() {
 	wait_rp_output "$(rp_ready_string)"
 }
 
-check_rtr_up() {
-	kill -0 "$1" 2> /dev/null || fail "$RP-rtr died. (See $SANDBOX/$RP-rtr.log)"
+# Check the program $1 is still running.
+# Its PID must be $2, and its logfile must be $3.
+check_pid_running() {
+	kill -0 "$2" 2> /dev/null || fail "$1 died. (See $3)"
 }
 
-# Wait until the RP outputs the "$1" string, with timeout.
-wait_rp_output() {
-	# 30s timeout
+# Waits until the file $3 contains the string $4, with 30s timeout.
+# The program of $2's writer is assumed to be $1, with PID $2.
+wait_output() {
 	for i in $(seq 150); do
 		sleep 0.2
-
-		if ! kill -0 "$RP_PID" 2> /dev/null; then
-			fail "$RP died. (See $SANDBOX/$RP.log)"
-		fi
-		if grep -Fq "$1" "$SANDBOX/$RP.log"; then
-			return 0
-		fi
+		check_pid_running "$1" "$2" "$3"
+		grep -Fq "$4" "$3" && return 0
 	done
 
 	stop_rp
-	fail "Timeout. $RP did not output '$1'."
+	fail "Timeout. $3 does not contain '$4'."
+}
+
+# Wait until the RP logs the string "$1".
+wait_rp_output() {
+	wait_output "$RP_BIN" "$RP_PID" "$SANDBOX/$RP.log" "$1"
+}
+
+# Wait until barry-rtr prints the string "$1".
+wait_router_output() {
+	wait_output "$BARRY-rtr" "$BARRY_RTR_PID" \
+		"$SANDBOX/barry-rtr.stdout" "$1"
 }
 
 stop_rp() {
@@ -188,6 +196,8 @@ start_router() {
 	$BARRY-rtr --input "$BARRY_RTR_SK" interactive 127.0.0.1 8323 \
 		>> "$SANDBOX/barry-rtr.stdout" &
 	export BARRY_RTR_PID="$!"
+	wait_router_output "Ready."
+	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
 }
 
 send_router_pdu() {
@@ -200,7 +210,7 @@ send_router_pdu() {
 wait_pdus() {
 	for i in $(seq 75); do
 		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
-		check_rtr_up "$RP_PID"
+		check_pid_running "$RP_BIN" "$RP_PID" "$SANDBOX/$RP.log"
 		sleep 0.2
 	done
 

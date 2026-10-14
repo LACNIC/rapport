@@ -63,7 +63,6 @@ sed -i"" \
 create_delta
 start_rp
 start_router
-sleep 1 # TODO this shouldn't be necessary
 send_router_pdu "reset-query"
 check_cache_response 0 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers [ 0 ]" \
@@ -107,7 +106,6 @@ new_step # 6
 create_delta
 start_rp --server.deltas.lifetime=2
 start_router
-sleep 1 # TODO this shouldn't be necessary
 send_router_pdu "reset-query"
 check_cache_response 0 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers [ 0 ]" \

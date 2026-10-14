@@ -19,8 +19,6 @@ check_vrps \
 	"1.1.8.0/24-24 => AS17001" \
 	"1.1.9.0/24-24 => AS17001" 	
 
-sleep 2
-
 send_router_pdu "reset-query version 0"
 check_cache_response_v0 0 1 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.9.0 as 17001" \

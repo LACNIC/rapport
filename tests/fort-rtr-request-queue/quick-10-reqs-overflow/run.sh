@@ -7,7 +7,6 @@
 run_barry
 start_rp
 start_router
-sleep 1 # TODO shouldn't be necessary
  
 # Send N_QUERIES reset-query PDUs as fast as possible, each in its own TCP
 # packet. Fort closes the connection when queries > 4, so some send_router_pdu
@@ -19,8 +18,6 @@ while [ "$N_REP" -lt "$N_QUERIES" ]; do
     send_router_pdu "reset-query" 2>/dev/null &
     N_REP=$((N_REP + 1))
 done
-
-sleep 2
 
 check_logfile fort1 -F "Too many simultaneous requests; Dropping RTR connection"
 

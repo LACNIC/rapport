@@ -10,8 +10,6 @@ start_router
 check_vrps \
 	"1.1.0.0/24-24 => AS64512"
 
-sleep 2
-
 # Sending reset-query
 send_router_pdu "reset-query version 0"
 check_cache_response_v0 0 1 \

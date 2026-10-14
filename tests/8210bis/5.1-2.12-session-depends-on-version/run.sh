@@ -15,7 +15,6 @@ rm -f "$PDU_DIR"/*
 
 request_session() {
 	start_router
-	sleep 1 # TODO should not be necessary
 
 	send_router_pdu "reset-query version $1"
 

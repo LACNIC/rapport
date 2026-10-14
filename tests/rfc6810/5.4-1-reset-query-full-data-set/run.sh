@@ -71,8 +71,6 @@ check_vrps \
 # Router establishes connection with the RTR Server and immediately sends the reset query.
 start_router
 
-sleep 2
-
 send_router_pdu "reset-query version 0"
 
 check_cache_response_v0 0 5 \
