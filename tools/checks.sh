@@ -18,7 +18,9 @@ fail() {
 }
 
 warn() {
-	echo "$TESTID warning: $@" 1>&2
+	CLR_YLW='\033[1;33m'
+	CLR_RST='\033[0m'
+	echo "$CLR_YLW  $@$CLR_RST" 1>&2
 	echo -n "1" >> "sandbox/counters/warns.txt"
 }
 
