@@ -400,8 +400,12 @@ check_rsync_requests() {
 		|| warn "Unexpected rsync request sequence; see $RSYNC_DIR"
 }
 
+# TODO Redesign this; it's too complicated.
+# Most of the boilerplate should be done by Barry.
+#
 # $@: Same as run_barry
 create_delta() {
+	# Preparations
 	APACHEDIR="sandbox/apache2/content/$TEST"
 	TMPDIR="sandbox/tmp/$TEST"
 
@@ -409,27 +413,52 @@ create_delta() {
 
 	mkdir -p "$TMPDIR"
 	rm -rf "$TMPDIR/"*
-	mv "$APACHEDIR" "$TMPDIR/old"
+
+	mv "$APACHEDIR" "$TMPDIR/main"
 
 	run_barry "$@"
-	mv "$APACHEDIR" "$TMPDIR/new"
+	mv "$APACHEDIR" "$TMPDIR/mid"
 
-	mkdir "$APACHEDIR"
+	mkdir "$TMPDIR/new"
+
+	# Root XMLs
 	$BARRY-delta \
-		--old.notification    "$TMPDIR/old/notification.xml" \
-		--old.snapshot        "$TMPDIR/old/snapshot.xml" \
-		--new.notification    "$TMPDIR/new/notification.xml" \
-		--new.snapshot        "$TMPDIR/new/snapshot.xml" \
-		--output.notification "$APACHEDIR/notification.xml" \
-		--output.delta.path   "$APACHEDIR/delta-$1.xml" \
+		--old.notification    "$TMPDIR/main/notification.xml" \
+		--old.snapshot        "$TMPDIR/main/snapshot.xml" \
+		--new.notification    "$TMPDIR/mid/notification.xml" \
+		--new.snapshot        "$TMPDIR/mid/snapshot.xml" \
+		--output.notification "$TMPDIR/new/notification.xml" \
+		--output.delta.path   "$TMPDIR/new/delta-$1.xml" \
 		--output.delta.uri    "https://localhost:8443/$TEST/delta-$1.xml" \
 		> "$SANDBOX/barry-delta.txt" 2>&1 \
 		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
+	mv "$TMPDIR/new/notification.xml" "$TMPDIR/main"
+	mv "$TMPDIR/mid/snapshot.xml" "$TMPDIR/main"
+	mv "$TMPDIR/new/delta-$1.xml" "$TMPDIR/main"
 
-	mv "$TMPDIR/new/snapshot.xml" "$APACHEDIR"
-	diff "$TMPDIR/old/ta.cer" "$TMPDIR/new/ta.cer" > /dev/null \
-		&& mv "$TMPDIR/new/ta.cer" "$APACHEDIR" \
-		|| mv "$TMPDIR/old/ta.cer" "$APACHEDIR"
+	# Additional XMLs requested by caller
+	for i in $RRDP_SUBDIRS; do
+		$BARRY-delta \
+			--old.notification    "$TMPDIR/main/$i/notification.xml" \
+			--old.snapshot        "$TMPDIR/main/$i/snapshot.xml" \
+			--new.notification    "$TMPDIR/mid/$i/notification.xml" \
+			--new.snapshot        "$TMPDIR/mid/$i/snapshot.xml" \
+			--output.notification "$TMPDIR/new/$i/notification.xml" \
+			--output.delta.path   "$TMPDIR/new/$i/delta-$1.xml" \
+			--output.delta.uri    "https://localhost:8443/$TEST/$i/delta-$1.xml" \
+			> "$SANDBOX/barry-delta-$i.txt" 2>&1 \
+			|| fail "barry-delta returned $?; see $SANDBOX/barry-delta-$i.txt"
+		mv "$TMPDIR/new/$i/notification.xml" "$TMPDIR/main/$i"
+		mv "$TMPDIR/mid/$i/snapshot.xml" "$TMPDIR/main/$i"
+		mv "$TMPDIR/new/$i/delta-$1.xml" "$TMPDIR/main/$i"
+	done
+
+	# TA
+	diff "$TMPDIR/main/ta.cer" "$TMPDIR/mid/ta.cer" > /dev/null \
+		&& mv "$TMPDIR/mid/ta.cer" "$TMPDIR/main/ta.cer"
+
+	# Cleanup
+	mv "$TMPDIR/main" "$APACHEDIR"
 	rm -r "$TMPDIR"
 }
 
