@@ -1,0 +1,22 @@
+ta.cer
+	1.cer 🛡️
+		1.roa 🛡️
+		1.mft 🛡️
+		1.crl 🛡️
+
+
+
+
+
+
+
+
+
+
+
+
+	ta.mft
+	ta.crl
+
+[node: 1.cer]
+rpp.uri = rsync://localhost:8873/repo1/$TEST/1

@@ -18,7 +18,7 @@ check_fort_cache() {
 	check_fort_cache_cages "https" "$2"
 }
 
-# Checks Fort cached the file whose HTTP URL is $1.
+# Checks Fort cached the file whose URL is $1.
 # Fort-only.
 check_fort_cache_file() {
 	ck_inc
@@ -129,4 +129,74 @@ check_fort_cache_cage_end() {
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
 		|| warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+}
+
+check_fort_cache_rsync_cage_begin() {
+	check_fort_cache_file "$1"
+
+	RSYNC_DIR="$SANDBOX/rsync"
+	mkdir -p "$RSYNC_DIR"
+
+	CAGE_ID="$(basename "$JSON" .json)"
+	# Files defined by the JSON
+	JSON_FILES="$RSYNC_DIR/cg$CAGE_ID-all-defined-files.txt"
+	# Files referenced by fallbacks in the JSON
+	REFD_FILES="$RSYNC_DIR/cg$CAGE_ID-all-refd-files.txt"
+	# Actual files in the directory
+	DIR_FILES="$RSYNC_DIR/cg$CAGE_ID-all-dir-files.txt"
+
+	SORT="sort -k1b,1" # For compatibility with join
+	jq -r ".rsync.files | keys[]" "$JSON" | $SORT -k1b,1 > "$JSON_FILES"
+}
+
+# $1: Fallback URI
+# $2...: Files that should've been cached in this fallback.
+check_fort_cache_rsync_fallback() {
+	FALLBACK="$1"
+	shift
+
+	ID="cg$CAGE_ID-fb$(basename "$FALLBACK")"
+	EXPCTD="$RSYNC_DIR/$ID-expected.txt"
+	ACTUAL="$RSYNC_DIR/$ID-actual.txt"
+	DIFF="$RSYNC_DIR/$ID.diff"
+
+	:> "$EXPCTD"
+	for i in "$@"; do
+		echo "rsync/$CAGE_ID/$i" >> "$EXPCTD"
+	done
+
+	jq -r ".rsync.fallbacks.\"$FALLBACK\".files | values[]" "$JSON" |
+		$SORT > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
+		warn "Unexpected rsync fallback files; see $RSYNC_DIR/$ID*"
+
+	cat "$ACTUAL" >> "$REFD_FILES"
+}
+
+check_fort_cache_rsync_cage_end() {
+	EXPCTD="$JSON_FILES.trimmed"
+	ACTUAL="$REFD_FILES.trimmed"
+	DIFF="$RSYNC_DIR/filerefs.diff"
+
+	cut -f1 "$JSON_FILES" > "$EXPCTD"
+	$SORT "$REFD_FILES" | uniq > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
+		warn "Fileref mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+
+	EXPCTD="$JSON_FILES.trimmed"
+	ACTUAL="$DIR_FILES"
+	DIFF="$RSYNC_DIR/dirs.diff"
+
+	PFX="$SANDBOX/workdir/a"
+	PFXLEN="${#PFX}"
+	find "$SANDBOX/workdir/rsync/$CAGE_ID" -type f |
+		cut "-c$PFXLEN-" | $SORT > "$ACTUAL"
+
+	ck_inc
+	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
+		warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
 }

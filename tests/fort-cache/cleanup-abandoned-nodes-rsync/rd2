@@ -1,0 +1,28 @@
+ta.cer
+	1.cer 🛡️
+		1.roa 🛡️
+		1.mft 🛡️
+		1.crl 🛡️
+	2.cer 🛡️
+		2.roa 🛡️
+		2.mft 🛡️
+		2.crl 🛡️
+	3.cer 🛡️
+		3.roa 🛡️
+		3.mft 🛡️
+		3.crl 🛡️
+
+
+
+
+	ta.mft
+	ta.crl
+
+[node: 1.cer]
+rpp.uri = rsync://localhost:8873/repo1/$TEST/1
+
+[node: 2.cer]
+rpp.uri = rsync://localhost:8873/repo2/$TEST/2
+
+[node: 3.cer]
+rpp.uri = rsync://localhost:8873/repo3/$TEST/3
