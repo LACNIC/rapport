@@ -84,7 +84,7 @@ run_test() {
 	cp -rp "sandbox/apache2" "$SANDBOX/apache2"
 	rm -rf "sandbox/apache2/content/"*
 	cp -rp "sandbox/rsyncd" "$SANDBOX/rsyncd"
-	rm -rf "sandbox/rsyncd/content/"*
+	clear_rsync_modules
 }
 
 

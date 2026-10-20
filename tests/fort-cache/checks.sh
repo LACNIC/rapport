@@ -200,3 +200,46 @@ check_fort_cache_rsync_cage_end() {
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
 		warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
 }
+
+# rsync boilerplate for simple tests involving multiple repositories.
+# Assumes each repo contains one RPP. This check is for the root RPP.
+# $@: Paths of the TA's fallbacked children, except manifest and CRL.
+check_root_cage() {
+	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/rpki"
+	check_fort_cache_rsync_fallback \
+		"rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
+		"$@" "rmt/$TEST/ta/ta.crl" "rmt/$TEST/ta/ta.mft"
+	check_fort_cache_rsync_cage_end
+}
+
+# rsync boilerplate for simple tests involving multiple repositories.
+# Assumes each repo contains one RPP. This check is for a child RPP.
+# Child repo N contains child RPP N, where N is a number.
+# Child RPPs only contain a ROA, a CRL and a manifest.
+# $1: N
+check_numbered_cage() {
+	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/repo$1"
+	check_fort_cache_rsync_fallback \
+		"rsync://localhost:8873/repo$1/$TEST/$1/$1.mft" \
+		"rmt/$TEST/$1/$1.crl" "rmt/$TEST/$1/$1.mft" \
+		"rmt/$TEST/$1/$1.roa"
+	check_fort_cache_rsync_cage_end
+}
+
+# Moves the cages $@ to their corresponding repositories.
+# This utility is temporary. At some point I need to move this
+# functionality to Barry.
+move_rsync_cages_to_repos() {
+	for i in "$@"; do
+		mkdir -p "sandbox/rsyncd/repo$i/$TEST"
+		mv "sandbox/rsyncd/content/$TEST/$i" "sandbox/rsyncd/repo$i/$TEST"
+	done
+}
+
+# Reverts move_rsync_cages_to_repos(); send the same arguments.
+# Also temporary.
+restore_rsync_cages_to_barry_workspace() {
+	for i in "$@"; do
+		mv "sandbox/rsyncd/repo$i/$TEST/$i" "sandbox/rsyncd/content/$TEST"
+	done
+}

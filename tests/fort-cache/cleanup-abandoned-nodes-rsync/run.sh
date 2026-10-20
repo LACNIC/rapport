@@ -6,30 +6,10 @@ test "$RP" = "fort2" || return 0
 . "tests/$CATEGORY/checks.sh"
 . "rp/$RP.sh"
 
-check_root_cage() {
-	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/rpki"
-	check_fort_cache_rsync_fallback \
-		"rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
-		"$@" "rmt/$TEST/ta/ta.crl" "rmt/$TEST/ta/ta.mft"
-	check_fort_cache_rsync_cage_end
-}
-
-check_numbered_cage() {
-	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/repo$1"
-	check_fort_cache_rsync_fallback \
-		"rsync://localhost:8873/repo$1/$TEST/$1/$1.mft" \
-		"rmt/$TEST/$1/$1.crl" "rmt/$TEST/$1/$1.mft" \
-		"rmt/$TEST/$1/$1.roa"
-	check_fort_cache_rsync_cage_end
-}
-
 # --------------------------- Step 1 ---------------------------
 
 run_barry "rd1" --rrdp-uri=""
-for i in 1 2 3 4; do
-	mkdir "sandbox/rsyncd/repo$i/$TEST"
-	mv "sandbox/rsyncd/content/$TEST/$i" "sandbox/rsyncd/repo$i/$TEST"
-done
+move_rsync_cages_to_repos "1" "2" "3" "4"
 run_rp --http.enabled="false"
 
 check_fort_cache 6 0
@@ -44,14 +24,10 @@ check_numbered_cage "4"
 
 # --------------------------- Step 2 ---------------------------
 
-for i in 1 2 3 4; do
-	mv "sandbox/rsyncd/repo$i/$TEST/$i" "sandbox/rsyncd/content/$TEST"
-done
+restore_rsync_cages_to_barry_workspace "1" "2" "3" "4"
 new_step
 run_barry "rd2" --rrdp-uri=""
-for i in 1 2 3; do
-	mv "sandbox/rsyncd/content/$TEST/$i" "sandbox/rsyncd/repo$i/$TEST"
-done
+move_rsync_cages_to_repos "1" "2" "3"
 run_rp --http.enabled="false"
 
 check_fort_cache 5 0
@@ -64,12 +40,10 @@ check_numbered_cage "3"
 
 # --------------------------- Step 3 ---------------------------
 
-for i in 1 2 3; do
-	mv "sandbox/rsyncd/repo$i/$TEST/$i" "sandbox/rsyncd/content/$TEST"
-done
+restore_rsync_cages_to_barry_workspace "1" "2" "3"
 new_step
 run_barry "rd3" --rrdp-uri=""
-mv "sandbox/rsyncd/content/$TEST/1" "sandbox/rsyncd/repo1/$TEST"
+move_rsync_cages_to_repos "1"
 run_rp --http.enabled="false"
 
 check_fort_cache 3 0

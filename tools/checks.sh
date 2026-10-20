@@ -499,3 +499,9 @@ new_step() {
 	STEP="$((STEP+1))"
 	#echo "  Step $STEP"
 }
+
+clear_rsync_modules() {
+	rm -rf "sandbox/rsyncd/content/"* \
+		"sandbox/rsyncd/repo1/"* "sandbox/rsyncd/repo2/"* \
+		"sandbox/rsyncd/repo3/"* "sandbox/rsyncd/repo4/"*
+}
