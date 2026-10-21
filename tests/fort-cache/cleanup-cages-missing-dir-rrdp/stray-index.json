@@ -1,0 +1,49 @@
+{
+  "uri": "https://localhost:8443/cleanup-missing-dir-rrdp/d/notification.xml",
+  "path": "https/4",
+  "attempt": "2026-10-21T18:11:10Z",
+  "success": "2026-10-21T18:11:10Z",
+  "rrdp": {
+    "files": {
+      "0": {
+        "uri": "rsync://localhost:8873/rpki/cleanup-missing-dir-rrdp/d/d.roa",
+        "hash": "22321BD1351AA7DA9166E2473F3DC35AD7D342764813635B5A36813E93E97B8E"
+      },
+      "1": {
+        "uri": "rsync://localhost:8873/rpki/cleanup-missing-dir-rrdp/d/d.mft",
+        "hash": "00B5F2C5C66C10856C0302EF1B8CFB3CB54D1BD32285B46E6C3F214D542549A9"
+      },
+      "2": {
+        "uri": "rsync://localhost:8873/rpki/cleanup-missing-dir-rrdp/d/d.crl",
+        "hash": "A5F8752EAC1DBF54A785F35EBB08C039F10DCFB2008742E1A5E725B2095967E4"
+      }
+    },
+    "sessions": {
+      "1": {
+        "steps": {
+          "1": {
+            "files": [
+              "0",
+              "1",
+              "2"
+            ]
+          }
+        },
+        "fallbacks": {
+          "rsync://localhost:8873/rpki/cleanup-missing-dir-rrdp/d/d.mft": {
+            "files": [
+              "0",
+              "2",
+              "1"
+            ],
+            "manifest": {
+              "file": "1",
+              "number": "01",
+              "update": "2026-10-21T18:11:10Z"
+            }
+          }
+        }
+      }
+    }
+  }
+}

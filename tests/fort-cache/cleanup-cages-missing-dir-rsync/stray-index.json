@@ -1,0 +1,36 @@
+{
+  "uri": "rsync://localhost:8873/repo3",
+  "path": "rsync/4",
+  "attempt": "2026-10-21T18:42:01Z",
+  "success": "2026-10-21T18:42:01Z",
+  "rsync": {
+    "files": {
+      "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.mft": {
+        "uri": "rsync://localhost:8873/repo3/cleanup-missing-dir-rsync/3/3.mft",
+        "hash": "CD4B6441C4D12E6AEFA3A5CA0A2C09227CC524A562B14E68C3EDBB88CDF9D7AA"
+      },
+      "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.roa": {
+        "uri": "rsync://localhost:8873/repo3/cleanup-missing-dir-rsync/3/3.roa",
+        "hash": "44E6C5A8D31CA6713ACE794DAFAB0D879FBD72BDBBB93427883F258B2292E074"
+      },
+      "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.crl": {
+        "uri": "rsync://localhost:8873/repo3/cleanup-missing-dir-rsync/3/3.crl",
+        "hash": "6FEC82DB7EB73BB44F402A90D52EEFC036371F86B6FFF10D1F6B94047BC66184"
+      }
+    },
+    "fallbacks": {
+      "rsync://localhost:8873/repo3/cleanup-missing-dir-rsync/3/3.mft": {
+        "files": [
+          "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.mft",
+          "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.roa",
+          "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.crl"
+        ],
+        "manifest": {
+          "file": "rsync/4/rmt/cleanup-missing-dir-rsync/3/3.mft",
+          "number": "01",
+          "update": "2026-10-21T18:42:00Z"
+        }
+      }
+    }
+  }
+}

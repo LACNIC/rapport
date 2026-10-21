@@ -1,0 +1,23 @@
+ta.cer
+	a.cer
+		a.roa
+		a.mft
+		a.crl
+	b.cer
+		b.roa
+		b.mft
+		b.crl
+	ta.mft
+	ta.crl
+
+[node: a.cer]
+rpp.notification = https://localhost:8443/$TEST/a/notification.xml
+[notification: https://localhost:8443/$TEST/a/notification.xml]
+snapshot.uri = https://localhost:8443/$TEST/a/snapshot.xml
+snapshot.path = a/snapshot.xml
+
+[node: b.cer]
+rpp.notification = https://localhost:8443/$TEST/b/notification.xml
+[notification: https://localhost:8443/$TEST/b/notification.xml]
+snapshot.uri = https://localhost:8443/$TEST/b/snapshot.xml
+snapshot.path = b/snapshot.xml

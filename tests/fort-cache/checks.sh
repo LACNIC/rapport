@@ -4,11 +4,21 @@
 check_fort_cache_cages() {
 	ck_inc
 	LOC="$SANDBOX/workdir/$1"
-	ACTUAL=$(ls -Ub1 "$LOC" | grep -c "\\.json$")
-	test $2 = "$ACTUAL" || fail "$LOC contains $ACTUAL cages ($2 expected)"
+
+	# Instead of checking there are $2 cages + $2 indexes, just check
+	# 2 * $2 directory nodes.
+	EXPCTD="$2"
+	EXPCTD="$((2 * EXPCTD))" # One directory (or TA) plus one index per cage
+	ACTUAL=$(ls -Ub1 "$LOC" | wc -l)
+
+	test "$EXPCTD" = "$ACTUAL" ||
+		fail "$LOC contains $ACTUAL directory nodes ($EXPCTD expected)"
 }
 
-# Checks the cache contains only the given cages.
+# Checks the cache contains exactly the given numbers of cages.
+# This function is concerned with checking there are no stray files, not that
+# the files themselves are correct.
+# (Other functions will ensure each dirnode is what it's supposed to be.)
 # Fort-only.
 #
 # $1: Number of rsync cages
@@ -201,10 +211,36 @@ check_fort_cache_rsync_cage_end() {
 		warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
 }
 
+# $1: Session ID
+# $2: Serial
+# $3..: Files in the RPP
+check_rrdp_root_cage() {
+	SID="$1"
+	SERIAL="$2"
+	shift 2
+
+	check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
+	check_fort_cache_rrdp_step "$SID" "$SERIAL" "$@" "ta/ta.crl" "ta/ta.mft"
+	check_fort_cache_rrdp_fallback "$SID" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
+		"$@" "ta/ta.crl" "ta/ta.mft"
+	check_fort_cache_cage_end
+}
+
+# $1: Session ID
+# $2: Serial
+# $3: Cage name
+check_rrdp_numbered_cage() {
+	check_fort_cache_cage_begin "https://localhost:8443/$TEST/$3/notification.xml"
+	FILES="$3/$3.crl $3/$3.mft $3/$3.roa"
+	check_fort_cache_rrdp_step "$1" "$2" $FILES
+	check_fort_cache_rrdp_fallback "$1" "rsync://localhost:8873/rpki/$TEST/$3/$3.mft" $FILES
+	check_fort_cache_cage_end
+}
+
 # rsync boilerplate for simple tests involving multiple repositories.
 # Assumes each repo contains one RPP. This check is for the root RPP.
 # $@: Paths of the TA's fallbacked children, except manifest and CRL.
-check_root_cage() {
+check_rsync_root_cage() {
 	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/rpki"
 	check_fort_cache_rsync_fallback \
 		"rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
@@ -217,7 +253,7 @@ check_root_cage() {
 # Child repo N contains child RPP N, where N is a number.
 # Child RPPs only contain a ROA, a CRL and a manifest.
 # $1: N
-check_numbered_cage() {
+check_rsync_numbered_cage() {
 	check_fort_cache_rsync_cage_begin "rsync://localhost:8873/repo$1"
 	check_fort_cache_rsync_fallback \
 		"rsync://localhost:8873/repo$1/$TEST/$1/$1.mft" \

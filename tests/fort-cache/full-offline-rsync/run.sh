@@ -2,6 +2,9 @@
 
 test "$RP" = "fort2" || return 0
 
+# Step 1: Do a normal rsync cycle
+# Step 2: Do an offline rsync cycle, check nothing changed
+
 . "tools/checks.sh"
 . "tests/$CATEGORY/checks.sh"
 . "rp/$RP.sh"
@@ -18,9 +21,9 @@ check_vrps \
 
 check_fort_cache 4 0
 check_fort_cache_file "rsync://localhost:8873/rpki/$TEST/ta.cer"
-check_root_cage "rmt/$TEST/ta/1.cer" "rmt/$TEST/ta/2.cer"
-check_numbered_cage "1"
-check_numbered_cage "2"
+check_rsync_root_cage "rmt/$TEST/ta/1.cer" "rmt/$TEST/ta/2.cer"
+check_rsync_numbered_cage "1"
+check_rsync_numbered_cage "2"
 
 # --------------------------- Step 2 ---------------------------
 
@@ -32,6 +35,6 @@ check_vrps \
 
 check_fort_cache 4 0
 check_fort_cache_file "rsync://localhost:8873/rpki/$TEST/ta.cer"
-check_root_cage "rmt/$TEST/ta/1.cer" "rmt/$TEST/ta/2.cer"
-check_numbered_cage "1"
-check_numbered_cage "2"
+check_rsync_root_cage "rmt/$TEST/ta/1.cer" "rmt/$TEST/ta/2.cer"
+check_rsync_numbered_cage "1"
+check_rsync_numbered_cage "2"
