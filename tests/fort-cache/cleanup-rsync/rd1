@@ -1,0 +1,19 @@
+ta.cer
+	stays.cer		# Stay the same during the next cycle
+		stays.roa
+		stays.mft
+		stays.crl
+	changes.cer		# Changes, stays valid
+		changes1.roa
+		changes.mft
+		changes.crl
+	invalidates.cer		# Changes, becomes invalid
+		invalidates.roa
+		invalidates.mft
+		invalidates.crl
+	drops.cer		# Disappears in the 2nd cycle
+		drops.roa
+		drops.mft
+		drops.crl
+	ta.mft
+	ta.crl

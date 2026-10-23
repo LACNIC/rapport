@@ -1,0 +1,22 @@
+ta.cer 🛡️
+	stays.cer 🛡️
+		stays.roa 🛡️
+		stays.mft 🛡️
+		stays.crl 🛡️
+	changes.cer 🛡️
+		changes.mft
+		changes2.roa
+		changes.crl
+	invalidates.cer
+		invalidates.roa 🛡️
+		invalidates.mft 🛡️
+		invalidates.crl 🛡️
+
+
+
+
+	ta.mft
+	ta.crl
+
+[node: invalidates.cer]
+obj.tbsCertificate.version = 4

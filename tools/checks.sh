@@ -409,7 +409,9 @@ create_delta() {
 	APACHEDIR="sandbox/apache2/content/$TEST"
 	TMPDIR="sandbox/tmp/$TEST"
 
-	rm -r "sandbox/rsyncd/content/$TEST"
+	# Barry already deltas rsync properly. We already backed up the rsyncd
+	# workspace during new_step(), so just clear it.
+	clear_rsync_modules
 
 	mkdir -p "$TMPDIR"
 	rm -rf "$TMPDIR/"*
@@ -453,7 +455,7 @@ create_delta() {
 		mv "$TMPDIR/new/$i/delta-$1.xml" "$TMPDIR/main/$i"
 	done
 
-	# TA
+	# HTTP TA
 	diff "$TMPDIR/main/ta.cer" "$TMPDIR/mid/ta.cer" > /dev/null \
 		&& mv "$TMPDIR/mid/ta.cer" "$TMPDIR/main/ta.cer"
 
