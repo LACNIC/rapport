@@ -10,7 +10,7 @@
 
 run_barry rd1
 
-run_rp
+run_rp --rsync.enabled="false"
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \
@@ -26,10 +26,9 @@ check_vrps \
 new_step
 create_delta rd2
 
-run_rp
+run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "Manifest is stale."
-check_logfile fort2 -F "Bad manifest."
+check_logfile fort2 -F "TRE: Manifest is stale. (nextUpdate: 2025-01-01 00:00:00)"
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

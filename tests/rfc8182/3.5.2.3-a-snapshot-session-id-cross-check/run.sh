@@ -61,4 +61,5 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "Snapshot session_id 'cafe' does not match Notification session_id 'beef'"
+check_logfile fort2 -F "TRE: (Line 3) Snapshot session_id 'cafe' does not match Notification session_id 'beef'"
+check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"

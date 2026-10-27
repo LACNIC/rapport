@@ -8,4 +8,4 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "Extension 'SIA' lacks a 'caRepository' valid rsync URI."
+check_logfile fort2 -F "TRE: Extension 'SIA' lacks a 'caRepository' valid rsync URI."

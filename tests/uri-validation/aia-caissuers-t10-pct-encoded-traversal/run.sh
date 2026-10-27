@@ -9,7 +9,7 @@ run_rp "--http.enabled=false"
 check_vrps
 
 # Confirm the URI was normalized (no residual ".." or "//")
-check_logfile fort2 -E "Certificate's caIssuers \(rsync://localhost:8873(/[^/.)]+)*\) does not match any of the TAL's rsync URIs"
+check_logfile fort2 -F "TRE: Certificate's caIssuers (rsync://localhost:8873/etc/passwd) does not match any of the TAL's rsync URIs."
 
 # Confirm the traversal target was never written to the rsync cache.
 if find "$SANDBOX/workdir/rsync" -path "*/etc/passwd" 2>/dev/null | grep -q .; then

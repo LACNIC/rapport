@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_logfile fort1       -F "ASN extension is not allowed to contain 'inherit' elements."
+check_logfile fort2       -F "TRE: ASN extension is not allowed to contain 'inherit' elements."
 
 check_vrps
 check_aspas

@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_logfile fort1 -F "The Provider ASIDs are not listed in ascending order."
+check_logfile fort2 -F "TRE: The Provider ASIDs are not listed in ascending order."
 
 check_vrps
 check_aspas

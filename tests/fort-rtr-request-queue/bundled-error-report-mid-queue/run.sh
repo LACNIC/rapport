@@ -14,7 +14,7 @@ send_bundled_router_pdus \
 
 # Waiting for a validation message in the log.
 # Fort must have responded with exactly ZERO PDUs before closing.
-check_logfile fort1 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Corrupt Data'. Closing socket."
+check_logfile fort2 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Corrupt Data'. Closing socket."
 check_pdus
  
 stop_router

@@ -8,7 +8,7 @@ run_barry rd
 MAXDEPTH_ARG="--maximum-certificate-depth 6"
 run_rp $MAXDEPTH_ARG
 
-check_report fort2 -F "Certificate chain maximum depth exceeded."
+check_logfile fort2 -F "TRE: Certificate chain maximum depth exceeded."
 
 check_vrps \
 	"10.0.1.0/24-24 => AS10001" \

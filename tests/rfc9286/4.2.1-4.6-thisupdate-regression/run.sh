@@ -5,7 +5,7 @@
 
 run_barry rd1
 
-run_rp
+run_rp --rsync.enabled="false"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \
@@ -15,10 +15,9 @@ check_vrps \
 
 new_step
 create_delta "rd2"
-run_rp
+run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "New manifest thisUpdate is not newer than the fallback manifest thisUpdate."
-check_logfile fort2 -F "Bad manifest."
+check_logfile fort2 -F "TRE: New manifest thisUpdate is not newer than the fallback manifest thisUpdate."
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \

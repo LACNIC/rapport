@@ -31,3 +31,9 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/$TEST/ta.cer" \
 	"rpki/"
+
+check_logfile fort2 -F "TRE: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"
+check_logfile fort2 -F "TRE: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"
+# TODO Probably shouldn't print these
+check_logfile fort2 -F "WRN: Cannot traverse through https/0: No such file or directory"
+check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"

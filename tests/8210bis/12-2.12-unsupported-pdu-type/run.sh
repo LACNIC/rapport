@@ -16,5 +16,7 @@ send_router_pdu "raw 020c0000 00000008"
 check_pdus \
 	"error-report   version 2 error-code 5 length 24 encapsulated-pdu-length [0-9]+ encapsulated-pdu \[ unknown.*020c000000000008 \] error-text-length 0"
 
+check_logfile fort2 -F "ERR: 127.0.0.1: Unknown PDU type: 12"
+
 stop_router
 stop_rp

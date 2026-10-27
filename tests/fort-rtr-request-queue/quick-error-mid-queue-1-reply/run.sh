@@ -27,7 +27,7 @@ check_cache_response 0 1 \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 83886080 providers \[ 0 \]" \
 	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 100663296 providers \[ 0 \]"
 
-check_logfile fort1 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Corrupt Data'. Closing socket."
+check_logfile fort2 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Corrupt Data'. Closing socket."
 
 stop_router
 stop_rp

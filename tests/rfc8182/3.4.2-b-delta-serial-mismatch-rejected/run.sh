@@ -61,6 +61,7 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "Delta serial '99' does not match Notification serial '2'"
-check_logfile fort2 -F "Falling back to snapshot."
-check_logfile fort2 -F "Snapshot exploded."
+check_logfile fort2 -F "TRE: (Line 4) Delta serial '99' does not match Notification serial '2'"
+check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
+check_logfile fort2 -F "TRC: Falling back to snapshot."
+check_logfile fort2 -F "TRC: Snapshot exploded."

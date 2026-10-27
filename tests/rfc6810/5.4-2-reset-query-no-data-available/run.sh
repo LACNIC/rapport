@@ -8,11 +8,8 @@
 tools/rsyncd-stop.sh "1"
 sleep 1
 
-run_barry
+run_barry rd --rrdp-uri=""
 
-rm -f sandbox/apache2/content/$TEST/*
-
-rm "sandbox/rsyncd/content/$TEST/ca/aspa.asa"
 truncate -s 1m "sandbox/rsyncd/content/$TEST/ca/aspa.asa"
 $RSYNC --daemon --bwlimit=1 --config="sandbox/rsyncd/rsyncd.conf"
 
@@ -35,6 +32,9 @@ start_router
 send_router_pdu "reset-query version 0"
 check_pdus \
 	"error-report   version 0 error-code 2 length [0-9]+ encapsulated-pdu-length 0 error-text-length 0"
+
+# Depends on what rsync manages to transfer in the short amount of time
+touch "$SANDBOX/.disable-log-checks"
 
 stop_rp
 stop_router

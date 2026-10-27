@@ -13,7 +13,7 @@ run_rp
 # This is fine for now. The resolution of #178 (#181) might later change this
 # expected outcome.
 
-#check_logfile fort2 -F "Certificate is missing the 'Basic Constraints' extension"
-check_logfile fort2 -F "Unrecognized certificate type; Ignoring."
+#check_logfile fort2 -F "TRE: Certificate is missing the 'Basic Constraints' extension."
+check_logfile fort2 -F "TRC: Unrecognized certificate type; Ignoring."
 
 check_vrps

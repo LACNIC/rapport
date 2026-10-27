@@ -90,7 +90,7 @@ check_rtr_index "session:[0-9]+" \
 	"serial:4 date:.+" \
 	"serial:3 date:.+" \
 	"serial:1 date:.+"
-check_report fort1 -F "Dropping expired serial: 2"
+check_logfile fort2 -F "Dropping expired serial: 2"
 
 new_step # 5
 create_delta
@@ -129,8 +129,8 @@ check_rtr_index "session:[0-9]+" \
 	"serial:6 date:.+" \
 	"serial:5 date:.+" \
 	"serial:4 date:.+"
-check_report fort1 -F "Dropping serial by FIFO: 3"
-check_report fort1 -F "Dropping serial by FIFO: 1"
+check_logfile fort2 -F "Dropping serial by FIFO: 3"
+check_logfile fort2 -F "Dropping serial by FIFO: 1"
 
 new_step # 7
 sed -i"" \
@@ -141,6 +141,6 @@ start_rp
 stop_rp
 check_rtr_index "session:[0-9]+" \
 	"serial:1 date:.+"
-check_report fort1 -F "Dropping expired serial: 6"
-check_report fort1 -F "Dropping expired serial: 5"
-check_report fort1 -F "Dropping expired serial: 4"
+check_logfile fort2 -F "Dropping expired serial: 6"
+check_logfile fort2 -F "Dropping expired serial: 5"
+check_logfile fort2 -F "Dropping expired serial: 4"

@@ -39,7 +39,7 @@ check_vrps \
 	"2.1.2.0/24-24 => AS20001" \
 	"2.1.3.0/24-24 => AS20001"
 
-check_logfile fort2 -F "valid-1-2.roa' is absent from the cache."
+check_logfile fort2 -F "TRE: Manifest's fileList file 'rsync://localhost:8873/rpki/$TEST/ca/valid-1-2.roa' is absent from the cache."
 
 
 # ---------------------------------------------------------------------------

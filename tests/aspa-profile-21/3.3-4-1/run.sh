@@ -9,8 +9,8 @@ run_rp
 check_vrps
 check_aspas "16777216:[16777215,16777217]"
 
-check_logfile fort1 -F "good.asa: Adding ASPA for customer 16777216"
-check_logfile fort1 -F "bad.asa: The Providers list contains the customer's ASID (33554432)."
+check_logfile fort2 -F "good.asa: Adding ASPA for customer 16777216"
+check_logfile fort2 -F "bad.asa: The Providers list contains the customer's ASID (33554432)."
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \

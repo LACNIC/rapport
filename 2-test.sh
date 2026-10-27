@@ -73,7 +73,14 @@ run_test() {
 
 	"$SRCDIR"/run.sh
 	case "$?" in
-	0)  NSUCCESSES=$((NSUCCESSES+1))  ;;
+	0)  tools/post-test.sh
+	    case "$?" in
+	    0)  NSUCCESSES=$((NSUCCESSES+1))  ;;
+	    1)  NFAILS=$((NFAILS+1))          ;;
+	    3)  NSKIPS=$((NSKIPS+1))          ;;
+	    *)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;
+	    esac
+	    ;;
 	1)  NFAILS=$((NFAILS+1))          ;;
 	3)  NSKIPS=$((NSKIPS+1))          ;;
 	*)  NUNKNOWNS=$((NUNKNOWNS+1))    ;;

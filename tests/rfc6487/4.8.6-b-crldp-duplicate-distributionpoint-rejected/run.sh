@@ -16,7 +16,7 @@ run_rp
 # But whatever... This is acceptable for now. The resolution of #178 (#181)
 # might later change this expected outcome.
 
-#check_logfile fort2 -E "The CRL Distribution Points extension has 2 distribution points\. \(1 expected\)"
-check_logfile fort2 -F "Unrecognized certificate type; Ignoring."
+#check_logfile fort2 -F "TRE: The CRL Distribution Points extension has 2 distribution points. (1 expected)"
+check_logfile fort2 -F "TRC: Unrecognized certificate type; Ignoring."
 
 check_vrps

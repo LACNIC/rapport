@@ -4,8 +4,7 @@
 . rp/$RP.sh
 
 run_barry rd1
-
-run_rp
+run_rp --rsync.enabled="false"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \
@@ -16,7 +15,7 @@ check_vrps \
 new_step
 create_delta "rd2"
 
-run_rp
+run_rp --rsync.enabled="false"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \
@@ -26,4 +25,4 @@ check_vrps \
     "3.1.0.0/24-24 => AS30001" \
     "3.1.1.0/24-24 => AS30001"
 
-check_logfile fort2 -F "New manifestNumber (1) is not higher than fallback manifestNumber (1)."
+check_logfile fort2 -F "TRE: New manifestNumber (1) is not higher than fallback manifestNumber (1)."

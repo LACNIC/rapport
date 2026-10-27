@@ -5,7 +5,7 @@
 
 run_barry rd1
 
-run_rp
+run_rp --rsync.enabled="false"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \
@@ -15,9 +15,9 @@ check_vrps \
 
 new_step
 create_delta "rd2"
-run_rp
+run_rp --rsync.enabled="false"
 
-check_logfile fort2 -E "RPP rsync://[^ ]+ does not directly contain manifest rsync://[^ ]+\."
+check_logfile fort2 -E "TRE: RPP rsync://localhost:8873/rpki/$TEST/ca does not directly contain manifest rsync://localhost:8873/rpki/nonexistent/ca.mft"
 
 check_vrps \
     "2.1.0.0/24-24 => AS20001" \

@@ -8,4 +8,4 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "Protocol disallows empty host"
+check_logfile fort2 -F "TRE: Cannot parse GENERAL_NAME 'rsync:///rpki/aia-caissuers-t7-no-host/ta.cer' as a URI: Protocol disallows empty host"

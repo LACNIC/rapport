@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "Certificate is missing the 'Certificate Policies' extension"
+check_logfile fort2 -F "TRE: Certificate is missing the 'Certificate Policies' extension."
 
 check_vrps

@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "Illegal key usage flag string"
+check_logfile fort2 -F "TRE: Illegal key usage flag string: 000011100"
 
 check_vrps

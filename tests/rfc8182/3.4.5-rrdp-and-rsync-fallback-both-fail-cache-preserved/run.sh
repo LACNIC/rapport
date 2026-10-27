@@ -56,3 +56,10 @@ check_http_requests \
 	"/$TEST/notification.xml 404"
 check_rsync_requests \
 	"rpki/"
+
+check_logfile fort2 -F "TRE: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"
+# rsync can't realize the download failed until it tries to read the files
+# TODO sometimes printed in different order
+check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/ta/ta.mft"
+check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/A/A.mft"
+check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/B/B.mft"

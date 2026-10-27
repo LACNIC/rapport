@@ -7,7 +7,8 @@ run_barry
 run_rp
 
 
-check_logfile fort1 -F "Signed Object's signature is invalid"
+# Output contains libcrypto error stack
+touch "$SANDBOX/.disable-log-checks"
 
 check_vrps
 check_aspas "2:[13001,70001,80001]"

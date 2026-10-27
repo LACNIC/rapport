@@ -32,7 +32,7 @@ run_rp
 
 # Validator detects that the URI in the EE cert's SIA.signedObject does not match
 # the URI from which it retrieved probe-roa.roa.
-check_logfile fort2 -E "Certificate's signedObject \('[^']+'\) does not match the URI of its own signed object \([^)]+\)\."
+check_logfile fort2 -F "TRE: Certificate's signedObject (rsync://localhost:8873/rpki/$TEST/ca/wrong-location.roa) does not match the URI of its own signed object (rsync://localhost:8873/rpki/$TEST/ca/probe-roa.roa)."
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

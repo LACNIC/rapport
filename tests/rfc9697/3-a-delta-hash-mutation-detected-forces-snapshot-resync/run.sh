@@ -44,7 +44,7 @@ check_http_requests \
 	"/$TEST/delta-step2.rd.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "Delta exploded."
+check_logfile fort2 -F "TRC: Delta exploded."
 
 
 # ---------------------------------------------------------------------------
@@ -81,6 +81,6 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "RRDP session desynchronization detected."
-check_logfile fort2 -F "Falling back to snapshot."
-check_logfile fort2 -F "Snapshot exploded."
+check_logfile fort2 -F "TRE: Notification delta hash for serial 2 does not match cached delta hash; RRDP session desynchronization detected."
+check_logfile fort2 -F "TRC: Falling back to snapshot."
+check_logfile fort2 -F "TRC: Snapshot exploded."

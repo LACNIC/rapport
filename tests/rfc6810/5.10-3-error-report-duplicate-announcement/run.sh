@@ -19,7 +19,7 @@ check_cache_response_v0 0 1 \
 send_router_pdu "error-report   version 0 error-code 7 length 16 encapsulated-pdu-length 0 error-text-length 0"
 check_pdus
 
-check_logfile fort1 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Duplicate Announcement Received'. Closing socket."
+check_logfile fort2 -F "ERR: RTR client 127.0.0.1 responded with error PDU 'Duplicate Announcement Received'. Closing socket."
 
 stop_router
 stop_rp

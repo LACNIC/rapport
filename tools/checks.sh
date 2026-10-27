@@ -1,13 +1,33 @@
 #!/bin/sh
 
+COLOR_YLW='\033[33m'
+COLOR_RED='\033[31m'
+COLOR_RST='\033[0m'
+
 ck_inc() {
 	echo -n "1" >> "sandbox/counters/total.txt"
 }
 
+# $1: Text color
+# $2: Error message. Must not include its ending period.
+# $3..: Files and directories the user will be invited to read.
+print_errmsg() {
+	COLOR="$1"
+	echo "$COLOR  $2. Try$COLOR_RST" 1>&2
+	shift 2
+
+	while [ ! -z "$1" ]; do
+		find "$1" -type f | while read f; do
+			echo "$COLOR  - $f$COLOR_RST" 1>&2
+		done
+		shift
+	done
+	echo "$COLOR  - $SRCDIR/run.sh$COLOR_RST" 1>&2
+}
+
+
 __fail() {
-	CLR_RED='\033[0;31m'
-	CLR_RST='\033[0m'
-	echo "$CLR_RED  $@$CLR_RST" 1>&2
+	print_errmsg "$COLOR_RED" "$@"
 	exit 1
 }
 
@@ -18,9 +38,7 @@ fail() {
 }
 
 warn() {
-	CLR_YLW='\033[1;33m'
-	CLR_RST='\033[0m'
-	echo "$CLR_YLW  $@$CLR_RST" 1>&2
+	print_errmsg "$COLOR_YLW" "$@"
 	echo -n "1" >> "sandbox/counters/warns.txt"
 }
 
@@ -55,7 +73,7 @@ run_barry() {
 		"$@" \
 		"$SRCDIR/$RD" \
 		>> "$SANDBOX/barry.txt" 2>&1 \
-		|| fail "Barry returned $?; see $SANDBOX/barry.txt"
+		|| fail "Barry returned $?" "$SANDBOX/barry.txt"
 }
 
 # Runs the RP in single-cycle mode.
@@ -86,7 +104,7 @@ start_rp() {
 # Check the program $1 is still running.
 # Its PID must be $2, and its logfile must be $3.
 check_pid_running() {
-	kill -0 "$2" 2> /dev/null || fail "$1 died. (See $3)"
+	kill -0 "$2" 2> /dev/null || fail "$1 died" "$3"
 }
 
 # Waits until the file $3 contains the string $4, with 30s timeout.
@@ -99,7 +117,7 @@ wait_output() {
 	done
 
 	stop_rp
-	fail "Timeout. $3 does not contain '$4'."
+	fail "Timeout. $3 does not contain '$4'"
 }
 
 # Wait until the RP logs the string "$1".
@@ -116,7 +134,7 @@ wait_router_output() {
 stop_rp() {
 	if [ ! -z "$RP_PID" ]; then
 		kill "$RP_PID"
-		wait "$RP_PID" || __fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
+		wait "$RP_PID" || __fail "$RP_BIN returned $?" "$SANDBOX/$RP.log"
 		export RP_PID=""
 	fi
 }
@@ -146,7 +164,7 @@ check_vrps() {
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
 		sort > "$ACTUAL_FILE"
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" ||
-		fail "Unexpected file VRPs; see $VRP_DIR"
+		fail "Unexpected file VRPs" "$VRP_DIR" "$SANDBOX/$RP.log"
 
 	if [ ! -z "$TEST_PID" ]; then
 		ck_inc
@@ -154,7 +172,7 @@ check_vrps() {
 			| grep "^VRP" | cut -f2- | sort \
 			> "$ACTUAL_RTR"
 		diff -B "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" ||
-			fail "Unexpected RTR VRPs; see $VRP_DIR"
+			fail "Unexpected RTR VRPs" "$VRP_DIR" "$SANDBOX/$RP.log"
 	fi
 }
 
@@ -180,7 +198,7 @@ check_aspas() {
 	ck_inc
 	rp_print_aspas "$ACTUAL_FILE"
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" \
-		|| fail "Unexpected file ASPAs; see $ASPA_DIR"
+		|| fail "Unexpected file ASPAs" "$ASPA_DIR" "$SANDBOX/$RP.log"
 
 	if [ ! -z "$RP_PID" ]; then
 		ck_inc
@@ -188,12 +206,12 @@ check_aspas() {
 			| grep "^ASPA" | cut -f2- | sort \
 			> "$ACTUAL_RTR"
 		diff -Bb "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" \
-			|| fail "Unexpected RTR ASPAs; see $ASPA_DIR"
+			|| fail "Unexpected RTR ASPAs" "$ASPA_DIR" "$SANDBOX/$RP.log"
 	fi
 }
 
 start_router() {
-	test -z "$BARRY_RTR_PID" || fail "The router is already running."
+	test -z "$BARRY_RTR_PID" || fail "The router is already running"
 
 	$BARRY-rtr --input "$BARRY_RTR_SK" interactive 127.0.0.1 8323 \
 		>> "$SANDBOX/barry-rtr.stdout" &
@@ -203,7 +221,7 @@ start_router() {
 }
 
 send_router_pdu() {
-	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
 
 	echo "$@" | $BARRY-ncu "$BARRY_RTR_SK"
 }
@@ -216,7 +234,7 @@ wait_pdus() {
 		sleep 0.2
 	done
 
-	fail "Timeout. $RP didn't reply $1 PDUs; see $SANDBOX/barry-rtr.stdout"
+	fail "Timeout; $RP didn't reply $1 PDUs" "$SANDBOX/$RP.log" "$SANDBOX/barry-rtr.stdout"
 }
 
 # $1: Expect notify? (0 or 1)
@@ -266,7 +284,7 @@ check_cache_response_v0() {
 # 
 # $@: PDU regexs
 check_pdus() {
-	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
 
 	PDU_DIR="$SANDBOX/pdu"
 	EXPECTED="$PDU_DIR/regex.txt"
@@ -286,13 +304,13 @@ check_pdus() {
 	ck_inc
 	while read A; do
 		test "$#" -ne 0 ||
-			fail "Unexpected RTR PDUs; see $PDU_DIR"
+			fail "Unexpected RTR PDUs" "$PDU_DIR" "$SANDBOX/$RP.log"
 		echo "$A" | grep -Eqx "$1" - ||
-			fail "Unexpected RTR PDUs; see $PDU_DIR"
+			fail "Unexpected RTR PDUs" "$PDU_DIR" "$SANDBOX/$RP.log"
 		shift
 	done < "$ACTUAL"
 
-	test "$#" -eq 0 || fail "Unexpected RTR PDUs; see $PDU_DIR"
+	test "$#" -eq 0 || fail "Unexpected RTR PDUs" "$PDU_DIR" "$SANDBOX/$RP.log"
 }
 
 # $1: RP
@@ -308,7 +326,7 @@ check_error_report_pdu() {
 }
 
 revalidate_rp() {
-	test ! -z "$RP_PID" || fail "The RP is not running."
+	test ! -z "$RP_PID" || fail "The RP is not running"
 
 	truncate -s 0 "$SANDBOX/$RP.log"
 	# TODO Fort hardcode
@@ -352,6 +370,38 @@ check_report() {
 check_logfile() {
 	test "$RP" = "$1" || return 0
 	check_output "$SANDBOX/$RP.log" "$2" "$3"
+
+	# For check_stray_log_errs()
+	case "$3" in
+	"ERR: "*|"TRE: "*)
+		mkdir -p "$SANDBOX/log-checks"
+		echo "$COLOR_RED$3$COLOR_RST" >> "$SANDBOX/log-checks/expected.log"
+		;;
+	"WRN: "*|"TRW: "*)
+		mkdir -p "$SANDBOX/log-checks"
+		echo "$COLOR_YLW$3$COLOR_RST" >> "$SANDBOX/log-checks/expected.log"
+		;;
+	esac
+}
+
+check_stray_log_errs() {
+	if [ -f "$SANDBOX/.disable-log-checks" ]; then
+		rm "$SANDBOX/.disable-log-checks"
+		return
+	fi
+
+	LOGDIR="$SANDBOX/log-checks"
+	EXPECTED="$LOGDIR/expected.log"
+	ACTUAL="$LOGDIR/actual.log"
+	DIFF="$LOGDIR/diff.txt"
+
+	mkdir -p "$LOGDIR"
+	test -f "$EXPECTED" || :> "$EXPECTED"
+	grep -E "(WRN|ERR|TRW|TRE): " "$SANDBOX/$RP.log" > "$ACTUAL"
+
+	ck_inc
+	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
+		fail "Unexpected warnings and/or errors" "$LOGDIR" "$SANDBOX/$RP.log"
 }
 
 # Checks the Apache server received the $@ sequence of requests (and nothing
@@ -433,7 +483,7 @@ create_delta() {
 		--output.delta.path   "$TMPDIR/new/delta-$1.xml" \
 		--output.delta.uri    "https://localhost:8443/$TEST/delta-$1.xml" \
 		> "$SANDBOX/barry-delta.txt" 2>&1 \
-		|| fail "barry-delta returned $?; see $SANDBOX/barry-delta.txt"
+		|| fail "barry-delta returned $?" "$SANDBOX/barry-delta.txt"
 	mv "$TMPDIR/new/notification.xml" "$TMPDIR/main"
 	mv "$TMPDIR/mid/snapshot.xml" "$TMPDIR/main"
 	mv "$TMPDIR/new/delta-$1.xml" "$TMPDIR/main"
@@ -449,7 +499,7 @@ create_delta() {
 			--output.delta.path   "$TMPDIR/new/$i/delta-$1.xml" \
 			--output.delta.uri    "https://localhost:8443/$TEST/$i/delta-$1.xml" \
 			> "$SANDBOX/barry-delta-$i.txt" 2>&1 \
-			|| fail "barry-delta returned $?; see $SANDBOX/barry-delta-$i.txt"
+			|| fail "barry-delta returned $?" "$SANDBOX/barry-delta-$i.txt"
 		mv "$TMPDIR/new/$i/notification.xml" "$TMPDIR/main/$i"
 		mv "$TMPDIR/mid/$i/snapshot.xml" "$TMPDIR/main/$i"
 		mv "$TMPDIR/new/$i/delta-$1.xml" "$TMPDIR/main/$i"
@@ -465,6 +515,8 @@ create_delta() {
 }
 
 new_step() {
+	check_stray_log_errs
+
 	# The latest sandbox has to be named "latest" because it needs a
 	# constant name.
 	# This is because the path of the RP log, RP cache and RTR socket file

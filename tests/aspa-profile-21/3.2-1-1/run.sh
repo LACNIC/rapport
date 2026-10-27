@@ -9,8 +9,8 @@ run_rp
 check_vrps
 check_aspas "16777216:[0]"
 
-check_logfile fort1 -F "correct.asa: Adding ASPA for customer 16777216"
-check_logfile fort1 -F "not-as.asa: customerASID out of range. (0-4294967295)"
+check_logfile fort2 -F "correct.asa: Adding ASPA for customer 16777216"
+check_logfile fort2 -F "not-as.asa: customerASID out of range. (0-4294967295)"
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \

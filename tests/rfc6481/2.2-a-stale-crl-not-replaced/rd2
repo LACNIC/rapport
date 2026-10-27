@@ -32,4 +32,5 @@ obj.content.encapContentInfo.eContent.asId = 30001
 obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 3.1.0.0/16 ]
 
 [node: ca.crl]
+obj.tbsCertList.thisUpdate = 2019-12-01T00:00:00Z
 obj.tbsCertList.nextUpdate = 2020-01-01T00:00:00Z

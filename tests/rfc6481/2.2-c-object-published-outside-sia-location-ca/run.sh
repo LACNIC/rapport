@@ -32,7 +32,7 @@ run_rp
 
 # Validator attempts to retrieve the manifest of ca from wrong-ca/ 
 # (the URI declared in the CA cert's SIA) and finds nothing there.
-check_logfile fort2 -E "RPP rsync://[^ ]+ does not directly contain manifest rsync://[^ ]+\."
+check_logfile fort2 -F "TRE: RPP rsync://localhost:8873/rpki/$TEST/wrong-ca does not directly contain manifest rsync://localhost:8873/rpki/$TEST/ca/ca.mft"
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

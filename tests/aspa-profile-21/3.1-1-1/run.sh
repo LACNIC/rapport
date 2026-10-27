@@ -9,9 +9,9 @@ run_rp
 check_vrps
 check_aspas "16777216:[4369]"
 
-check_logfile fort1 -F "correct.asa: Adding ASPA for customer 16777216"
-check_logfile fort1 -F "not-1.asa: Version number is not 1: 2"
-check_logfile fort1 -F "implicit.asa: Version number is NULL."
+check_logfile fort2 -F "correct.asa: Adding ASPA for customer 16777216"
+check_logfile fort2 -F "not-1.asa: Version number is not 1: 2"
+check_logfile fort2 -F "implicit.asa: Version number is NULL."
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \

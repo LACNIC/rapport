@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "Certificate is missing the 'Authority Key Identifier' extension"
+check_logfile fort2 -F "TRE: Certificate is missing the 'Authority Key Identifier' extension."
 
 check_vrps

@@ -21,7 +21,7 @@ done
 
 send_bundled_router_pdus "$BUNDLED"
 
-check_logfile fort1 -F "Too many simultaneous requests; Dropping RTR connection"
+check_logfile fort2 -F "ERR: 127.0.0.1: Too many simultaneous requests; Dropping RTR connection."
 
 check_pdus
 

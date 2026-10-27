@@ -14,6 +14,7 @@ send_router_pdu "reset-query version 3"
 check_error_report_pdu "fort1" "2" "4" \
 	"reset-query    version 3 zero 0 length 8" \
 	"The maximum supported RTR version is 2."
+check_logfile fort2 -F "ERR: 127.0.0.1: Unsupported RTR version: 3"
 
 stop_router
 stop_rp

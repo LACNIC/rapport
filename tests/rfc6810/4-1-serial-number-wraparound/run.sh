@@ -14,6 +14,7 @@ check_vrps \
 sed -Ei"" \
     's/serial:[0-9]+ /serial:4294967294 /g' \
     "sandbox/tests/$CATEGORY/$TEST/latest/workdir/rtr/index"
+mv "$SANDBOX/workdir/rtr/1" "$SANDBOX/workdir/rtr/4294967294"
 
 # We execute the validation waiting for the serial 4294967295 
 run_barry rd

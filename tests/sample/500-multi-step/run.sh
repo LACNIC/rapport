@@ -80,6 +80,9 @@ check_vrps \
 	"3.1.0.0/16-16 => AS1234" "3.2.0.0/16-16 => AS1234" \
 	"601::/16-16 => AS1234" "6.1.0.0/16-16 => AS1234"
 
+# Need to disable these, because they include rsync errors,
+# which depend on implementation.
+touch "$SANDBOX/.disable-log-checks"
 
 # Stage 4: RRDP and rsync come back online, RP recovers via delta
 

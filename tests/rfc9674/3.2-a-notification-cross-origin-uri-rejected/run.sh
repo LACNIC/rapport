@@ -32,11 +32,11 @@ check_rsync_requests
 new_step
 create_delta "step2.rd"
 
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
-
 # Rewrite the <delta> uri so its origin (scheme://host:port) differs from the
 # notification's own origin.
-sed -i 's|<delta serial="2" uri="https://localhost:8443/|<delta serial="2" uri="https://attacker.example:8443/|' "$NOTIFICATION"
+sed -i \
+	's|<delta serial="2" uri="https://localhost:8443/|<delta serial="2" uri="https://attacker.example:8443/|' \
+	"sandbox/apache2/content/$TEST/notification.xml"
 
 run_rp
 
@@ -54,4 +54,5 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -E "Notification '[^']+' does not have the same origin as its Delta: "
+check_logfile fort2 -F "TRE: (Line 6) Notification 'https://localhost:8443/$TEST/notification.xml' does not have the same origin as its Delta: https://attacker.example:8443/$TEST/delta-step2.rd.xml"
+check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"

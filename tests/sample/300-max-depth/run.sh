@@ -36,8 +36,8 @@ run_barry
 # (run_barry() also does it.)
 run_rp $MAXDEPTH_ARG
 
-check_report fort2       -F "Certificate chain maximum depth exceeded."
-check_report rpki-client -F "maximum certificate chain depth exhausted"
+check_logfile fort2       -F "Certificate chain maximum depth exceeded."
+check_logfile rpki-client -F "maximum certificate chain depth exhausted"
 # TODO Add prover & routinator
 
 check_vrps \

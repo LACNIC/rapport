@@ -13,8 +13,8 @@ run_rp
 
 # Same as sample/200-bad-roa-version
 check_vrps
-check_report fort2       -F "ROA's version (2) is nonzero."
-check_report rpki-client -F "unexpected version (expected 0, got 2)"
+check_logfile fort2       -F "ROA's version (2) is nonzero."
+check_logfile rpki-client -F "unexpected version (expected 0, got 2)"
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \

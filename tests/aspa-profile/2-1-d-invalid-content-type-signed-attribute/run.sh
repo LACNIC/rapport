@@ -9,4 +9,4 @@ run_rp
 check_vrps
 check_aspas "16777216:[123,70000,4294967295]"
 
-check_report fort1 -F "The OID of the SignedObject's content type attribute is not 'aspa'."
+check_logfile fort2 -F "TRE: The OID of the SignedObject's content type attribute is not 'aspa'."

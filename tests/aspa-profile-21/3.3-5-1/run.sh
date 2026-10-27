@@ -11,9 +11,9 @@ check_aspas \
 	"16777216:[1,2,3,4,5]" \
 	"33554432:[111,2121,3838,3839,10000]"
 
-check_logfile fort1 -F "good1.asa: Adding ASPA for customer 16777216"
-check_logfile fort1 -F "good2.asa: Adding ASPA for customer 33554432"
-check_logfile fort1 -F "bad.asa: The Provider ASIDs are not listed in ascending order."
+check_logfile fort2 -F "good1.asa: Adding ASPA for customer 16777216"
+check_logfile fort2 -F "good2.asa: Adding ASPA for customer 33554432"
+check_logfile fort2 -F "bad.asa: The Provider ASIDs are not listed in ascending order."
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \

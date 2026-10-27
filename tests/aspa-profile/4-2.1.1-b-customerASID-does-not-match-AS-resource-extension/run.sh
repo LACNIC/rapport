@@ -6,4 +6,4 @@
 run_barry
 run_rp
 
-check_logfile fort1 -F "EE certificate's ASN extension does not exactly match customerASID 2."
+check_logfile fort2 -F "TRE: EE certificate's ASN extension does not exactly match customerASID 2."

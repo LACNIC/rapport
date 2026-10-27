@@ -7,9 +7,9 @@ run_barry
 start_rp
 start_router
 
-check_logfile fort1 -F "aspa1A.asa: Adding ASPA for customer 16842752"
-check_logfile fort1 -F "aspa1B.asa: Adding ASPA for customer 16842752"
-check_logfile fort1 -F "aspa1C.asa: Adding ASPA for customer 16908288"
+check_logfile fort2 -F "TRC: Adding ASPA for customer 16842752"
+check_logfile fort2 -F "TRC: Adding ASPA for customer 16842752"
+check_logfile fort2 -F "TRC: Adding ASPA for customer 16908288"
 
 check_vrps
 check_aspas \

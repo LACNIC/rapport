@@ -45,6 +45,6 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "We need 2 deltas, but the notification only has 1."
-check_logfile fort2 -F "Falling back to snapshot."
-check_logfile fort2 -F "Snapshot exploded."
+check_logfile fort2 -F "TRE: We need 2 deltas, but the notification only has 1."
+check_logfile fort2 -F "TRC: Falling back to snapshot."
+check_logfile fort2 -F "TRC: Snapshot exploded."

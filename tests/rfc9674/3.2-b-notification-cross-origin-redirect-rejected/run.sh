@@ -32,4 +32,6 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -E "https?://[^ ]+ is redirecting to https?://[^ ]+; disallowing because of different origin\."
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/notification.xml is redirecting to https://attacker.invalid/$TEST/notification.xml; disallowing because of different origin."
+# TODO turn this into a trace; it's nothing to worry about.
+check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"

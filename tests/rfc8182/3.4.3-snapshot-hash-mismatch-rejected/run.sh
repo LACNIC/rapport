@@ -30,4 +30,4 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -E "Snapshot '[^']*' does not match its expected hash\."
+check_logfile fort2 -F "TRE: Snapshot 'https://localhost:8443/$TEST/snapshot.xml' does not match its expected hash."

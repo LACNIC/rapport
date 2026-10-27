@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "Certificate validation failed: certificate revoked"
+check_logfile fort2 -F "TRE: Certificate validation failed: certificate revoked"
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

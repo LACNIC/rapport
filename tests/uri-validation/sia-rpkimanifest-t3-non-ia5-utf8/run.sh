@@ -8,4 +8,4 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "Invalid IA5String character"
+check_logfile fort2 -F "TRE: Invalid IA5String character: 0xc3"

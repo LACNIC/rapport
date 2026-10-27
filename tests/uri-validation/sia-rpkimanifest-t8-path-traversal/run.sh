@@ -9,7 +9,7 @@ run_rp "--http.enabled=false"
 check_vrps
 
 # Confirm the URI was normalized (no residual ".." or "//")
-check_logfile fort2 -E "does not directly contain manifest rsync://localhost:8873(/[^/.)]+)*\."
+check_logfile fort2 -F "TRE: RPP rsync://localhost:8873/rpki/$TEST/ca does not directly contain manifest rsync://localhost:8873/etc/passw"
 
 # Confirm the traversal target was never written to the rsync cache.
 if find "$SANDBOX/workdir/rsync" -path "*/etc/passwd" 2>/dev/null | grep -q .; then

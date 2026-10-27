@@ -24,8 +24,8 @@ check_vrps
 # by querying its output.
 # The error message is not standardized, of course,
 # so each RP needs a dedicated check.
-check_report fort2       -F "ROA's version (2) is nonzero."
-check_report rpki-client -F "unexpected version (expected 0, got 2)"
+check_logfile fort2       -F "ROA's version (2) is nonzero."
+check_logfile rpki-client -F "unexpected version (expected 0, got 2)"
 # TODO Add prover & routinator
 
 check_http_requests \

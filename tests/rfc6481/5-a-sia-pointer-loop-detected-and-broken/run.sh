@@ -28,10 +28,10 @@ create_delta rd2
 
 run_rp
 
-# TODO: This only covers the case of FORT
 # The validator follows cycle-ca's caRepository SIA to ca1/ and the referenced manifest.
 # Issuer validation prevents the infinite loop from executing.
-check_logfile fort2 -E "Issuer name \('[0-9a-f]+'\) does not equal issuer certificate's name \('[0-9a-f]+'\)\."
+# TODO No; this is wrong. This does not test what it intends to test.
+check_logfile fort2 -E "TRE: Issuer name \('[0-9a-f]+'\) does not equal issuer certificate's name \('[0-9a-f]+'\)\."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

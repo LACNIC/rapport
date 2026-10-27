@@ -21,5 +21,7 @@ EXPECTED="$EXPECTED error-text-length 0"
 
 check_pdus "$EXPECTED"
 
+check_logfile fort2 -F "ERR: 127.0.0.1: Unknown PDU type: 12"
+
 stop_router
 stop_rp

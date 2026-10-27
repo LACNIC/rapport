@@ -13,7 +13,8 @@ check_aspas "16842752:[13001,13002,13003]"
 # We override the serial number of FORT
 sed -Ei"" \
     's/serial:[0-9]+ /serial:4294967294 /g' \
-    "sandbox/tests/$CATEGORY/$TEST/latest/workdir/rtr/index"
+    "$SANDBOX/workdir/rtr/index"
+mv "$SANDBOX/workdir/rtr/1" "$SANDBOX/workdir/rtr/4294967294"
 
 # We execute the validation waiting for the serial 4294967295 
 run_barry rd

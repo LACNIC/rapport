@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "The 'issuer' name has an unknown attribute"
+check_logfile fort2 -F "TRE: The 'issuer' name has an unknown attribute. (NID: 17)"
 
 check_vrps
