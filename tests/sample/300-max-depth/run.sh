@@ -14,7 +14,7 @@
 # Hence, we need to send a custom argument to the RP.
 case "$RP" in
 	"fort2")
-		MAXDEPTH_ARG="--maximum-certificate-depth 13"
+		MAXDEPTH_ARG="" # Hardcoded
 		;;
 	"routinator")
 		MAXDEPTH_ARG="--max-ca-depth 11"
@@ -36,7 +36,7 @@ run_barry
 # (run_barry() also does it.)
 run_rp $MAXDEPTH_ARG
 
-check_logfile fort2       -F "Certificate chain maximum depth exceeded."
+check_logfile fort2       -F "TRE: Certificate chain maximum depth exceeded."
 check_logfile rpki-client -F "maximum certificate chain depth exhausted"
 # TODO Add prover & routinator
 
@@ -57,7 +57,9 @@ check_vrps \
 	"2.1.0.0/16-16 => AS1234" \
 	"2.2.1.0/24-24 => AS1234" \
 	"2.2.2.1/32-32 => AS1234" \
-	"2.2.2.2/32-32 => AS1234"
+	"2.2.2.2/32-32 => AS1234" \
+	"301::/16-16 => AS1234" \
+	"3.1.0.0/16-16 => AS1234"
 check_http_requests \
 	"/$TEST/ta.cer 200" \
 	"/$TEST/notification.xml 200" \

@@ -9,7 +9,7 @@ test "$RP" = "fort2" || return 0
 
 case "$RP" in
 	"fort2")
-		MAXDEPTH_ARG="--maximum-certificate-depth 13"
+		MAXDEPTH_ARG="" # Hardcoded
 		;;
 	"routinator")
 		MAXDEPTH_ARG="--max-ca-depth 11"
@@ -29,7 +29,7 @@ run_barry
 run_rp $MAXDEPTH_ARG
 
 
-check_logfile fort2       -F "Certificate chain maximum depth exceeded."
+check_logfile fort2       -F "TRE: Certificate chain maximum depth exceeded."
 check_logfile rpki-client -F "maximum certificate chain depth exhausted"
 check_vrps \
 	"1.0.0.0/8-8 => AS1234" \
