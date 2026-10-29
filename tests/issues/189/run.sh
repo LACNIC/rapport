@@ -82,7 +82,8 @@ run_rp
 check_vrps "1.1.0.0/24-24 => AS64520"
 
 # Confirm the desync detection fired.
-check_logfile fort2 -E "RRDP desync: <publish> is attempting to create '.*', but the file is already cached\."
+check_logfile fort2 -F "TRE: (Line 178) RRDP desync: <publish> is attempting to create 'rsync://localhost:8873/rpki/189/ca/route.roa', but the file is already cached."
+check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
 
 
 # ---------------------------------------------------------------------------
@@ -125,7 +126,7 @@ run_rp
 check_vrps "1.1.0.0/24-24 => AS64520"
 
 # Confirm the desync detection fired.
-check_logfile fort2 -E "RRDP desync: <publish> is attempting to create '.*', but the file is already cached\."
-
+check_logfile fort2 -F "TRE: (Line 72) RRDP desync: <publish> is attempting to create 'rsync://localhost:8873/rpki/189/ca/route.roa', but the file is already cached."
+check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
 
 rm -f /tmp/roa_a.b64

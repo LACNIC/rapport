@@ -29,8 +29,11 @@ rm "sandbox/rsyncd/content/$TEST/ca2/ca2.mft"
 
 run_rp "--http.enabled=false"
 
-# The validator must warn about the missing manifest in ca2's publication point.
-#check_logfile fort2 -F "Manifest missing: rsync://localhost:8873/rpki/$TEST/ca2/ca2.mft"
+# Fort doesn't print anything because the compare-dest rsync is blind to the
+# manifest removal.
+# There are tests elsewhere that check corrupted manifest fallbacks,
+# so there's probably not much else to check.
+#check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/ca2/ca2.mft"
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

@@ -44,5 +44,5 @@ check_rsync_root_cage "rmt/$TEST/ta/1.cer" "rmt/$TEST/ta/2.cer"
 check_rsync_numbered_cage "1"
 check_rsync_numbered_cage "2"
 
-check_logfile fort2 -F "Cage 4: has index, lacks content, lacks node"
-check_logfile fort2 -F "4 is orphaned; Deleting."
+check_logfile fort2 -F "TRC:   Cage 4: has index, lacks content, lacks node"
+check_logfile fort2 -F "TRC:   4 is orphaned; Deleting."

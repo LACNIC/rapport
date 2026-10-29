@@ -2,12 +2,15 @@
 
 test "$RP" = "fort2" || return 0
 
-. "tools/checks.sh"
-. "tests/$CATEGORY/checks.sh"
-. "rp/$RP.sh"
+# This sample test involves incremental validation cycles.
+# The RP will have to deal with caching and RRDP deltas.
+
+. tools/checks.sh
+. tests/$CATEGORY/checks.sh
+. rp/$RP.sh
 
 
-# Stage 1: Normal, simple run
+# Stage 1: Normal simple startup run
 
 run_barry "step1.rd"
 run_rp
@@ -36,33 +39,33 @@ check_fort_cache_rrdp_step "1" "1" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/E.cer" \
 	"ta/ta.crl" "ta/ta.mft"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/ta" \
+	"1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/E.cer" \
 	"ta/ta.crl" "ta/ta.mft"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/A" \
+	"1" "rsync://localhost:8873/rpki/$TEST/A/A.mft" \
 	"A/A.crl" "A/A.mft" "A/A.roa"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/B" \
+	"1" "rsync://localhost:8873/rpki/$TEST/B/B.mft" \
 	"B/B.crl" "B/B.mft" "B/B.roa"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/C" \
+	"1" "rsync://localhost:8873/rpki/$TEST/C/C.mft" \
 	"C/C1.roa" "C/C.crl" "C/C.mft"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/D" \
+	"1" "rsync://localhost:8873/rpki/$TEST/D/D.mft" \
 	"D/D.crl" "D/D.mft" "D/D.roa"
 check_fort_cache_rrdp_fallback \
-	"1" "rsync://localhost:8873/rpki/$TEST/E" \
+	"1" "rsync://localhost:8873/rpki/$TEST/E/E.mft" \
 	"E/E.crl" "E/E.mft" "E/E.roa"
 check_fort_cache_cage_end
-
-# TODO cleanup properly
-rm "$SANDBOX/rrdp/"*
-
 
 # Stage 2: Some ROAs change
 
 new_step
+# create_delta() is the incremental counterpart of the snapshot-y run_barry().
+# It computes the delta between the existing RRDP stage and the given new RD,
+# and places it in the apache server.
+# The rsync box is updated too.
 create_delta "step2.rd"
 run_rp
 
@@ -72,6 +75,9 @@ check_vrps \
 	"301::/16-16 => AS1234" "302::/16-16 => AS1234" \
 	"3.1.0.0/16-16 => AS1234" "3.2.0.0/16-16 => AS1234" \
 	"601::/16-16 => AS1234" "6.1.0.0/16-16 => AS1234"
+# This time we expect the RP to not query the snapshot;
+# we want it to apply the smaller delta instead.
+# Notice that the TA is queried but not re-downloaded.
 check_http_requests \
 	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \
@@ -89,18 +95,14 @@ check_fort_cache_rrdp_step "1" "2" \
 	"F/F.crl" "F/F.mft" "F/F.roa" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/F.cer" \
 	"ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/F.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A" "A/A.crl" "A/A.mft" "A/A.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/B" "B/B.crl" "B/B.mft" "B/B.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/C" "C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/D" "D/D.crl" "D/D.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F" "F/F.crl" "F/F.mft" "F/F.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A/A.mft" "A/A.crl" "A/A.mft" "A/A.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/B/B.mft" "B/B.crl" "B/B.mft" "B/B.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/C/C.mft" "C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/D/D.mft" "D/D.crl" "D/D.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F/F.mft" "F/F.crl" "F/F.mft" "F/F.roa"
 check_fort_cache_cage_end
-
-# TODO cleanup properly
-rm "$SANDBOX/rrdp/"*
-
 
 # Stage 3: Both RRDP and rsync die, RP needs to fallback
 
@@ -112,18 +114,24 @@ rm -rf "sandbox/apache2/content/$TEST"/*
 rm -rf "sandbox/rsyncd/content/$TEST"/*
 run_rp
 
+# The RP attempts to download relevant files, but all attempts fail.
+check_http_requests \
+	"/$TEST/ta.cer 404" \
+	"/$TEST/notification.xml 404"
+# The rsync log doesn't seem to tell us whether the download failed,
+# at least with the current configuration, so this will have to do for now.
+check_rsync_requests \
+	"rpki/$TEST/ta.cer" \
+	"rpki/"
+
+# In spite of the hiccup, the RP continues serving the same VRPs as in the
+# previous cycle, because it falls back to its cache.
 check_vrps \
 	"101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234" \
 	"2.22.0.0/16-16 => AS1234" "222::/16-16 => AS1234" \
 	"301::/16-16 => AS1234" "302::/16-16 => AS1234" \
 	"3.1.0.0/16-16 => AS1234" "3.2.0.0/16-16 => AS1234" \
 	"601::/16-16 => AS1234" "6.1.0.0/16-16 => AS1234"
-check_http_requests \
-	"/$TEST/ta.cer 404" \
-	"/$TEST/notification.xml 404"
-check_rsync_requests \
-	"rpki/$TEST/ta.cer" \
-	"rpki/"
 
 # Nothing changes
 check_fort_cache 0 2
@@ -137,26 +145,26 @@ check_fort_cache_rrdp_step "1" "2" \
 	"F/F.crl" "F/F.mft" "F/F.roa" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/F.cer" \
 	"ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/A.cer" "ta/B.cer" "ta/C.cer" "ta/D.cer" "ta/F.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A" "A/A.crl" "A/A.mft" "A/A.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/B" "B/B.crl" "B/B.mft" "B/B.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/C" "C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/D" "D/D.crl" "D/D.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F" "F/F.crl" "F/F.mft" "F/F.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A/A.mft" "A/A.crl" "A/A.mft" "A/A.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/B/B.mft" "B/B.crl" "B/B.mft" "B/B.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/C/C.mft" "C/C1.roa" "C/C2.roa" "C/C.crl" "C/C.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/D/D.mft" "D/D.crl" "D/D.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/F/F.mft" "F/F.crl" "F/F.mft" "F/F.roa"
 check_fort_cache_cage_end
 
-# TODO cleanup properly
-rm "$SANDBOX/rrdp/"*
+# Need to disable these, because they include rsync errors,
+# which depend on implementation.
+touch "$SANDBOX/.disable-log-checks"
 
-
-# Stage 4: RRDP and rsync come back, RP recovers via delta
+# Stage 4: RRDP and rsync come back online, RP recovers via delta
 
 new_step
 mv     "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
 cp -rp "$SANDBOX/../step$((STEP-2))/apache2/content/$TEST"/* "sandbox/apache2/content/$TEST"
 cp -rp "$SANDBOX/../step$((STEP-2))/rsyncd/content/$TEST"/*  "sandbox/rsyncd/content/$TEST"
-create_delta "step4.rd"
+STEP_PREV="$((STEP-2))" create_delta "step4.rd"
 run_rp
 
 check_vrps "101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234"
@@ -170,6 +178,6 @@ check_fort_cache 0 2
 check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
 check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
 check_fort_cache_rrdp_step "1" "3" "A/A.crl" "A/A.mft" "A/A.roa" "ta/A.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" "ta/A.cer" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A" "A/A.crl" "A/A.mft" "A/A.roa"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" "ta/A.cer" "ta/ta.crl" "ta/ta.mft"
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A/A.mft" "A/A.crl" "A/A.mft" "A/A.roa"
 check_fort_cache_cage_end

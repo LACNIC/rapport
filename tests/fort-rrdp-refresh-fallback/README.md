@@ -110,7 +110,7 @@ Serial 2's manifest is RPP-fatal while serials 3 and 4 are valid. Extends c-1 to
 #### d-1 — `invalid-roa-does-not-induce-fallback`
 
 **Description:**
-The counterpart to Group A, capturing the non-fatal ROA behavior explicitly. Serial 4 adds A4 with an **invalid ROA signature** (not a corrupt manifest). Per FORT's policy, a single bad ROA is not RPP-fatal: FORT invalidates only A4 (no VRP for it) and accepts serial 4 as the served state, with A4 still present in the RPP-level fallback and refresh cache. No backward-walk fallback to serial 3 occurs — FORT stays on serial 4.
+The counterpart to Group A, capturing the non-fatal ROA behavior explicitly. Serial 4 adds invalid ROA A4 (not a corrupt manifest). Per FORT's policy, a single bad ROA is not RPP-fatal: FORT invalidates only A4 (no VRP for it) and accepts serial 4 as the served state, with A4 still present in the RPP-level fallback and refresh cache. No backward-walk fallback to serial 3 occurs — FORT stays on serial 4.
 
 ---
 
@@ -126,9 +126,9 @@ The first iteration FORT processes is RPP-fatal (corrupt `A.mft` at serial 1) wi
 **Description:**
 Builds on d-1 to confirm that FORT's fallback is a *re-validated RPP*, not a frozen VRP set. When FORT is forced back onto a cached serial, it re-validates that RPP before serving it — and an invalid ROA inside it is re-rejected on that pass. Two iterations:
 
-*Iteration 1 (the d-1 state).* Serials 1–4, with `A4.roa`'s signature invalid at serial 4 and `A.mft` valid. Serial 4 is served, VRPs are A1+A2+A3 (A4 self-invalidates), and `A4.roa` sits in serial 4's fallback/refresh cache without yielding a VRP.
+*Iteration 1 (the d-1 state).* Serials 1–4, with invalid `A4.roa` at serial 4 and `A.mft` valid. Serial 4 is served, VRPs are A1+A2+A3 (A4 self-invalidates), and `A4.roa` sits in serial 4's fallback/refresh cache without yielding a VRP.
 
-*Iteration 2 (everything fails).* A new serial 5 arrives RPP-fatal (corrupt `A.mft`). FORT cannot serve serial 5 and walks back to serial 4, re-validating its RPP to serve it. `A4.roa` is re-checked, its signature fails again, so A4's resource is still absent from the served set and `A4.roa` remains in serial 4's fallback (cached, never served).
+*Iteration 2 (everything fails).* A new serial 5 arrives RPP-fatal (corrupt `A.mft`). FORT cannot serve serial 5 and walks back to serial 4, re-validating its RPP to serve it. `A4.roa` is re-checked, fails again, so A4's resource is still absent from the served set and `A4.roa` remains in serial 4's fallback (cached, never served).
 
 ---
 

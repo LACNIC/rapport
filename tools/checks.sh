@@ -166,6 +166,7 @@ check_vrps() {
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" ||
 		fail "Unexpected file VRPs" "$VRP_DIR" "$SANDBOX/$RP.log"
 
+	# TODO Where did "TEST_PID" come from?
 	if [ ! -z "$TEST_PID" ]; then
 		ck_inc
 		$BARRY-rtr -f rapport reset 127.0.0.1 8323 \
@@ -237,25 +238,20 @@ wait_pdus() {
 	fail "Timeout; $RP didn't reply $1 PDUs" "$SANDBOX/$RP.log" "$SANDBOX/barry-rtr.stdout"
 }
 
-# $1: Expect notify? (0 or 1)
-# $2: Expected serial
-# $3-: Expected resource PDUs
-check_cache_response() {
-	NOTIF="$1"
-	SERIAL="$2"
+__check_cache_response() {
+	VERSION="$1"
+	NOTIF="$2"
 	shift 2
 
 	if [ "$NOTIF" -eq 1 ]; then
 		check_pdus \
-			"serial-notify  version 2 session [0-9]+ length 12 serial [0-9]+" \
-			"cache-response version 2 session [0-9]+ length 8" \
-			"$@" \
-			"end-of-data    version 2 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+			"serial-notify  version $VERSION session [0-9]+ length 12 serial [0-9]+" \
+			"cache-response version $VERSION session [0-9]+ length 8" \
+			"$@"
 	else
 		check_pdus \
-			"cache-response version 2 session [0-9]+ length 8" \
-			"$@" \
-			"end-of-data    version 2 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+			"cache-response version $VERSION session [0-9]+ length 8" \
+			"$@"
 	fi
 }
 
@@ -264,18 +260,26 @@ check_cache_response_v0() {
 	SERIAL="$2"
 	shift 2
 
-	if [ "$NOTIF" -eq 1 ]; then
-		check_pdus \
-			"serial-notify  version 0 session [0-9]+ length 12 serial [0-9]+" \
-			"cache-response version 0 session [0-9]+ length 8" \
-			"$@" \
-			"end-of-data    version 0 session [0-9]+ length 12 serial $SERIAL"
-	else
-		check_pdus \
-			"cache-response version 0 session [0-9]+ length 8" \
-			"$@" \
-			"end-of-data    version 0 session [0-9]+ length 12 serial $SERIAL"
-	fi
+	__check_cache_response "0" "$NOTIF" "$@" "end-of-data    version 0 session [0-9]+ length 12 serial $SERIAL"
+}
+
+check_cache_response_v1() {
+	NOTIF="$1"
+	SERIAL="$2"
+	shift 2
+
+	__check_cache_response "1" "$NOTIF" "$@" "end-of-data    version 1 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
+}
+
+# $1: Expect notify? (0 or 1)
+# $2: Expected serial
+# $3-: Expected resource PDUs
+check_cache_response() {
+	NOTIF="$1"
+	SERIAL="$2"
+	shift 2
+
+	__check_cache_response "2" "$NOTIF" "$@" "end-of-data    version 2 session [0-9]+ length 24 serial $SERIAL refresh [0-9]+ retry [0-9]+ expire [0-9]+"
 }
 
 # Please do not use this function is you're expecting a normal
@@ -300,7 +304,7 @@ check_pdus() {
 	wait_pdus "$#"
 	cp "$SANDBOX/barry-rtr.stdout" "$ACTUAL"
 	truncate -s 0 "$SANDBOX/barry-rtr.stdout"
-	
+
 	ck_inc
 	while read A; do
 		test "$#" -ne 0 ||
@@ -365,11 +369,11 @@ check_report() {
 # Checks the RP's logfile contains the error message $3.
 # However, it only performs the check if the RP is $1.
 # $1: RP
-# $2: grep flags
+# $2: ignored
 # $3: regex to search
 check_logfile() {
 	test "$RP" = "$1" || return 0
-	check_output "$SANDBOX/$RP.log" "$2" "$3"
+	check_output "$SANDBOX/$RP.log" -F "$3"
 
 	# For check_stray_log_errs()
 	case "$3" in
@@ -397,7 +401,9 @@ check_stray_log_errs() {
 
 	mkdir -p "$LOGDIR"
 	test -f "$EXPECTED" || :> "$EXPECTED"
-	grep -E "(WRN|ERR|TRW|TRE): " "$SANDBOX/$RP.log" > "$ACTUAL"
+	test -f "$SANDBOX/$RP.log" \
+		&& grep -E "(WRN|ERR|TRW|TRE): " "$SANDBOX/$RP.log" > "$ACTUAL" \
+		|| touch "$ACTUAL"
 
 	ck_inc
 	diff "$EXPECTED" "$ACTUAL" > "$DIFF" ||
@@ -424,7 +430,7 @@ check_http_requests() {
 
 	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| warn "Unexpected Apache request sequence; see $APACHE_DIR"
+		|| warn "Unexpected Apache request sequence" "$APACHE_DIR"
 }
 
 # Checks the rsync server received the $@ sequence of requests (and nothing
@@ -447,7 +453,7 @@ check_rsync_requests() {
 
 	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
-		|| warn "Unexpected rsync request sequence; see $RSYNC_DIR"
+		|| warn "Unexpected rsync request sequence" "$RSYNC_DIR"
 }
 
 # TODO Redesign this; it's too complicated.

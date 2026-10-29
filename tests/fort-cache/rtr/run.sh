@@ -20,9 +20,9 @@ check_rtr_index() {
 	ck_inc
 	while read A; do
 		test "$#" -ne 0 ||
-			fail "Unexpected RTR index; see $RTR_DIR"
+			fail "Unexpected RTR index" "$RTR_DIR"
 		echo "$A" | grep -Eqx "$1" - ||
-			fail "Unexpected RTR index; see $RTR_DIR"
+			fail "Unexpected RTR index" "$RTR_DIR"
 		shift
 	done < "$ACTUAL"
 }
@@ -64,33 +64,33 @@ create_delta
 start_rp
 start_router
 send_router_pdu "reset-query"
-check_cache_response 0 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers [ 0 ]" \
+check_cache_response 0 4 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.4.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers \[ 0 \]"
 send_router_pdu "serial-query serial 1"
-check_cache_response 0 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.1.0 as 1234" \
+check_cache_response 0 4 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.4.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:1:: as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234"
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.1.0 as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:1:: as 1234"
 send_router_pdu "serial-query serial 2"
 check_pdus "cache-reset    version 2 zero 0 length 8"
 send_router_pdu "serial-query serial 3"
-check_cache_response 0 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.3.0 as 1234" \
+check_cache_response 0 4 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.4.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:3:: as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234"
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.3.0 as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:3:: as 1234"
 send_router_pdu "serial-query serial 4"
-check_cache_response 0
+check_cache_response 0 4
 stop_router
 stop_rp
 check_rtr_index "session:[0-9]+" \
 	"serial:4 date:.+" \
 	"serial:3 date:.+" \
 	"serial:1 date:.+"
-check_logfile fort2 -F "Dropping expired serial: 2"
+check_logfile fort2 -F "TRC: Dropping expired serial: 2"
 
 new_step # 5
 create_delta
@@ -107,10 +107,10 @@ create_delta
 start_rp --server.deltas.lifetime=2
 start_router
 send_router_pdu "reset-query"
-check_cache_response 0 \
-	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers [ 0 ]" \
+check_cache_response 0 6 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.6.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:6:: as 1234"
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:6:: as 1234" \
+	"aspa-pdu       version 2 flags 1 zero 0 length 16 customer 33554432 providers \[ 0 \]"
 send_router_pdu "serial-query serial 1"
 check_pdus "cache-reset    version 2 zero 0 length 8"
 send_router_pdu "serial-query serial 2"
@@ -118,19 +118,19 @@ check_pdus "cache-reset    version 2 zero 0 length 8"
 send_router_pdu "serial-query serial 3"
 check_pdus "cache-reset    version 2 zero 0 length 8"
 send_router_pdu "serial-query serial 4"
-check_cache_response 0 \
-	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.4.0 as 1234" \
+check_cache_response 0 6 \
 	"ipv4-prefix    version 2 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.6.0 as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234" \
-	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:6:: as 1234"
+	"ipv4-prefix    version 2 zero1 0 length 20 flags 0 plen 24 maxlen 24 zero2 0 prefix 1.1.4.0 as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 1 plen 120 maxlen 120 zero2 0 prefix 101:6:: as 1234" \
+	"ipv6-prefix    version 2 zero1 0 length 32 flags 0 plen 120 maxlen 120 zero2 0 prefix 101:4:: as 1234"
 stop_router
 stop_rp
 check_rtr_index "session:[0-9]+" \
 	"serial:6 date:.+" \
 	"serial:5 date:.+" \
 	"serial:4 date:.+"
-check_logfile fort2 -F "Dropping serial by FIFO: 3"
-check_logfile fort2 -F "Dropping serial by FIFO: 1"
+check_logfile fort2 -F "TRC: Dropping serial by FIFO: 3"
+check_logfile fort2 -F "TRC: Dropping serial by FIFO: 1"
 
 new_step # 7
 sed -i"" \
@@ -141,6 +141,6 @@ start_rp
 stop_rp
 check_rtr_index "session:[0-9]+" \
 	"serial:1 date:.+"
-check_logfile fort2 -F "Dropping expired serial: 6"
-check_logfile fort2 -F "Dropping expired serial: 5"
-check_logfile fort2 -F "Dropping expired serial: 4"
+check_logfile fort2 -F "TRC: Dropping expired serial: 6"
+check_logfile fort2 -F "TRC: Dropping expired serial: 5"
+check_logfile fort2 -F "TRC: Dropping expired serial: 4"

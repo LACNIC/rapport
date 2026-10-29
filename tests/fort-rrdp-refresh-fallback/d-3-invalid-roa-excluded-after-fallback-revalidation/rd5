@@ -19,4 +19,4 @@ obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.5.0.0/16 ]
 obj.content.encapContentInfo.eContent.asId = 64505
 
 [node: A.mft]
-obj.content.signerInfos.0.signature = 0xAD02323322
+obj.content.encapContentInfo.eContent.version = 111

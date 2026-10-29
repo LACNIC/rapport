@@ -75,17 +75,17 @@ check_fort_cache_rrdp_step "1" "1" \
 	"d/d.crl" "d/d.mft" "d/e.cer" "d/e.roa" \
 	"e/e.crl" "e/e.mft" \
 	"ta/1.cer" "ta/1.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/1.cer" "ta/1.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/1" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/1/1.mft" \
 	"1/1.crl" "1/1.mft" "1/2.cer" "1/2.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/2" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/2/2.mft" \
 	"2/2.crl" "2/2.mft" "2/3.cer" "2/3.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/3" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/3/3.mft" \
 	"3/3.crl" "3/3.mft" "3/4.cer" "3/4.roa"
 # ...
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/a" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/a/a.mft" \
 	"a/a.crl" "a/a.mft" "a/b.cer" "a/b.roa"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/b" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/b/b.mft" \
 	"b/b.crl" "b/b.mft" "b/c.cer" "b/c.roa"
 check_fort_cache_cage_end

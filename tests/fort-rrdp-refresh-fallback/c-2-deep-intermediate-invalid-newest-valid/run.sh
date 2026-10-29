@@ -47,9 +47,9 @@ check_fort_cache_rrdp_step "1" "4" \
 	"ta/A.cer" "ta/ta.crl" "ta/ta.mft"
 
 # Fallback for CA A: EXPECTED serial 4's set (newest valid), manifest 04.
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/A/A.mft" \
 	"A/A1.roa" "A/A2.roa" "A/A3.roa" "A/A4.roa" "A/A.crl" "A/A.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/A.cer" "ta/ta.crl" "ta/ta.mft"
 
 check_fort_cache_cage_end

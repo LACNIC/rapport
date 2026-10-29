@@ -43,7 +43,7 @@ check_http_requests \
 	"/$TEST/delta-step2.rd.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "Delta exploded."
+check_logfile fort2 -F "TRC: Delta exploded."
 
 
 # ---------------------------------------------------------------------------
@@ -69,4 +69,4 @@ check_http_requests \
 	"/$TEST/delta-step3.rd.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "Delta exploded."
+check_logfile fort2 -F "TRC: Delta exploded."

@@ -3,6 +3,12 @@
 . tools/checks.sh
 . rp/$RP.sh
 
+# TODO randomly errors because check_error_report_pdu() is not kicking in,
+# because it's targetting fort1.
+# Implement a post-test check that ensures the test checked the PDUs after
+# send_router_pdu().
+# TODO then sed all fort1s into fort2s.
+
 # Processing serial 1
 run_barry rd1
 start_rp "--server.deltas.lifetime" "2"

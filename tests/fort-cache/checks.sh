@@ -84,7 +84,7 @@ check_fort_cache_rrdp_step() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
-		|| warn "Unexpected RRDP session files; see $RRDP_DIR/$ID*"
+		|| warn "Unexpected RRDP session files" "$EXPCTD" "$ACTUAL" "$DIFF"
 
 	cat "$SS_FILES" >> "$REFD_FILES"
 }
@@ -113,7 +113,7 @@ check_fort_cache_rrdp_fallback() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
-		|| warn "Unexpected RRDP fallback files; see $RRDP_DIR/$ID*"
+		|| warn "Unexpected RRDP fallback files" "$EXPCTD" "$ACTUAL" "$DIFF"
 
 	cat "$FB_FILES" >> "$REFD_FILES"
 }
@@ -128,7 +128,7 @@ check_fort_cache_cage_end() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
-		|| warn "Fileref mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+		|| warn "Fileref mismatch" "$EXPCTD" "$ACTUAL" "$DIFF"
 
 	EXPCTD="$JSON_FILES.trimmed"
 	ACTUAL="$DIR_FILES"
@@ -138,7 +138,7 @@ check_fort_cache_cage_end() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
-		|| warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+		|| warn "Dir mismatch" "$EXPCTD" "$ACTUAL" "$DIFF"
 }
 
 check_fort_cache_rsync_cage_begin() {
@@ -180,7 +180,7 @@ check_fort_cache_rsync_fallback() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
-		warn "Unexpected rsync fallback files; see $RSYNC_DIR/$ID*"
+		warn "Unexpected rsync fallback files" "$EXPCTD" "$ACTUAL" "$DIFF"
 
 	cat "$ACTUAL" >> "$REFD_FILES"
 }
@@ -195,7 +195,7 @@ check_fort_cache_rsync_cage_end() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
-		warn "Fileref mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+		warn "Fileref mismatch" "$EXPCTD" "$ACTUAL" "$DIFF"
 
 	EXPCTD="$JSON_FILES.trimmed"
 	ACTUAL="$DIR_FILES"
@@ -208,7 +208,7 @@ check_fort_cache_rsync_cage_end() {
 
 	ck_inc
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" ||
-		warn "Dir mismatch; see\n- $EXPCTD\n- $ACTUAL\n- $DIFF"
+		warn "Dir mismatch" "$EXPCTD" "$ACTUAL" "$DIFF"
 }
 
 # $1: Session ID

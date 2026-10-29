@@ -11,6 +11,6 @@ ta.cer 🛡️
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.2.0.0/16 ]
 obj.content.encapContentInfo.eContent.asId = 64502
 
-# Invalidate the A.mft signature: serial 2 is the RPP-fatal intermediate.
+# Invalidate A.mft: serial 2 is the RPP-fatal intermediate.
 [node: A.mft]
-obj.content.signerInfos.0.signature = 0xAD02323322
+obj.content.encapContentInfo.eContent.version = 111

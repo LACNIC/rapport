@@ -4,7 +4,7 @@
 # Sends multiple PDUs in a single TCP packet.
 # Each PDU must contain a trailing newline!
 send_bundled_router_pdus() {
-	test ! -z "$BARRY_RTR_PID" || fail "The router is not running."
+	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
 	printf "$@" | $BARRY-ncu "$BARRY_RTR_SK"
 }
 

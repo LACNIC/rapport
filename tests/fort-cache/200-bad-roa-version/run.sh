@@ -13,7 +13,7 @@ run_rp
 
 # Same as sample/200-bad-roa-version
 check_vrps
-check_logfile fort2       -F "ROA's version (2) is nonzero."
+check_logfile fort2       -F "TRE: ROA's version (2) is nonzero."
 check_logfile rpki-client -F "unexpected version (expected 0, got 2)"
 check_http_requests \
 	"/$TEST/ta.cer 200" \
@@ -27,6 +27,6 @@ check_fort_cache_file "https://localhost:8443/$TEST/ta.cer"
 check_fort_cache_cage_begin "https://localhost:8443/$TEST/notification.xml"
 check_fort_cache_rrdp_step "1" "1" \
 	"ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
-check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta" \
+check_fort_cache_rrdp_fallback "1" "rsync://localhost:8873/rpki/$TEST/ta/ta.mft" \
 	"ta/roa.roa" "ta/ta.crl" "ta/ta.mft"
 check_fort_cache_cage_end

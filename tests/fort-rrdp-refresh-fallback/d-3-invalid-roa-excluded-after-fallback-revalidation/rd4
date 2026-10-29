@@ -12,4 +12,4 @@ ta.cer 🛡️
 [node: A4.roa]
 obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.4.0.0/16 ]
 obj.content.encapContentInfo.eContent.asId = 64504
-obj.content.signerInfos.0.signature = 0xAD02323322
+obj.content.encapContentInfo.eContent.version = 111

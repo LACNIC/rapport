@@ -23,7 +23,7 @@ send_router_pdu "reset-query version 1"
 # Check exact Cache Response PDU flow.
 # Validate RTR reached serial 1 (in the end-of-data) and returns the expected
 # prefix PDUs.
-check_cache_response 0 1 \
+check_cache_response_v1 0 1 \
 	"ipv4-prefix    version 1 zero1 0 length 20 flags 1 plen 8 maxlen 8 zero2 0 prefix 1.0.0.0 as 1234" \
 	"ipv6-prefix    version 1 zero1 0 length 32 flags 1 plen 8 maxlen 8 zero2 0 prefix 100:: as 1234"
 

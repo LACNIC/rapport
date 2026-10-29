@@ -24,7 +24,7 @@ new_step
 create_delta rd2
 run_rp
 
-check_logfile fort2 -E "RPP rsync://[^ ]+ does not directly contain manifest rsync://[^ ]+\."
+check_logfile fort2 -F "TRE: RPP rsync://[^ ]+ does not directly contain manifest rsync://[^ ]+\."
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

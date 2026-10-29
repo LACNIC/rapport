@@ -94,6 +94,8 @@ check_fort_cache_rsync_fallback \
 	"rmt/$TEST/changes/changes.mft"
 check_fort_cache_rsync_cage_end
 
+check_logfile fort2 -F "TRE: Certificate version is not v3."
+
 # Old versions of fallbacks are "dropped" (nodes freed and files refput'd)
 check_logfile fort2 -F "TRC: Dropping fallback: $BASEURL/ta/ta.mft (mftnum 01)"
 check_logfile fort2 -F "TRC: Dropping fallback: $BASEURL/changes/changes.mft (mftnum 01)"

@@ -44,5 +44,6 @@ check_rrdp_root_cage "1" "1" "ta/a.cer" "ta/b.cer"
 check_rrdp_numbered_cage "1" "1" "a"
 check_rrdp_numbered_cage "1" "1" "b"
 
-check_logfile fort2 -F "Cage 4: lacks index, has content, lacks node"
-check_logfile fort2 -F "4 is orphaned; Deleting."
+check_logfile fort2 -F "WRN: https/4.json: File does not exist."
+check_logfile fort2 -F "TRC:   Cage 4: lacks index, has content, lacks node"
+check_logfile fort2 -F "TRC:   4 is orphaned; Deleting."

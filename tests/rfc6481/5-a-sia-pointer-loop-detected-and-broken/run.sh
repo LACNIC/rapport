@@ -31,7 +31,7 @@ run_rp
 # The validator follows cycle-ca's caRepository SIA to ca1/ and the referenced manifest.
 # Issuer validation prevents the infinite loop from executing.
 # TODO No; this is wrong. This does not test what it intends to test.
-check_logfile fort2 -E "TRE: Issuer name \('[0-9a-f]+'\) does not equal issuer certificate's name \('[0-9a-f]+'\)\."
+check_logfile fort2 -F "TRE: Issuer name \('[0-9a-f]+'\) does not equal issuer certificate's name \('[0-9a-f]+'\)\."
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \
