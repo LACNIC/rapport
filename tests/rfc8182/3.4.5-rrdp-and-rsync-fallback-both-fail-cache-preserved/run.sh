@@ -14,9 +14,9 @@ run_rp
 
 check_vrps \
 	"101::/16-16 => AS1234" \
+	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \
-	"201::/16-16 => AS1234" \
-	"2.1.0.0/16-16 => AS1234" 
+	"1.2.0.0/16-16 => AS1234"
 
 check_http_requests \
 	"/$TEST/ta.cer 200" \
@@ -39,17 +39,16 @@ rm -f "sandbox/apache2/content/$TEST/notification.xml" \
       "sandbox/apache2/content/$TEST"/delta-*.xml
 
 # rsync side (rsyncd): empty the publication point tree.
-rm -rf "sandbox/rsyncd/content/$TEST"
-mkdir -p "sandbox/rsyncd/content/$TEST"
+rm -rf "sandbox/rsyncd/content/$TEST"/*
 
 run_rp
 
 # The cache from step1 must be preserved.
 check_vrps \
 	"101::/16-16 => AS1234" \
+	"102::/16-16 => AS1234" \
 	"1.1.0.0/16-16 => AS1234" \
-	"201::/16-16 => AS1234" \
-	"2.1.0.0/16-16 => AS1234" 
+	"1.2.0.0/16-16 => AS1234"
 
 check_http_requests \
 	"/$TEST/ta.cer 304" \
@@ -59,7 +58,5 @@ check_rsync_requests \
 
 check_logfile fort2 -F "TRE: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"
 # rsync can't realize the download failed until it tries to read the files
-# TODO sometimes printed in different order
 check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/ta/ta.mft"
 check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/A/A.mft"
-check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/B/B.mft"

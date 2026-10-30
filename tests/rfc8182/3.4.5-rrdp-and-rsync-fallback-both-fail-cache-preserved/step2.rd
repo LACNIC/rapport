@@ -1,15 +1,14 @@
 ta.cer 🛡️
 	A.cer 🛡️
-		A.roa 🛡️
-		A.mft 🛡️
-		A.crl 🛡️
-	C.cer
-		C.roa
-		C2.roa
-		C.mft
-		C.crl
+		A1.roa 🛡️
+		A.mft
+		A.crl
+	B.cer
+		B.roa
+		B.mft
+		B.crl
 	ta.mft
-	ta.crl 🛡️
+	ta.crl
 
 [notification: https://localhost:8443/$TEST/notification.xml]
 session = cafe

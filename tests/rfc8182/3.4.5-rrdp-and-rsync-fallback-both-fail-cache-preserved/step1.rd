@@ -1,12 +1,9 @@
 ta.cer
 	A.cer
-		A.roa
+		A1.roa
+		A2.roa
 		A.mft
 		A.crl
-	B.cer
-		B.roa
-		B.mft
-		B.crl
 	ta.mft
 	ta.crl
 
