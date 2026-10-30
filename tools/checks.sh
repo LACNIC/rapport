@@ -378,23 +378,23 @@ check_logfile() {
 	# For check_stray_log_errs()
 	case "$3" in
 	"ERR: "*|"TRE: "*)
-		mkdir -p "$SANDBOX/log-checks"
-		echo "$COLOR_RED$3$COLOR_RST" >> "$SANDBOX/log-checks/expected.log"
+		mkdir -p "$SANDBOX/checks-log"
+		echo "$COLOR_RED$3$COLOR_RST" >> "$SANDBOX/checks-log/expected.log"
 		;;
 	"WRN: "*|"TRW: "*)
-		mkdir -p "$SANDBOX/log-checks"
-		echo "$COLOR_YLW$3$COLOR_RST" >> "$SANDBOX/log-checks/expected.log"
+		mkdir -p "$SANDBOX/checks-log"
+		echo "$COLOR_YLW$3$COLOR_RST" >> "$SANDBOX/checks-log/expected.log"
 		;;
 	esac
 }
 
 check_stray_log_errs() {
-	if [ -f "$SANDBOX/.disable-log-checks" ]; then
-		rm "$SANDBOX/.disable-log-checks"
+	if [ -f "$SANDBOX/.disable-post-log-checks" ]; then
+		rm "$SANDBOX/.disable-post-log-checks"
 		return
 	fi
 
-	LOGDIR="$SANDBOX/log-checks"
+	LOGDIR="$SANDBOX/checks-log"
 	EXPECTED="$LOGDIR/expected.log"
 	ACTUAL="$LOGDIR/actual.log"
 	DIFF="$LOGDIR/diff.txt"
@@ -414,7 +414,7 @@ check_stray_log_errs() {
 # else).
 # $@: Sequence of HTTP requests in "PATH HTTP_RESULT_CODE" format.
 check_http_requests() {
-	APACHE_DIR="$SANDBOX/apache2-checks"
+	APACHE_DIR="$SANDBOX/checks-apache2"
 	EXPECTED="$APACHE_DIR/expected.log"
 	ACTUAL="$APACHE_DIR/actual.log"
 	DIFF="$APACHE_DIR/diff.txt"
@@ -437,7 +437,7 @@ check_http_requests() {
 # else).
 # $@: Sequence of rsync requests in "PATH" format.
 check_rsync_requests() {
-	RSYNC_DIR="$SANDBOX/rsync-checks"
+	RSYNC_DIR="$SANDBOX/checks-rsync"
 	EXPECTED="$RSYNC_DIR/expected.log"
 	ACTUAL="$RSYNC_DIR/actual.log"
 	DIFF="$RSYNC_DIR/diff.txt"

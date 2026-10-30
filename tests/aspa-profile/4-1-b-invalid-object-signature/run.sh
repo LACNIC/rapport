@@ -8,7 +8,7 @@ run_rp
 
 
 # Output contains libcrypto error stack
-touch "$SANDBOX/.disable-log-checks"
+touch "$SANDBOX/.disable-post-log-checks"
 
 check_vrps
 check_aspas "2:[13001,70001,80001]"

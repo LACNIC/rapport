@@ -10,4 +10,4 @@ check_vrps
 
 check_logfile fort2 -F "TRE: Cannot parse GENERAL_NAME 'rsync://localhost:8873/rpki/aia-caissuers-t5-control-chars/t\\ta.cer' as a URI: Illegal character in path component"
 # TODO Haven't figured out how to transfer the control char correctly
-touch "$SANDBOX/.disable-log-checks"
+touch "$SANDBOX/.disable-post-log-checks"

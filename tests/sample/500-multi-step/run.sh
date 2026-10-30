@@ -82,7 +82,7 @@ check_vrps \
 
 # Need to disable these, because they include rsync errors,
 # which depend on implementation.
-touch "$SANDBOX/.disable-log-checks"
+touch "$SANDBOX/.disable-post-log-checks"
 
 # Stage 4: RRDP and rsync come back online, RP recovers via delta
 

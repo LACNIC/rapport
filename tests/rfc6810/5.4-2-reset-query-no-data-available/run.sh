@@ -34,7 +34,7 @@ check_pdus \
 	"error-report   version 0 error-code 2 length [0-9]+ encapsulated-pdu-length 0 error-text-length 0"
 
 # Depends on what rsync manages to transfer in the short amount of time
-touch "$SANDBOX/.disable-log-checks"
+touch "$SANDBOX/.disable-post-log-checks"
 
 stop_rp
 stop_router
