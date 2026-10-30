@@ -146,7 +146,7 @@ stop_rp() {
 # $@: Sequence of VRPs in "PREFIX-MAXLEN => AS" format.
 #     It must be sorted in accordance to `sort`'s default rules.
 check_vrps() {
-	VRP_DIR="$SANDBOX/vrp"
+	VRP_DIR="$SANDBOX/checks-vrp"
 	EXPECTED="$VRP_DIR/expected.txt"
 	ACTUAL_FILE="$VRP_DIR/actual-file.txt"
 	ACTUAL_RTR="$VRP_DIR/actual-rtr.txt"
@@ -184,7 +184,7 @@ check_vrps() {
 # Checks file output ASPAs. If the RP is running in perpetual mode,
 # also checks the RTR ASPAs.
 check_aspas() {
-	ASPA_DIR="$SANDBOX/aspa"
+	ASPA_DIR="$SANDBOX/checks-aspa"
 	EXPECTED="$ASPA_DIR/expected.txt"
 	ACTUAL_FILE="$ASPA_DIR/actual-file.txt"
 	ACTUAL_RTR="$ASPA_DIR/actual-rtr.txt"
@@ -289,7 +289,7 @@ check_cache_response() {
 check_pdus() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
 
-	PDU_DIR="$SANDBOX/pdu"
+	PDU_DIR="$SANDBOX/checks-pdu"
 	EXPECTED="$PDU_DIR/regex.txt"
 	ACTUAL="$PDU_DIR/actual.txt"
 	mkdir -p "$PDU_DIR"

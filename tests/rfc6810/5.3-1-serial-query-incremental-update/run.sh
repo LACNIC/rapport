@@ -19,7 +19,7 @@ check_cache_response_v0 0 1 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 64512"
 
 # Extract Serial Number from the End of Data PDU.
-P0_SERIAL=$(grep "^end-of-data" "$SANDBOX/pdu/actual.txt" \
+P0_SERIAL=$(grep "^end-of-data" "$SANDBOX/checks-pdu/actual.txt" \
     | grep -oE 'serial [0-9]+' | grep -oE '[0-9]+')
 
 test -n "$P0_SERIAL"  || fail "Could not extract Serial Number from End of Data PDU"
@@ -43,7 +43,7 @@ check_cache_response_v0 1 2 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.2.0.0 as 64513"
 
 # Verify the End of Data Serial Number is strictly greater than P0's,
-P1_SERIAL=$(grep "^end-of-data" "$SANDBOX/pdu/actual.txt" \
+P1_SERIAL=$(grep "^end-of-data" "$SANDBOX/checks-pdu/actual.txt" \
     | grep -oE 'serial [0-9]+' | grep -oE '[0-9]+')
 
 test -n "$P1_SERIAL" || fail "Could not extract Serial Number from End of Data PDU"

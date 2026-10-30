@@ -9,7 +9,7 @@
 . tools/checks.sh
 . rp/$RP.sh
 
-PDU_DIR="$SANDBOX/pdu"
+PDU_DIR="$SANDBOX/checks-pdu"
 mkdir -p "$PDU_DIR"
 rm -f "$PDU_DIR"/*
 

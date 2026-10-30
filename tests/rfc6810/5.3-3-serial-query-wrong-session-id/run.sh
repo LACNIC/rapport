@@ -21,7 +21,7 @@ check_cache_response_v0 0 1 \
 	"ipv4-prefix    version 0 zero1 0 length 20 flags 1 plen 24 maxlen 24 zero2 0 prefix 1.1.0.0 as 64512"
 
 # Extract Session ID and Serial Number from the End of Data PDU.
-SESSION_ID=$(grep "^end-of-data" "$SANDBOX/pdu/actual.txt" \
+SESSION_ID=$(grep "^end-of-data" "$SANDBOX/checks-pdu/actual.txt" \
     | grep -oE 'session [0-9]+' | grep -oE '[0-9]+')
 
 test -n "$SESSION_ID" || fail "Could not extract Session ID from End of Data PDU"
