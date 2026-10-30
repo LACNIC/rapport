@@ -164,16 +164,15 @@ check_vrps() {
 		awk -F, '{ printf "%s-%s => %s\n", $2, $3, $1 }' - |
 		sort > "$ACTUAL_FILE"
 	diff -B "$EXPECTED" "$ACTUAL_FILE" > "$ACTUAL_FILE.diff" ||
-		fail "Unexpected file VRPs" "$VRP_DIR" "$SANDBOX/$RP.log"
+		fail "Unexpected file VRPs" "$EXPECTED" "$ACTUAL_FILE" "$ACTUAL_FILE.diff" "$SANDBOX/$RP.log"
 
-	# TODO Where did "TEST_PID" come from?
-	if [ ! -z "$TEST_PID" ]; then
+	if [ ! -z "$RP_PID" ]; then
 		ck_inc
 		$BARRY-rtr -f rapport reset 127.0.0.1 8323 \
 			| grep "^VRP" | cut -f2- | sort \
 			> "$ACTUAL_RTR"
 		diff -B "$EXPECTED" "$ACTUAL_RTR" > "$ACTUAL_RTR.diff" ||
-			fail "Unexpected RTR VRPs" "$VRP_DIR" "$SANDBOX/$RP.log"
+			fail "Unexpected RTR VRPs" "$EXPECTED" "$ACTUAL_RTR" "$ACTUAL_RTR.diff" "$SANDBOX/$RP.log"
 	fi
 }
 
