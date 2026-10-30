@@ -30,4 +30,6 @@ check_partial_responses() {
     	ck_inc
     	test "$count" -lt "$max_pdus" \
         	|| fail "Received $count PDUs; must be less than $max_pdus ($ppu * $max queries)"
+
+	rm -f "$SANDBOX/.sent-pdus"
 }

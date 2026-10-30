@@ -11,9 +11,9 @@ check_vrps
 check_aspas "16842752:[13001,13002,13003]"
 
 send_router_pdu "reset-query version 3"
-check_error_report_pdu "fort1" "2" "4" \
+check_error_report_pdu "fort2" "2" "4" \
 	"reset-query    version 3 zero 0 length 8" \
-	"The maximum supported RTR version is 2."
+	"RTR version number is too high."
 check_logfile fort2 -F "ERR: 127.0.0.1: Unsupported RTR version: 3"
 
 stop_router

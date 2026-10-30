@@ -13,8 +13,6 @@ start_router
 
 check_vrps "1.1.0.0/24-24 => AS64512"
 
-sleep 2
-
 send_router_pdu "reset-query version 0"
 
 check_cache_response_v0 0 1 \
@@ -34,7 +32,7 @@ WRONG_SESSION_ID=$(( (SESSION_ID + 1) % 65536 ))
 
 send_router_pdu "serial-query session $WRONG_SESSION_ID serial 1 version 0"
 
-check_error_report_pdu "fort1" "0" "0" \
+check_error_report_pdu "fort2" "0" "0" \
 	"serial-query   version 0 session $WRONG_SESSION_ID length 12 serial 1" \
 	"Session ID doesn't match."
 

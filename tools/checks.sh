@@ -224,10 +224,13 @@ send_router_pdu() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
 
 	echo "$@" | $BARRY-ncu "$BARRY_RTR_SK"
+	touch "$SANDBOX/.sent-pdus"
 }
 
 # Wait at most 15 seconds for $1 PDUs to arrive
 wait_pdus() {
+	rm -f "$SANDBOX/.sent-pdus" # Waiting counts
+
 	for i in $(seq 75); do
 		test $(wc -l < "$SANDBOX/barry-rtr.stdout") -ge "$1" && return 0
 		check_pid_running "$RP_BIN" "$RP_PID" "$SANDBOX/$RP.log"
@@ -288,6 +291,7 @@ check_cache_response() {
 # $@: PDU regexs
 check_pdus() {
 	test ! -z "$BARRY_RTR_PID" || fail "The router is not running"
+	rm -f "$SANDBOX/.sent-pdus"
 
 	PDU_DIR="$SANDBOX/checks-pdu"
 	EXPECTED="$PDU_DIR/regex.txt"
@@ -326,6 +330,12 @@ check_pdus() {
 check_error_report_pdu() {
 	test "$RP" = "$1" || return 0
 	check_pdus "error-report   version $2 error-code $3 length [0-9]+ encapsulated-pdu-length [0-9]+ encapsulated-pdu \[ $4 \] error-text-length ${#5} error-text $5"
+}
+
+check_stray_sent_pdus() {
+	if [ -f "$SANDBOX/.sent-pdus" ]; then
+		warn "It seems you sent PDUs but didn't check the RTR response. Please review"
+	fi
 }
 
 revalidate_rp() {
@@ -521,6 +531,7 @@ create_delta() {
 
 new_step() {
 	check_stray_log_errs
+	check_stray_sent_pdus
 
 	# The latest sandbox has to be named "latest" because it needs a
 	# constant name.

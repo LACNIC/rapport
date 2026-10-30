@@ -19,6 +19,7 @@ while [ "$N_REP" -lt "$N_QUERIES" ]; do
     N_REP=$((N_REP + 1))
 done
 
+wait_rp_output "Too many simultaneous requests"
 check_logfile fort2 -F "ERR: 127.0.0.1: Too many simultaneous requests; Dropping RTR connection."
 
 PDUS_PER_RESPONSE=11   # cache-response + 3 ipv4 + 3 ipv6 + 3 aspa + end-of-data
