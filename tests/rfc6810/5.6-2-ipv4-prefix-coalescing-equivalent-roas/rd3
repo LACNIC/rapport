@@ -9,5 +9,5 @@ ta.cer 🛡️
         ta.crl 🛡️
 
 [node: roa2.roa]
-obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.2.0.0/16 ]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 1.2.0.0/16 ]
 obj.content.encapContentInfo.eContent.asId = 10001
