@@ -1,0 +1,7 @@
+ta.cer 🛡️
+	a.roa 🛡️
+	b.roa
+
+[notification: https://localhost:8443/$TEST/notification.xml]
+serial = 2
+snapshot.serial = 1

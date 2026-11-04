@@ -115,4 +115,22 @@ This test checks that the validator rejects a Delta File whose `version` attribu
 
 ---
 
-*End of RFC 8182 test suite — 12 test cases*
+### `serial-mismatch-notif-notifdelta`
+
+Mismatch between the Notification's `<notification>` serial and the Notification's most recent `<delta>` serial.
+
+---
+
+### `serial-mismatch-notif-snapshot`
+
+Mismatch between the Notification's `<notification>` serial and the Snapshot's `<snapshot>` serial.
+
+---
+
+### `serial-mismatch-notifdelta-delta`
+
+Mismatch between the Notification's `<delta>` serial and the corresponding Delta's `<delta>` serial.
+
+---
+
+*End of RFC 8182 test suite — 15 test cases*
