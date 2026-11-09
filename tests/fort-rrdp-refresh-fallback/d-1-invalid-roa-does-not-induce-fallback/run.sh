@@ -30,7 +30,7 @@ create_delta rd4
 
 run_rp "--rsync.enabled=false"
 
-check_logfile fort2 -F "TRE: ROA's version (111) is nonzero."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/A/A4.roa: ROA's version (111) is nonzero."
 
 check_vrps \
 	"1.1.0.0/16-16 => AS64501" \

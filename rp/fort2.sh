@@ -31,6 +31,8 @@ rp_run() {
 		--validation-threads=1 \
 		--output.vrp "$SANDBOX/vrps.csv" \
 		--output.aspa "$SANDBOX/aspa.json" \
+		--log.console.level "debug" \
+		--log.console.color \
 		--rsync.program "$RSYNC" \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 \
@@ -47,6 +49,8 @@ rp_start() {
 		--validation-threads=1 \
 		--output.vrp "$SANDBOX/vrps.csv" \
 		--output.aspa "$SANDBOX/aspa.json" \
+		--log.console.level "debug" \
+		--log.console.color \
 		--server.max-rtr-version "2" \
 		--rsync.program "$RSYNC" \
 		"$@" \

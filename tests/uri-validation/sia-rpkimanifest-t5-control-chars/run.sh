@@ -8,6 +8,6 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "TRE: Cannot parse GENERAL_NAME 'rsync://localhost:8873/rpki/sia-rpkimanifest-t5-control-chars/ca/ca\\t.mft' as a URI: Illegal character in path component"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: Cannot parse GENERAL_NAME 'rsync://localhost:8873/rpki/$TEST/ca/ca\\t.mft' as a URI: Illegal character in path component"
 # TODO Haven't figured out how to transfer the control char correctly
 touch "$SANDBOX/.disable-post-log-checks"

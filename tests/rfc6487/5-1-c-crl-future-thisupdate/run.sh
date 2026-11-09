@@ -6,7 +6,8 @@
 run_barry
 run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "TRE: Certificate validation failed: CRL is not yet valid"
+# TODO Awkward error message
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: Certificate validation failed: CRL is not yet valid"
 
 check_vrps \
 	"2.1.0.0/24-24 => AS20001" \

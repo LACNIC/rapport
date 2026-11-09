@@ -15,4 +15,4 @@ run_barry
 
 ( run_rp ) 2>>"$SANDBOX/ignored-errors.log" || true
 
-check_logfile fort2 -F "TRE: ASN value '4294967296' is out of bounds."
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/ta.cer: ASN value '4294967296' is out of bounds."

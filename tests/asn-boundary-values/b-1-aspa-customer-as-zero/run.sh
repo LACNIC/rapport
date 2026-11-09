@@ -7,7 +7,7 @@ run_barry rd1
 start_rp
 start_router
 
-check_logfile fort2 -F "TRE: Customer 0 is not allowed."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/aspa.asa: Customer 0 is not allowed."
 
 check_vrps
 check_aspas

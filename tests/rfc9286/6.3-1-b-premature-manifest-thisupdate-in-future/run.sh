@@ -19,7 +19,7 @@ create_delta "rd2"
 run_rp --rsync.enabled="false"
 
 # TODO Make that date variable
-check_logfile fort2 -F "TRE: Manifest is not valid yet. (thisUpdate: 2040-05-01 19:39:38)"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: Manifest is not valid yet. (thisUpdate: 2040-05-01 19:39:38)"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \

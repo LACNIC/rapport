@@ -17,7 +17,7 @@ new_step
 create_delta "rd2"
 run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "TRE: New manifest thisUpdate is not newer than the fallback manifest thisUpdate."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: New manifest thisUpdate is not newer than the fallback manifest thisUpdate."
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \

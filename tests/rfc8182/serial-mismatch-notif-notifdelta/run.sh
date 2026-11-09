@@ -17,7 +17,7 @@ sed -i"" 's/<delta serial="2"/<delta serial="1"/' "sandbox/apache2/content/$TEST
 run_rp --rsync.enabled="false"
 
 # Rejects the entire Notification.
-check_logfile fort2 -F "TRE: Notification serial does not match highest delta serial: 2 != 1"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/notification.xml: Notification serial does not match highest delta serial: 2 != 1"
 # rsync disabled, so succeeds on the fallback.
 check_logfile fort2 -F "TRC: It's already a fallback."
 # TODO Add other checks

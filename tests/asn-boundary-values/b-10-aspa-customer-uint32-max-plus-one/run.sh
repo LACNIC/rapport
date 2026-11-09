@@ -7,7 +7,7 @@ run_barry rd1
 start_rp
 start_router
 
-check_logfile fort2 -F "TRE: ASN value '4294967296' is out of bounds. (0-4294967295)"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: ASN value '4294967296' is out of bounds. (0-4294967295)"
 
 check_vrps
 check_aspas

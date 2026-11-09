@@ -28,7 +28,8 @@ create_delta rd2
 
 run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "TRE: CRL is stale/expired. (lastUpdate:2019-12-01 00:00:00Z, nextUpdate:2020-01-01 00:00:00Z)"
+# TODO Awkward error message
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: CRL is stale/expired. (lastUpdate:2019-12-01 00:00:00Z, nextUpdate:2020-01-01 00:00:00Z)"
 
 check_vrps \
 	"1.1.0.0/24-24 => AS10001" \

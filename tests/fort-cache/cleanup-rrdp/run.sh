@@ -98,7 +98,7 @@ check_fort_cache_rrdp_fallback "1" \
 	"changes/changes.mft"
 check_fort_cache_cage_end
 
-check_logfile fort2 -F "TRE: Certificate version is not v3."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/invalidates.cer: Certificate version is not v3."
 
 # Old versions of fallbacks are "dropped" (nodes freed and files refput'd)
 BASEURL="rsync://localhost:8873/rpki/$TEST"

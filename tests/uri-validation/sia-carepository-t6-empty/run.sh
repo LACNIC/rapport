@@ -8,4 +8,4 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "TRE: Cannot parse GENERAL_NAME '' as a URI: Scheme not terminated"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: Cannot parse GENERAL_NAME '' as a URI: Scheme not terminated"

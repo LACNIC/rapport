@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "TRE: Basic Constraints extension contains a Path Length Constraint."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: Basic Constraints extension contains a Path Length Constraint."
 
 check_vrps

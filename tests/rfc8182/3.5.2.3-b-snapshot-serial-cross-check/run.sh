@@ -61,5 +61,5 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "TRE: (Line 4) Snapshot serial '99' does not match Notification serial '2'"
-check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: (Line 4) Snapshot serial '99' does not match Notification serial '2'"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"

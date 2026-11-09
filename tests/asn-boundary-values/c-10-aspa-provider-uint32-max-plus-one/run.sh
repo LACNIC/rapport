@@ -7,7 +7,7 @@ run_barry rd1
 start_rp
 start_router
 
-check_logfile fort2 -F "TRE: Provider out of range. (0-4294967295)"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/aspa.asa: Provider out of range. (0-4294967295)"
 
 check_vrps
 check_aspas

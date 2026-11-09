@@ -19,8 +19,8 @@ sed -i"" "s/delta-rd2.xml\" hash=\".*\"/delta-rd2.xml\" hash=\"$HASH\"/" \
 	"sandbox/apache2/content/$TEST/notification.xml"
 run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "TRE: (Line 4) Delta serial '1' does not match Notification serial '2'"
-check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-rd2.xml: (Line 4) Delta serial '1' does not match Notification serial '2'"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-rd2.xml: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
 check_logfile fort2 -F "TRC: Falling back to snapshot."
 check_logfile fort2 -F "TRC: RPP seems salvageable."
 check_vrps \

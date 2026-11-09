@@ -50,7 +50,7 @@ new_step
 create_delta rd4
 run_rp "--rsync.enabled=false"
 
-check_logfile fort2 -F "TRE: ROA's version (111) is nonzero."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/A/A4.roa: ROA's version (111) is nonzero."
 
 check_vrps \
 	"1.1.0.0/16-16 => AS64501" \
@@ -85,7 +85,7 @@ create_delta rd5
 
 run_rp "--rsync.enabled=false"
 
-check_logfile fort2 -F "TRE: ROA's version (111) is nonzero."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/A/A4.roa: ROA's version (111) is nonzero."
 
 # THE ASSERTION: A4's resource is STILL absent -- produced by a
 # re-validation of serial 4's fallback RPP.

@@ -21,4 +21,4 @@ run_rp
 
 check_vrps
 
-check_logfile fort2 -F "TRE: Certificate's caIssuers (rsync://localhost:8873/rpki/191/wrong-parent/parent.cer) does not match parent certificate's URI (rsync://localhost:8873/rpki/191/parent)."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/parent/child.cer: Certificate's caIssuers (rsync://localhost:8873/rpki/$TEST/wrong-parent/parent.cer) does not match parent certificate's URI (rsync://localhost:8873/rpki/$TEST/parent)."

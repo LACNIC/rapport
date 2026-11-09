@@ -54,6 +54,7 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "TRE: Delta 'https://localhost:8443/$TEST/delta-step2.rd.xml' does not match its expected hash."
+# TODO Redundant error message
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-step2.rd.xml: Delta 'https://localhost:8443/$TEST/delta-step2.rd.xml' does not match its expected hash."
 check_logfile fort2 -F "TRC: Falling back to snapshot."
 check_logfile fort2 -F "TRC: Snapshot exploded."

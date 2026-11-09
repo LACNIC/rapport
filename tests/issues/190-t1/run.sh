@@ -46,6 +46,6 @@ run_rp "--rsync.enabled=false"
 # FAILS while the bug exists: withdraw committed, no rollback, VRP_A absent.
 check_vrps "1.1.0.0/24-24 => AS64510"
 
-check_logfile fort2 -F "TRE: Cannot decode base64: Generic error"
-check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
-check_logfile fort2 -F "TRE: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-rd_step2-t1.xml: Cannot decode base64: Generic error"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-rd_step2-t1.xml: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: Error requesting URL: The requested URL returned error: 404. (HTTP code: 404)"

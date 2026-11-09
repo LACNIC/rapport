@@ -6,6 +6,6 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "TRE: Certificate is missing the 'Key Usage' extension."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: Certificate is missing the 'Key Usage' extension."
 
 check_vrps

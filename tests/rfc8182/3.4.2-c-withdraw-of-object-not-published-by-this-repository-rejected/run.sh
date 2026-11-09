@@ -63,7 +63,7 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "TRE: (Line 229) Broken RRDP: <withdraw> is attempting to delete unknown file 'rsync://localhost/other/UNKNOWN.roa'."
-check_logfile fort2 -F "TRE: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-step2.rd.xml: (Line 229) Broken RRDP: <withdraw> is attempting to delete unknown file 'rsync://localhost/other/UNKNOWN.roa'."
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/delta-step2.rd.xml: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"
 check_logfile fort2 -F "TRC: Falling back to snapshot."
 check_logfile fort2 -F "TRC: Snapshot exploded."

@@ -6,7 +6,7 @@
 run_barry
 run_rp
 
-check_logfile fort2 -F "TRE: The OID of the SignedObject's encapContentInfo is not 'aspa'."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/invalid.asa: The OID of the SignedObject's encapContentInfo is not 'aspa'."
 
 check_vrps
 check_aspas

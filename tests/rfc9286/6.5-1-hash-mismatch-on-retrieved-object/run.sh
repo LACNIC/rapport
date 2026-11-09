@@ -20,7 +20,7 @@ echo "a" > "sandbox/rsyncd/content/$TEST/ca/valid-1-2.roa"
 
 run_rp "--http.enabled=false"
 
-check_logfile fort2 -F "TRE: File 'valid-1-2.roa' does not match its expected hash."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: File 'valid-1-2.roa' does not match its expected hash."
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \

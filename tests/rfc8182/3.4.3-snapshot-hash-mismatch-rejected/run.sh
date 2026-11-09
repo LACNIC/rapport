@@ -30,4 +30,5 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "TRE: Snapshot 'https://localhost:8443/$TEST/snapshot.xml' does not match its expected hash."
+# TODO Awkward error message
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: Snapshot 'https://localhost:8443/$TEST/snapshot.xml' does not match its expected hash."

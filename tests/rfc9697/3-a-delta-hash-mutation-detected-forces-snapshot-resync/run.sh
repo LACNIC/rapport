@@ -81,6 +81,6 @@ check_http_requests \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests
 
-check_logfile fort2 -F "TRE: Notification delta hash for serial 2 does not match cached delta hash; RRDP session desynchronization detected."
+check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/notification.xml: Notification delta hash for serial 2 does not match cached delta hash; RRDP session desynchronization detected."
 check_logfile fort2 -F "TRC: Falling back to snapshot."
 check_logfile fort2 -F "TRC: Snapshot exploded."

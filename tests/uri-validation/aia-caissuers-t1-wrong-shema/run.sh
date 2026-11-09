@@ -8,4 +8,4 @@ run_rp "--http.enabled=false"
 
 check_vrps
 
-check_logfile fort2 -F "TRE: Extension 'AIA' lacks a 'caIssuers' valid rsync URI."
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ta/ca.cer: Extension 'AIA' lacks a 'caIssuers' valid rsync URI."

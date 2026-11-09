@@ -16,7 +16,7 @@ new_step
 create_delta "rd2"
 run_rp --rsync.enabled="false"
 
-check_logfile fort2 -F "TRE: Certificate validation failed: certificate revoked"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/ca/ca.mft: Certificate validation failed: certificate revoked"
 
 check_vrps \
     "1.1.0.0/24-24 => AS10001" \
