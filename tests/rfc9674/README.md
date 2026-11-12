@@ -37,4 +37,20 @@ This test checks that the Relying Party does not follow HTTP redirection toward 
 
 ---
 
+### `redirects`
+
+**Description:**
+Checks the RP follows a small amount of same-origin redirects correctly.
+
+(The RFC never actually mandates redirects should be followed, but whatever.)
+
+### `redirects-exceeded`
+
+**Description:**
+Checks the RP's redirect limit.
+
+Note: Fort's redirection limit is 1, so I can't really make a `redirects-loop` test. Add it if one of the other RP implementations allow more.
+
+---
+
 *End of RFC 9674 test suite — 2 test case*
