@@ -1,20 +1,13 @@
 #!/bin/sh
 
 . tools/checks.sh
-. tests/$CATEGORY/apache2-redirect.sh
 . rp/$RP.sh
 
 test "$RP" = "fort2" || skip "Test is FORT2-specific"
 
-
-# Runs no matter how this script exits (normal end, fail()'s exit 1, or any
-# unexpected error) so a single shared Apache instance is always left running
-# for whichever test runs next.
-trap restore_normal_apache EXIT
-
-
-# Apache instance swap: throwaway redirect-capable instance for this test only
-start_redirect_apache
+export APACHE2_PORT="8444"
+export APACHE2_DIR="sandbox/apache2/$APACHE2_PORT"
+tools/apache2-start.sh "$SRCDIR/apache2.conf"
 
 run_barry
 run_rp
@@ -32,6 +25,6 @@ check_http_requests \
 check_rsync_requests \
 	"rpki/"
 
-check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/notification.xml: Redirecting to https://attacker.invalid/$TEST/notification.xml; disallowing because of different origin."
+check_logfile fort2 -F "TRE: https://localhost:$APACHE2_PORT/$TEST/notification.xml: Redirecting to https://attacker.invalid/$TEST/notification.xml; disallowing because of different origin."
 # TODO turn this into a trace; it's nothing to worry about.
 check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"

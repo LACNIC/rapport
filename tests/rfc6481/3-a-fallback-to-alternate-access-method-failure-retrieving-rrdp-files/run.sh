@@ -12,7 +12,7 @@
 run_barry rd
 
 # Remove all RRDP content, simulating an RRDP server outage.
-rm -rf "sandbox/apache2/content/$TEST/"*
+rm -rf "$APACHE2_DIR/content/$TEST/"*
 
 run_rp
 

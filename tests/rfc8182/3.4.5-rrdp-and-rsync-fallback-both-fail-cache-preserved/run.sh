@@ -34,9 +34,9 @@ create_delta "step2.rd"
 
 # Remove the RPP content from BOTH transports, but keep ta.cer reachable so the
 # RP can still read the SIA and attempt (and fail) each access method.
-rm -f "sandbox/apache2/content/$TEST/notification.xml" \
-      "sandbox/apache2/content/$TEST/snapshot.xml" \
-      "sandbox/apache2/content/$TEST"/delta-*.xml
+rm -f "$APACHE2_DIR/content/$TEST/notification.xml" \
+      "$APACHE2_DIR/content/$TEST/snapshot.xml" \
+      "$APACHE2_DIR/content/$TEST"/delta-*.xml
 
 # rsync side (rsyncd): empty the publication point tree.
 rm -rf "sandbox/rsyncd/content/$TEST"/*

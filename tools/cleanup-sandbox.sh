@@ -1,18 +1,13 @@
 #!/bin/sh
 
-if [ -f "sandbox/apache2/apache2.pid" ]; then
-	kill $(cat "sandbox/apache2/apache2.pid")
-fi
+for i in sandbox/apache2/*; do
+	test -f "$i/apache2.pid" && kill $(cat "$i/apache2.pid")
+done
 if [ -f "sandbox/rsyncd/rsyncd.pid" ]; then
 	kill $(cat "sandbox/rsyncd/rsyncd.pid")
 fi
 
 mkdir -p "custom/keys"
-mkdir -p "sandbox/counters"
-mkdir -p "sandbox/apache2"
-mkdir -p "sandbox/rsyncd"
-mkdir -p "sandbox/tests"
-
 if [ ! -f "custom/keys/50.pem" ]; then
 	for i in $(seq 0 50); do
 		echo "Creating custom/keys/$i.pem"
@@ -20,18 +15,13 @@ if [ ! -f "custom/keys/50.pem" ]; then
 	done
 fi
 
-rm -rf sandbox/counters/*
-rm -rf sandbox/apache2/*
-rm -rf sandbox/rsyncd/*
-rm -rf sandbox/tests/*
-
+rm -rf sandbox/*
+mkdir -p "sandbox/counters"
 touch "sandbox/counters/total.txt"
 touch "sandbox/counters/warns.txt"
+mkdir "sandbox/tests"
 
-cp "tools/apache2.conf" "sandbox/apache2"
-mkdir -p "sandbox/apache2/content"
-mkdir -p "sandbox/apache2/logs"
-
+mkdir -p "sandbox/rsyncd"
 cp "tools/rsyncd.conf" "sandbox/rsyncd"
 mkdir "sandbox/rsyncd/content"
 mkdir "sandbox/rsyncd/repo1"

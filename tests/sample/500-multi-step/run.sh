@@ -57,7 +57,7 @@ cp -p  "$(rp_tal_path)" "$SANDBOX/../tmp.tal"
 
 new_step
 cp -p  "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
-rm -rf "sandbox/apache2/content/$TEST"/*
+rm -rf "$APACHE2_DIR/content/$TEST"/*
 rm -rf "sandbox/rsyncd/content/$TEST"/*
 run_rp
 
@@ -88,7 +88,7 @@ touch "$SANDBOX/.disable-post-log-checks"
 
 new_step
 mv     "$SANDBOX/../tmp.tal" "$(rp_tal_path)"
-cp -rp "$SANDBOX/../step$((STEP-2))/apache2/content/$TEST"/* "sandbox/apache2/content/$TEST"
+cp -rp "$SANDBOX/../step$((STEP-2))/apache2/$APACHE2_PORT/content/$TEST"/* "$APACHE2_DIR/content/$TEST"
 cp -rp "$SANDBOX/../step$((STEP-2))/rsyncd/content/$TEST"/*  "sandbox/rsyncd/content/$TEST"
 STEP_PREV="$((STEP-2))" create_delta "step4.rd"
 run_rp

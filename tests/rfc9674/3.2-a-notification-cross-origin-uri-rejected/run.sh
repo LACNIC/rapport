@@ -36,7 +36,7 @@ create_delta "step2.rd"
 # notification's own origin.
 sed -i \
 	's|<delta serial="2" uri="https://localhost:8443/|<delta serial="2" uri="https://attacker.example:8443/|' \
-	"sandbox/apache2/content/$TEST/notification.xml"
+	"$APACHE2_DIR/content/$TEST/notification.xml"
 
 run_rp
 

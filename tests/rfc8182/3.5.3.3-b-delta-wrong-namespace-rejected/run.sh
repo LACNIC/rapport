@@ -31,8 +31,8 @@ check_rsync_requests
 new_step
 create_delta "step2.rd"
 
-DELTA="sandbox/apache2/content/$TEST/delta-step2.rd.xml"
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+DELTA="$APACHE2_DIR/content/$TEST/delta-step2.rd.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 sed -i 's|xmlns="http://www.ripe.net/rpki/rrdp"|xmlns="http://example.com/wrong"|' "$DELTA"
 

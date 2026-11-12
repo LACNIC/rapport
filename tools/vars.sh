@@ -21,7 +21,6 @@ if [ -z "$APACHE2" ]; then
 	export APACHE2=apache2
 fi
 check_exists "$APACHE2 -v" "APACHE2"
-export APACHE_REQLOG="sandbox/apache2/logs/8443.log"
 
 
 if [ -z "$RSYNC" ]; then
@@ -29,6 +28,7 @@ if [ -z "$RSYNC" ]; then
 fi
 check_exists "$RSYNC --help" "RSYNC"
 export RSYNC_REQLOG="sandbox/rsyncd/rsyncd.log"
+
 
 if [ -z "$RP_BIN" ]; then
 	export RP_BIN="$RP_BIN_DEFAULT"

@@ -13,7 +13,7 @@ run_barry rd
 
 # Corrupt the served snapshot so its content no longer matches the hash
 # advertised in the notification.
-truncate -s 1m "sandbox/apache2/content/$TEST/snapshot.xml"
+truncate -s 1m "$APACHE2_DIR/content/$TEST/snapshot.xml"
 
 run_rp
 

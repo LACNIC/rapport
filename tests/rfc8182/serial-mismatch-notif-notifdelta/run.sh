@@ -13,7 +13,7 @@ check_vrps "1.0.0.0/8-8 => AS1234" "100::/8-8 => AS1234"
 
 new_step
 create_delta "rd2"
-sed -i"" 's/<delta serial="2"/<delta serial="1"/' "sandbox/apache2/content/$TEST/notification.xml"
+sed -i"" 's/<delta serial="2"/<delta serial="1"/' "$APACHE2_DIR/content/$TEST/notification.xml"
 run_rp --rsync.enabled="false"
 
 # Rejects the entire Notification.

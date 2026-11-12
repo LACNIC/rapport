@@ -61,10 +61,10 @@ run_barry() {
 		shift
 	fi
 
-	$BARRY	--rsync-uri  "rsync://localhost:8873/rpki/$TEST" \
+	$BARRY	--rsync-uri  "rsync://localhost:$RSYNC_PORT/rpki/$TEST" \
 		--rsync-path "sandbox/rsyncd/content/$TEST" \
-		--rrdp-uri   "https://localhost:8443/$TEST" \
-		--rrdp-path  "sandbox/apache2/content/$TEST" \
+		--rrdp-uri   "https://localhost:$APACHE2_PORT/$TEST" \
+		--rrdp-path  "$APACHE2_DIR/content/$TEST" \
 		--serial "$STEP" \
 		--previous-path "sandbox/$SRCDIR/step$STEP_PREV/rsyncd/content/$TEST" \
 		--keys "custom/keys" \
@@ -434,8 +434,8 @@ check_http_requests() {
 		echo "$i" >> "$EXPECTED"
 	done
 
-	cp "$APACHE_REQLOG" "$ACTUAL"
-	:> "$APACHE_REQLOG"
+	cp "$APACHE2_DIR/requests.log" "$ACTUAL"
+	:> "$APACHE2_DIR/requests.log"
 
 	ck_inc
 	diff -B "$EXPECTED" "$ACTUAL" > "$DIFF" \
@@ -471,7 +471,7 @@ check_rsync_requests() {
 # $@: Same as run_barry
 create_delta() {
 	# Preparations
-	APACHEDIR="sandbox/apache2/content/$TEST"
+	APACHEDIR="$APACHE2_DIR/content/$TEST"
 	TMPDIR="sandbox/tmp/$TEST"
 
 	# Barry already deltas rsync properly. We already backed up the rsyncd

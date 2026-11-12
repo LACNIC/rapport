@@ -27,8 +27,8 @@
 . tools/checks.sh
 . rp/$RP.sh
 
-SNAPSHOT="sandbox/apache2/content/$TEST/snapshot.xml"
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+SNAPSHOT="$APACHE2_DIR/content/$TEST/snapshot.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 
 # ---------------------------------------------------------------------------

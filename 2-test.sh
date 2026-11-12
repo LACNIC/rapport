@@ -47,8 +47,25 @@ NUNKNOWNS=0
 # Turn off RP, barry, apache & rsync on Ctrl+C
 trap 'tools/cleanup.sh; exit 1' INT
 
-tools/apache2-start.sh
+export APACHE2_PORT="8443"
+export APACHE2_DIR="sandbox/apache2/$APACHE2_PORT"
+tools/apache2-start.sh "tools/apache2.conf"
+export RSYNC_PORT="8873"
 tools/rsyncd-start.sh
+
+stop_custom_apaches() {
+	cp -rp "sandbox/apache2" "$SANDBOX/apache2"
+
+	for i in sandbox/apache2/*; do
+		PORT="$(basename "$i")"
+		if [ "$PORT" != "$APACHE2_PORT" ]; then
+			APACHE2_PORT="$PORT" \
+				APACHE2_DIR="sandbox/apache2/$PORT" \
+				tools/apache2-stop.sh
+			rm -rf "$i"
+		fi
+	done
+}
 
 run_test() {
 	test -d "$1" || return 0
@@ -67,8 +84,11 @@ run_test() {
 
 	echo "Test: $TESTID"
 
-	:> "$APACHE_REQLOG"
+	:> "$APACHE2_DIR/main.log"
+	:> "$APACHE2_DIR/requests.log"
+	rm -rf "$APACHE2_DIR/content/"*
 	:> "$RSYNC_REQLOG"
+	clear_rsync_modules
 	mkdir -p "$SANDBOX/workdir"
 
 	"$SRCDIR"/run.sh
@@ -88,10 +108,8 @@ run_test() {
 
 	stop_rp
 	stop_router
-	cp -rp "sandbox/apache2" "$SANDBOX/apache2"
-	rm -rf "sandbox/apache2/content/"*
+	stop_custom_apaches
 	cp -rp "sandbox/rsyncd" "$SANDBOX/rsyncd"
-	clear_rsync_modules
 }
 
 

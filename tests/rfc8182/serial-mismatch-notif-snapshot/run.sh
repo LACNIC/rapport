@@ -14,7 +14,7 @@ check_vrps "1.0.0.0/8-8 => AS1234" "100::/8-8 => AS1234"
 new_step
 create_delta "rd2"
 # Remove the delta from the notification, to force the resnapshot.
-sed -i"" 's/<delta.*>//' "sandbox/apache2/content/$TEST/notification.xml"
+sed -i"" 's/<delta.*>//' "$APACHE2_DIR/content/$TEST/notification.xml"
 run_rp --rsync.enabled="false"
 
 # First attempts to delta up, fails, then rejects the Snapshot too.

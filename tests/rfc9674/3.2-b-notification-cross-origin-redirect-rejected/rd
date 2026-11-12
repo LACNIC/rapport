@@ -10,6 +10,6 @@ ta.cer
 	ta.mft
 	ta.crl
 
-[notification: https://localhost:8443/$TEST/notification.xml]
+[notification: https://localhost:$APACHE2_PORT/$TEST/notification.xml]
 session = cafe
 serial = 1

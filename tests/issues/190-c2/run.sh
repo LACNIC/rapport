@@ -9,7 +9,7 @@
 . tools/checks.sh
 . rp/$RP.sh
 
-APACHEDIR="sandbox/apache2/content/$TEST"
+APACHEDIR="$APACHE2_DIR/content/$TEST"
 NOTIFICATION="$APACHEDIR/notification.xml"
 SNAPSHOT="$APACHEDIR/snapshot.xml"
 

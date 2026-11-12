@@ -17,7 +17,7 @@ create_delta "rd2"
 # A publish with a hash is supposed to replace the file.
 # This publish lacks a hash, but the cache already has a.roa, from rd1.
 BOGUS_PUBLISH="<publish uri=\"rsync://localhost:8873/rpki/$TEST/ta/a.roa\">ZmFpbAo=</publish>"
-sed -i"" "s#serial=\"2\">#serial=\"2\">$BOGUS_PUBLISH#" "sandbox/apache2/content/$TEST/delta-rd2.xml"
+sed -i"" "s#serial=\"2\">#serial=\"2\">$BOGUS_PUBLISH#" "$APACHE2_DIR/content/$TEST/delta-rd2.xml"
 
 run_rp
 

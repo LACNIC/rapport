@@ -57,7 +57,7 @@ check_logfile fort2 -F "TRC: Delta exploded."
 new_step
 create_delta "step3.rd"
 
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 # A random, obviously-different 64-hex-char value. No real hash computation is
 # needed: this check never re-fetches delta-step2.rd.xml, it only compares the

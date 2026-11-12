@@ -35,7 +35,7 @@ create_delta "step2.rd"
 # Corrupt the served delta file so its content no longer matches the hash
 # advertised in the notification. The notification still references the
 # original (correct) hash; only the file bytes change.
-truncate -s 1m "sandbox/apache2/content/$TEST/delta-step2.rd.xml"
+truncate -s 1m "$APACHE2_DIR/content/$TEST/delta-step2.rd.xml"
 
 run_rp
 

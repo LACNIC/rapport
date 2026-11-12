@@ -32,8 +32,8 @@ check_rsync_requests
 new_step
 run_barry "step2.rd"
 
-SNAPSHOT="sandbox/apache2/content/$TEST/snapshot.xml"
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+SNAPSHOT="$APACHE2_DIR/content/$TEST/snapshot.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 # Rewrite the snapshot's own serial (2 -> 99) so it no longer matches the
 # serial the notification announces (2).

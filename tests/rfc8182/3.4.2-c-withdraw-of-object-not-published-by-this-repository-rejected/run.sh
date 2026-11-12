@@ -33,8 +33,8 @@ check_rsync_requests
 new_step
 create_delta "step2.rd"
 
-DELTA="sandbox/apache2/content/$TEST/delta-step2.rd.xml"
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+DELTA="$APACHE2_DIR/content/$TEST/delta-step2.rd.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 # 1. Inject a <withdraw> for a URI this notification never published.
 UNKNOWN_HASH=$(printf '0%.0s' $(seq 1 64))

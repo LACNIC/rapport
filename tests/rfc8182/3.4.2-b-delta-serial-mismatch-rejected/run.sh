@@ -32,8 +32,8 @@ check_rsync_requests
 new_step
 create_delta "step2.rd"
 
-DELTA="sandbox/apache2/content/$TEST/delta-step2.rd.xml"
-NOTIFICATION="sandbox/apache2/content/$TEST/notification.xml"
+DELTA="$APACHE2_DIR/content/$TEST/delta-step2.rd.xml"
+NOTIFICATION="$APACHE2_DIR/content/$TEST/notification.xml"
 
 # 1. Rewrite the delta file's own root-element serial (2 -> 99).
 sed -i 's/serial="2">/serial="99">/' "$DELTA"

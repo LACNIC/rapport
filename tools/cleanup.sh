@@ -10,11 +10,13 @@ if [ ! -z "$BARRY_RTR_PID" ]; then
 	kill "$BARRY_RTR_PID"
 fi
 
-PIDFILE=sandbox/apache2/apache2.pid
-if [ -f "$PIDFILE" ]; then
-	echo "Stopping apache2."
-	kill $(cat "$PIDFILE")
-fi
+for i in sandbox/apache2/*; do
+	PIDFILE="$i/apache2.pid"
+	if [ -f "$PIDFILE" ]; then
+		echo "Stopping apache2."
+		kill $(cat "$PIDFILE")
+	fi
+done
 
 PIDFILE=sandbox/rsyncd/rsyncd.pid
 if [ -f "$PIDFILE" ]; then

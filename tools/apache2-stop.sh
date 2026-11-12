@@ -1,11 +1,6 @@
 #!/bin/sh
 
-PIDFILE=sandbox/apache2/apache2.pid
-
-echo "Stopping apache2."
-if [ -f "$PIDFILE" ]; then
-	kill $(cat "$PIDFILE")
-else
-	echo "Expected running apache, but $PIDFILE doesn't exist."
-	exit 1
+if [ -f "$APACHE2_DIR/apache2.pid" ]; then
+	echo "Stopping apache2 $APACHE2_PORT"
+	kill $(cat "$APACHE2_DIR/apache2.pid")
 fi
