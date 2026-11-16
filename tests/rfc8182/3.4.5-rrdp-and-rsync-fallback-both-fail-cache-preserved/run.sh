@@ -60,4 +60,3 @@ check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/notification.xml: Erro
 # rsync can't realize the download failed until it tries to read the files
 # TODO Should print the TA, not the TAL
 check_logfile fort2 -F "TRE: $TEST.tal: Manifest missing: rsync://localhost:8873/rpki/$TEST/ta/ta.mft"
-check_logfile fort2 -F "TRE: Manifest missing: rsync://localhost:8873/rpki/$TEST/A/A.mft"

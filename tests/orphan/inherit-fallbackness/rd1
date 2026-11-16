@@ -1,0 +1,122 @@
+ta.cer
+	a1.cer					# 01
+		b1.cer				# 0101
+			c1.cer			# 010101
+				d1.cer		# 01010101
+					d1.roa	# 0101010101
+					d1.mft
+					d1.crl
+				c1.roa		# 01010102
+				c1.mft
+				c1.crl
+			c2.cer			# 010102
+				d2.cer		# 01010201
+					d2.roa	# 0101020101
+					d2.mft
+					d2.crl
+				c2.roa		# 01010202
+				c2.mft
+				c2.crl
+			b1.roa			# 010103
+			b1.mft
+			b1.crl
+		b2.cer				# 0102
+			b2.roa			# 010201
+			b2.mft
+			b2.crl
+		a1.roa				# 0103
+		a1.mft
+		a1.crl
+	a2.cer					# 02
+		a2.roa				# 0201
+		a2.mft
+		a2.crl
+	ta.roa					# 03
+	ta.mft
+	ta.crl
+
+# TODO it appears that the parser does not accept '::/0'
+[node: ta.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0::/0 ]
+[node: a1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0100::/8 ]
+[node: b1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101::/16 ]
+[node: c1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:0100::/24 ]
+[node: d1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:0101::/32 ]
+[node: c2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:0200::/24 ]
+[node: d2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:0201::/32 ]
+[node: b2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0102::/16 ]
+[node: a2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0200::/8 ]
+
+[node: d1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0101:0100::/40 ]
+[node: d1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0101::/32 ]
+[node: c1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0102::/32 ]
+[node: c1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0100::/24 ]
+[node: d2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0201:0100::/40 ]
+[node: d2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0201::/32 ]
+[node: c2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0202::/32 ]
+[node: c2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0200::/24 ]
+[node: b1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:0300::/24 ]
+[node: b1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101::/16 ]
+[node: b2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0102:0100::/24 ]
+[node: b2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0102::/16 ]
+[node: a1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0103::/16 ]
+[node: a1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0100::/8 ]
+[node: a2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0201::/16 ]
+[node: a2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0200::/8 ]
+[node: ta.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0300::/8 ]
+[node: ta.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0::/0 ]
+
+
+############################################
+
+# TODO This test would be stronger if it checked past notification boundaries.
+# (As opposed to obj.content.signerInfos.0.version = 0 in rd2.)
+# But new_step doesn't support multiple notifications.
+# Need to solve that to-do first.
+
+#[node: a1.cer]
+#rpp.notification = https://localhost:8443/$TEST/a1/notification.xml
+#[notification: https://localhost:8443/$TEST/a1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/a1/snapshot.xml
+#snapshot.path = a1/snapshot.xml
+
+#[node: b1.cer]
+#rpp.notification = https://localhost:8443/$TEST/b1/notification.xml
+#[notification: https://localhost:8443/$TEST/b1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/b1/snapshot.xml
+#snapshot.path = b1/snapshot.xml
+
+#[node: c1.cer]
+#rpp.notification = https://localhost:8443/$TEST/c1/notification.xml
+#[notification: https://localhost:8443/$TEST/c1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/c1/snapshot.xml
+#snapshot.path = c1/snapshot.xml
+
+#[node: d1.cer]
+#rpp.notification = https://localhost:8443/$TEST/d1/notification.xml
+#[notification: https://localhost:8443/$TEST/d1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/d1/snapshot.xml
+#snapshot.path = d1/snapshot.xml
+
+#[node: c2.cer]
+#rpp.notification = https://localhost:8443/$TEST/c2/notification.xml
+#[notification: https://localhost:8443/$TEST/c2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/c2/snapshot.xml
+#snapshot.path = c2/snapshot.xml
+
+#[node: d2.cer]
+#rpp.notification = https://localhost:8443/$TEST/d2/notification.xml
+#[notification: https://localhost:8443/$TEST/d2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/d2/snapshot.xml
+#snapshot.path = d2/snapshot.xml
+
+#[node: b2.cer]
+#rpp.notification = https://localhost:8443/$TEST/b2/notification.xml
+#[notification: https://localhost:8443/$TEST/b2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/b2/snapshot.xml
+#snapshot.path = b2/snapshot.xml
+
+#[node: a2.cer]
+#rpp.notification = https://localhost:8443/$TEST/a2/notification.xml
+#[notification: https://localhost:8443/$TEST/a2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/a2/snapshot.xml
+#snapshot.path = a2/snapshot.xml

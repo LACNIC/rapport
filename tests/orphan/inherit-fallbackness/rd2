@@ -1,0 +1,121 @@
+ta.cer 🛡️
+	a1.cer 🛡️				# 01
+		b1.cer 🛡️			# 0101
+			c1.cer			# 010151
+				d1.cer		# 01015101
+					d1.roa	# 0101510101
+					d1.mft
+					d1.crl
+				c1.roa		# 01015102
+				c1.mft
+				c1.crl
+			c2.cer			# 010152
+				d2.cer		# 01015201
+					d2.roa	# 0101520101
+					d2.mft
+					d2.crl
+				c2.roa		# 01015202
+				c2.mft
+				c2.crl
+			b1.roa			# 010153
+			b1.mft
+			b1.crl
+		b2.cer				# 0152
+			b2.roa			# 015201
+			b2.mft
+			b2.crl
+		a1.roa				# 0153
+		a1.mft
+		a1.crl
+	a2.cer					# 52
+		a2.roa				# 5201
+		a2.mft
+		a2.crl
+	ta.roa					# 53
+	ta.mft
+	ta.crl
+
+# TODO Improve default resource distribution
+# When parent is shielded, they're not marked as "ip_overridden" in the next
+# cycle, so manifests are getting IPv4 resources.
+# In general, everyone should always get a subset of the parent's resources,
+# not try to heuristic something based on the tree level.
+
+[node: c1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:5100::/24 ]
+[node: d1.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:5101::/32 ]
+[node: c2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:5200::/24 ]
+[node: d2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0101:5201::/32 ]
+[node: b2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 0152::/16 ]
+[node: a2.cer]	obj.tbsCertificate.extensions.ip.extnValue = [ 5200::/8 ]
+
+[node: d1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5101:0100::/40 ]
+[node: d1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5101::/32 ]
+[node: c1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5102::/32 ]
+[node: c1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5100::/24 ]
+[node: d2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5201:0100::/40 ]
+[node: d2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5201::/32 ]
+[node: c2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5202::/32 ]
+[node: c2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5200::/24 ]
+[node: b1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101:5300::/24 ]
+[node: b1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0101::/16 ]
+[node: b2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0152:0100::/24 ]
+[node: b2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0152::/16 ]
+[node: a1.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0153::/16 ]
+[node: a1.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0100::/8 ]
+[node: a2.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 5201::/16 ]
+[node: a2.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 5200::/8 ]
+[node: ta.roa]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 5300::/8 ]
+[node: ta.mft]	obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 0::/0 ]
+
+[node: b1.mft] obj.content.signerInfos.0.version = 0
+
+
+############################################
+
+#[node: a1.cer]
+#rpp.notification = https://localhost:8443/$TEST/a1/notification.xml
+#[notification: https://localhost:8443/$TEST/a1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/a1/snapshot.xml
+#snapshot.path = a1/snapshot.xml
+
+#[node: b1.cer]
+#rpp.notification = https://localhost:8443/$TEST/b1/notification.xml
+#[notification: https://localhost:8443/$TEST/b1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/b1/snapshot.xml
+#snapshot.path = b1/snapshot.xml
+
+#[node: c1.cer]
+#rpp.notification = https://localhost:8443/$TEST/c1/notification.xml
+#[notification: https://localhost:8443/$TEST/c1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/c1/snapshot.xml
+#snapshot.path = c1/snapshot.xml
+
+#[node: d1.cer]
+#rpp.notification = https://localhost:8443/$TEST/d1/notification.xml
+#[notification: https://localhost:8443/$TEST/d1/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/d1/snapshot.xml
+#snapshot.path = d1/snapshot.xml
+
+#[node: c2.cer]
+#rpp.notification = https://localhost:8443/$TEST/c2/notification.xml
+#[notification: https://localhost:8443/$TEST/c2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/c2/snapshot.xml
+#snapshot.path = c2/snapshot.xml
+
+#[node: d2.cer]
+#rpp.notification = https://localhost:8443/$TEST/d2/notification.xml
+#[notification: https://localhost:8443/$TEST/d2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/d2/snapshot.xml
+#snapshot.path = d2/snapshot.xml
+
+#[node: b2.cer]
+#rpp.notification = https://localhost:8443/$TEST/b2/notification.xml
+#[notification: https://localhost:8443/$TEST/b2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/b2/snapshot.xml
+#snapshot.path = b2/snapshot.xml
+
+#[node: a2.cer]
+#rpp.notification = https://localhost:8443/$TEST/a2/notification.xml
+#[notification: https://localhost:8443/$TEST/a2/notification.xml]
+#snapshot.uri = https://localhost:8443/$TEST/a2/snapshot.xml
+#snapshot.path = a2/snapshot.xml
