@@ -126,4 +126,13 @@ This test checks that the validator computes the SHA-256 hash of every file retr
 
 ---
 
+### 6.6-2 - `fallbackness-inherited`
+
+**Description:**
+If an RPP needs to be fallbacked, then all its descendants are also fallbacked. The RP doesn't even attempt to refresh them.
+
+---
+
+TODO Section 4.4 has testable requirements.
+
 *End of RFC 9286 test suite — 14 test cases*
