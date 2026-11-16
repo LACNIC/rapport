@@ -489,7 +489,7 @@ create_delta() {
 	mkdir "$TMPDIR/new"
 
 	# Root XMLs
-	$BARRY-delta \
+	$BARRY-delta -vv \
 		--old.notification    "$TMPDIR/main/notification.xml" \
 		--old.snapshot        "$TMPDIR/main/snapshot.xml" \
 		--new.notification    "$TMPDIR/mid/notification.xml" \
@@ -505,7 +505,7 @@ create_delta() {
 
 	# Additional XMLs requested by caller
 	for i in $RRDP_SUBDIRS; do
-		$BARRY-delta \
+		$BARRY-delta -vv \
 			--old.notification    "$TMPDIR/main/$i/notification.xml" \
 			--old.snapshot        "$TMPDIR/main/$i/snapshot.xml" \
 			--new.notification    "$TMPDIR/mid/$i/notification.xml" \
