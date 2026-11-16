@@ -17,7 +17,6 @@ sed -Ei"" \
 mv "$SANDBOX/workdir/rtr/1" "$SANDBOX/workdir/rtr/4294967294"
 
 # We execute the validation waiting for the serial 4294967295 
-run_barry rd
 start_rp
 start_router
 
