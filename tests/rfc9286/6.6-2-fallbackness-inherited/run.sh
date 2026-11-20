@@ -42,5 +42,5 @@ check_vrps \
 	"5300::/8-8 => AS1234"
 check_aspas
 
-check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/inherit-fallbackness/b1/b1.mft: The SignerInfo version is only allowed to be 3. (Was 0.)"
+check_logfile fort2 -F "TRE: rsync://localhost:8873/rpki/$TEST/b1/b1.mft: The SignerInfo version is only allowed to be 3. (Was 0.)"
 check_logfile fort2 -F "TRC: Fallbackness inherited."

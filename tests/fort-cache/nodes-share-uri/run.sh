@@ -17,7 +17,7 @@ cp -r "$SANDBOX/workdir/https/1" "$SANDBOX/workdir/https/2"
 run_rp
 check_vrps "1.0.0.0/8-8 => AS1234" "100::/8-8 => AS1234"
 
-URI="https://localhost:8443/nodes-share-uri/notification.xml"
+URI="https://localhost:8443/$TEST/notification.xml"
 # TODO sometimes swaps the jsons because of the random directory traversal
 check_logfile fort2 -F "WRN: https/1.json and https/2.json are both identified by URI '$URI'. Dropping both."
 check_logfile fort2 -F "TRC: rm -f https/1.json"
