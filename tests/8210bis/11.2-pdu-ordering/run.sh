@@ -27,17 +27,14 @@ aspa_withdraw() {
 }
 
 create_rd() {
-	echo "ta.cer" > "$SRCDIR/rd"
+	test "$1" = "rd1" &&
+		echo "ta.cer" > "$SRCDIR/rd" ||
+		echo "ta.cer 🛡️" > "$SRCDIR/rd"
 	awk '{ printf "\t%s.roa\n", NR }' "$SRCDIR/$1-pfx.src" >> "$SRCDIR/rd"
 	awk '{ printf "\t%s.asa\n", NR }' "$SRCDIR/$1-asa.src" >> "$SRCDIR/rd"
-	echo "\tta.mft" >> "$SRCDIR/rd"
 	echo >> "$SRCDIR/rd"
 	shuf "$SRCDIR/$1-pfx.src" | awk '{ printf "[node: %s.roa]\n$EEIPS = [ %s/%s ]\n$SOIPS = [ %s/%s-%s ]\n$SOAS = %s\n\n", NR, $1, $3, $1, $3, $2, $4 }' - >> "$SRCDIR/rd"
 	shuf "$SRCDIR/$1-asa.src" | awk '{ printf "[node: %s.asa]\n$EEAS = [ %s ]\n$SOCAS = %s\n$SOPRV = [ 10000 ]\n\n", NR, $1, $1 }' - >> "$SRCDIR/rd"
-	echo "[node: ta.mft]" >> "$SRCDIR/rd"
-	echo "obj.content.encapContentInfo.eContent.manifestNumber = $STEP" >> "$SRCDIR/rd"
-	echo "[notification: https://localhost:8443/$TEST/notification.xml]" >> "$SRCDIR/rd"
-	echo "serial = $STEP" >> "$SRCDIR/rd"
 }
 
 print_expected_step1() {
@@ -110,8 +107,6 @@ send_router_pdu "reset-query"
 print_expected_step1 > "$SANDBOX/tmp"
 set --; while IFS= read -r l; do set -- "$@" "$l"; done < "$SANDBOX/tmp"
 check_cache_response 0 1 "$@"
-
-#fail achoo
 
 print_expected_step2() {
 	pfx4 1 48.32.32.32 30 28 16

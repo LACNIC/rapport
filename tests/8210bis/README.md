@@ -281,6 +281,20 @@ This test verifies the cache fetches Cache Response PDU streams in the total ord
 
 ---
 
+### 11.2 - `pdu-ordering-2`
+
+**Description:**
+Unit test from [#205](https://github.com/NICMx/FORT-validator/pull/205), translated to Rapport's format, meant as a regression test. It reveals a significant blind spot in the original `pdu-ordering`.
+
+---
+
+### 11.2 - `pdu-ordering-3`
+
+**Description:**
+Analyzing `pdu-ordering-2`, it dawned on me that the original `pdu-ordering` only tests the sorting function; it does not test the delta merge function. `pdu-ordering-3` is intended as a more complete version of `pdu-ordering-2`.
+
+---
+
 ### 12-2.2 - `corrupt-data-pdu`
 
 **Description:**

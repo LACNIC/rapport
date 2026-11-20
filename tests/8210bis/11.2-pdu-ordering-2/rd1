@@ -1,0 +1,7 @@
+ta.cer
+	AS2.roa
+
+[node: AS2.roa]
+obj.content.certificates.0.tbsCertificate.extensions.ip.extnValue = [ 192.0.2.0/24, 2001:db8:1::/48 ]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 192.0.2.0/24-24, 2001:db8:1::/48-48 ]
+obj.content.encapContentInfo.eContent.asId = 2

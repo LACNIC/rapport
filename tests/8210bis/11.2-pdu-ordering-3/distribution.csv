@@ -1,0 +1,50 @@
+addr,maxlen,plen,as,left,right,variant
+"=BITLSHIFT(1, 4)",whatever,whatever,whatever,=$A2,,left followed by left
+"=BITLSHIFT(2, 4)",whatever,whatever,whatever,=$A3,,left followed by right
+"=BITLSHIFT(3, 4)",whatever,whatever,whatever,,=$A4,right followed by left
+"=BITLSHIFT(4, 4)",whatever,whatever,whatever,=$A5,,left followed by both
+"=BITLSHIFT(5, 4)",whatever,whatever,whatever,=$A6,=$A6,both followed by both
+"=BITLSHIFT(6, 4)",whatever,whatever,whatever,=$A7,=$A7,both followed by right
+"=BITLSHIFT(7, 4)",whatever,whatever,whatever,,=$A8,right followed by right
+"=BITLSHIFT(8, 4)",whatever,whatever,whatever,,=$A9,right followed by both
+"=BITLSHIFT(9, 4)",whatever,whatever,whatever,=$A10,=$A10,both followed by left
+"=BITLSHIFT(10, 4)",whatever,whatever,whatever,=$A11,,
+,,,,,,
+"=BITLSHIFT(11, 4)",whatever,whatever,whatever,,,
+"=BITLSHIFT(12, 4)",5,whatever,whatever,=$B14,,
+=A14,=B14+1,whatever,whatever,=$B15,,
+=A15,=B15+1,whatever,whatever,,=$B16,
+=A16,=B16+1,whatever,whatever,=$B17,,
+=A17,=B17+1,whatever,whatever,=$B18,=$B18,
+=A18,=B18+1,whatever,whatever,=$B19,=$B19,
+=A19,=B19+1,whatever,whatever,,=$B20,
+=A20,=B20+1,whatever,whatever,,=$B21,
+=A21,=B21+1,whatever,whatever,=$B22,=$B22,
+=A22,=B22+1,whatever,whatever,=$B23,,
+"==BITLSHIFT(13, 4)",whatever,whatever,whatever,,,
+,,,,,,
+"=BITLSHIFT(14, 4)",=B23+1,whatever,whatever,,,
+=A26,=B26+1,5,whatever,=$C27,,
+=A27,=B27,=C27+1,whatever,=$C28,,
+=A28,=B28,=C28+1,whatever,,=$C29,
+=A29,=B29,=C29+1,whatever,=$C30,,
+=A30,=B30,=C30+1,whatever,=$C31,=$C31,
+=A31,=B31,=C31+1,whatever,=$C32,=$C32,
+=A32,=B32,=C32+1,whatever,,=$C33,
+=A33,=B33,=C33+1,whatever,,=$C34,
+=A34,=B34,=C34+1,whatever,=$C35,=$C35,
+=A35,=B35,=C35+1,whatever,=$C36,,
+=A36,=B36+1,whatever,whatever,,,
+,,,,,,
+=A37,=B37+1,=C36+1,whatever,,,
+=A39,=B39,=C39+1,1000,=$D40,,
+=A40,=B40,=C40,=D40+1,=$D41,,
+=A41,=B41,=C41,=D41+1,,=$D42,
+=A42,=B42,=C42,=D42+1,=$D43,,
+=A43,=B43,=C43,=D43+1,=$D44,=$D44,
+=A44,=B44,=C44,=D44+1,=$D45,=$D45,
+=A45,=B45,=C45,=D45+1,,=$D46,
+=A46,=B46,=C46,=D46+1,,=$D47,
+=A47,=B47,=C47,=D47+1,=$D48,=$D48,
+=A48,=B48,=C48,=D48+1,=$D49,,
+=A49,=B49,=C49+1,whatever,,,
