@@ -80,6 +80,19 @@ The publication point advertises both an `rpkiNotify` (RRDP) and a `caRepository
 
 ---
 
+### 3.5.1.3-12a - `non-contiguous-notification-deltas`
+
+**Description:**
+Notification has deltas 2 and 4, and is missing 3. The RP needs to notice this and fall back to rsync.
+
+
+### 3.5.1.3-12b - `shuffled-deltas`
+
+**Description:**
+Notification has full delta list, but they're not sorted. Despite this, the RP needs to access the delta files in ascending order.
+
+---
+
 ### 3.5.2.3-a - `snapshot-session-id-cross-check`
 
 **Description:**
@@ -133,4 +146,4 @@ Mismatch between the Notification's `<delta>` serial and the corresponding Delta
 
 ---
 
-*End of RFC 8182 test suite — 15 test cases*
+*End of RFC 8182 test suite*
