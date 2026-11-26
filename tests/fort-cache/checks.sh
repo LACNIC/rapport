@@ -79,7 +79,7 @@ check_fort_cache_rrdp_step() {
 	done
 
 	SS_FILES="$RRDP_DIR/$ID-files.txt"
-	jq -r ".rrdp.sessions.\"$SID\".steps.\"$SERIAL\".files | values[]" "$JSON" | $SORT > "$SS_FILES"
+	jq -r ".rrdp.steps.\"$SERIAL\".files | values[]" "$JSON" | $SORT > "$SS_FILES"
 	join -o 1.2 "$JSON_FILES" "$SS_FILES" | $SORT > "$ACTUAL"
 
 	ck_inc
@@ -108,7 +108,7 @@ check_fort_cache_rrdp_fallback() {
 	done
 
 	FB_FILES="$RRDP_DIR/$ID-files.txt"
-	jq -r ".rrdp.sessions.\"$SID\".fallbacks.\"$FALLBACK\".files | values[]" "$JSON" | $SORT > "$FB_FILES"
+	jq -r ".rrdp.fallbacks.\"$FALLBACK\".files | values[]" "$JSON" | $SORT > "$FB_FILES"
 	join -o 1.2 "$JSON_FILES" "$FB_FILES" | $SORT > "$ACTUAL"
 
 	ck_inc
@@ -130,6 +130,7 @@ check_fort_cache_cage_end() {
 	diff -B "$EXPCTD" "$ACTUAL" > "$DIFF" \
 		|| warn "Fileref mismatch" "$EXPCTD" "$ACTUAL" "$DIFF"
 
+	# Ok, now check the actual files in the cage directory.
 	EXPCTD="$JSON_FILES.trimmed"
 	ACTUAL="$DIR_FILES"
 	DIFF="$RRDP_DIR/dirs.diff"

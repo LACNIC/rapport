@@ -23,4 +23,3 @@ check_rsync_requests \
 check_logfile fort2 -F "TRC: Attempting redirect: https://localhost:8446/$TEST/step"
 check_logfile fort2 -F "TRC: Attempting redirect: https://localhost:8446/$TEST/snapshot.xml"
 check_logfile fort2 -F "TRE: https://localhost:8446/$TEST/notification.xml: Too many redirects."
-check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"

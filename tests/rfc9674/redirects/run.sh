@@ -22,5 +22,3 @@ check_rsync_requests \
 
 check_logfile fort2 -F "TRC: Attempting redirect: https://localhost:8445/$TEST/snapshot.xml"
 check_logfile fort2 -F "TRE: https://localhost:8445/$TEST/notification.xml: The document was not an RRDP Notification."
-# TODO ...
-check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"

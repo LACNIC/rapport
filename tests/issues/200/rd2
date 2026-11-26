@@ -1,0 +1,6 @@
+ta.cer 🛡️
+	2.roa
+
+[node: 2.roa]
+obj.content.encapContentInfo.eContent.ipAddrBlocks = [ 1.2.2.0/24 ]
+obj.content.encapContentInfo.eContent.asId = 64502

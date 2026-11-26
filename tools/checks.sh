@@ -467,6 +467,7 @@ check_rsync_requests() {
 
 # TODO Redesign this; it's too complicated.
 # Most of the boilerplate should be done by Barry.
+# And merge with create_delta_rsync().
 #
 # $@: Same as run_barry
 create_delta() {
@@ -527,6 +528,11 @@ create_delta() {
 	# Cleanup
 	mv "$TMPDIR/main" "$APACHEDIR"
 	rm -r "$TMPDIR"
+}
+
+create_delta_rsync() {
+	clear_rsync_modules
+	run_barry "$@"
 }
 
 new_step() {

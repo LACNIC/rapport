@@ -36,7 +36,7 @@ rp_run() {
 		--rsync.program "$RSYNC" \
 		"$@" \
 		> "$SANDBOX/$RP.log" 2>&1 \
-		|| fail "$RP_BIN returned $?; see $SANDBOX/$RP.log"
+		|| fail "$RP_BIN returned $?" "$SANDBOX/$RP.log"
 }
 
 rp_start() {

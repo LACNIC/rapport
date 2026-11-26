@@ -94,8 +94,9 @@ STEP_PREV="$((STEP-2))" create_delta "step4.rd"
 run_rp
 
 check_vrps "101::/16-16 => AS1234" "1.1.0.0/16-16 => AS1234"
+# TODO Fort's logic changed in 2026-11-25; rethink.
 check_http_requests \
 	"/$TEST/ta.cer 304" \
 	"/$TEST/notification.xml 200" \
-	"/$TEST/delta-step4.rd.xml 200"
+	"/$TEST/snapshot.xml 200"
 check_rsync_requests

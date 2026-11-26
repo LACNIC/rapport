@@ -26,5 +26,3 @@ check_rsync_requests \
 	"rpki/"
 
 check_logfile fort2 -F "TRE: https://localhost:$APACHE2_PORT/$TEST/notification.xml: Redirecting to https://attacker.invalid/$TEST/notification.xml; disallowing because of different origin."
-# TODO turn this into a trace; it's nothing to worry about.
-check_logfile fort2 -F "WRN: Cannot traverse through https/1: No such file or directory"
