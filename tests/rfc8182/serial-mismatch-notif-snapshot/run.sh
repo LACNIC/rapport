@@ -18,7 +18,7 @@ sed -i"" 's/<delta.*>//' "$APACHE2_DIR/content/$TEST/notification.xml"
 run_rp --rsync.enabled="false"
 
 # First attempts to delta up, fails, then rejects the Snapshot too.
-check_logfile fort2 -F "TRW: https://localhost:8443/$TEST/notification.xml: There's no delta list to process."
+check_logfile fort2 -F "TRC: There's no delta list to process."
 check_logfile fort2 -F "TRC: Falling back to snapshot."
 check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: (Line 4) Snapshot serial '1' does not match Notification serial '2'"
 check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: Error requesting URL: Failure writing output to destination. (HTTP code: 200)"

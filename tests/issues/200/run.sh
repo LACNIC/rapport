@@ -51,8 +51,6 @@ check_http_requests \
 	"/$TEST/notification.xml 200" \
 	"/$TEST/snapshot.xml 200"
 check_rsync_requests # None
-# TODO why is this a warning?
-check_logfile fort2 -F "TRW: https://localhost:8443/$TEST/notification.xml: There's no delta list to process."
 check_logfile fort2 -F "TRE: https://localhost:8443/$TEST/snapshot.xml: Snapshot 'https://localhost:8443/$TEST/snapshot.xml' does not match its expected hash."
 
 check_fort_cache 0 2
